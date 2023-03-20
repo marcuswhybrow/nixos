@@ -72,7 +72,10 @@ in {
           enable = true;
           userName = "Marcus Whybrow";
           userEmail = "marcus@whybrow.uk";
-          extraConfig.init.defaultBranch = "main";
+          extraConfig = {
+            init.defaultBranch = "main";
+            core.editor = "vim";
+          };
         };
 
         gh.enable = true;
