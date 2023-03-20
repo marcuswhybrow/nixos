@@ -25,7 +25,7 @@
   };
   shellAbbrs = {
     s = "sudo nixos-rebuild switch";
-    c = "sudo vim /etc/nixos";
+    c = "vim ~/.dotfiles";
     l = "wlogout";
   };
 }
