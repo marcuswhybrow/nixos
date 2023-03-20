@@ -4,10 +4,6 @@
 
 { config, pkgs, ... }:
 
-let
-  stateVersion = "22.11";
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -19,18 +15,37 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = [
-    pkgs.neovim
+    # Shell
     pkgs.fish
+
+    # Tools
     pkgs.wget
     pkgs.unixtools.ping
     pkgs.pamixer
+    pkgs.killall
+    pkgs.wlogout
+
+    # Tools (Rust)
+    pkgs.trashy        # replaces `rm`
+    pkgs.bat           # cat
+    pkgs.exa           # ls
+    pkgs.fd            # find
+    pkgs.procs         # ps
+    pkgs.sd            # sed
+    pkgs.du-dust       # du
+    pkgs.ripgrep       # grep
+    pkgs.ripgrep-all   # grep
+    pkgs.tealdeer      # man
+    pkgs.bandwhich     # Network Bandwidth
+    pkgs.delta         # git diff
+  
+    # Editors
+    pkgs.neovim
+
+    # Apps
     pkgs.coreboot-configurator
     pkgs.megasync
-    unstable.avizo
-    pkgs.wlogout
-    pkgs.killall
-    pkgs.trashy
-  ];
+];
 
   mwBar.enable = true;
   mwHome.enable = true;
@@ -151,6 +166,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = stateVersion; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 
 }

@@ -74,7 +74,17 @@ in {
           userEmail = "marcus@whybrow.uk";
           extraConfig = {
             init.defaultBranch = "main";
-            core.editor = "vim";
+            core = {
+              editor = "vim";
+              pager = "delta";
+            };
+            interactive.diffFilter = "delta --color-only";
+            delta = {
+              navigate = true;
+              light = false;
+            };
+            merge.conflictstyle = "diff3";
+            diff.colorMoved = "default";
           };
         };
 
