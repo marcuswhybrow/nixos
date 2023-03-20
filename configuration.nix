@@ -12,6 +12,7 @@ in
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     <home-manager/nixos>
+    ./mw-home.nix
     ./mw-bar
   ];
 
@@ -103,70 +104,7 @@ in
   };
 
   mwBar.enable = true;
-
-  home-manager.users.marcus = { pkgs, ... }: {
-    home = {
-      stateVersion = stateVersion;
-      packages = with pkgs; [
-        htop
-        alacritty
-        brave
-      ];
-    };
-    wayland.windowManager.sway = {
-      enable = true;
-      config = {
-        bars = [];   # disables Sway bar (using Waybar instead)
-        menu = "${pkgs.rofi}/bin/rofi -show drun";
-        terminal = "alacritty";
-        input = {
-          "*" = {
-            repeat_delay = "300";
-            xkb_layout = "gb";
-            natural_scroll = "enabled";
-            tap = "enabled";
-          };
-        };
-        keycodebindings = {
-          # Speakers (fn-F1/F2/F3)
-          "67" = "exec pamixer --toggle-mute";   # fn+F1
-          "68" = "exec pamixer --decrease 5";    # fn+F2
-          "69" = "exec pamixer --increase 5";    # fn+F3
-
-          # Screen brightness (fn-F8/F9)
-          "232" = "exec light -U 10";   # fn+F8 (decrease)
-          "233" = "exec light -A 10";   # fn+F9 (increase)
-        };
-      };
-    };
-    programs = {
-      rofi = {
-        enable = true;
-        font = "Droid Sans Mono 14";
-      };
-      fish = import ./fish;
-      starship.enable = true;
-      neovim = {
-        enable = true;
-        vimAlias = true;
-        plugins = with pkgs.vimPlugins; [
-          vim-fish
-          vim-nix
-          gruvbox
-        ];
-        extraConfig = ''
-          colorscheme gruvbox
-        '';
-      };
-      git = {
-        enable = true;
-        userName = "Marcus Whybrow";
-        userEmail = "marcus@whybrow.uk";
-        extraConfig.init.defaultBranch = "main";
-      };
-      gh.enable = true;
-    };
-  };
+  mwHome.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
