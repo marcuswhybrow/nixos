@@ -16,6 +16,26 @@ in
     ./mw-bar
   ];
 
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = [
+    pkgs.neovim
+    pkgs.fish
+    pkgs.wget
+    pkgs.unixtools.ping
+    pkgs.pamixer
+    pkgs.coreboot-configurator
+    pkgs.megasync
+    unstable.avizo
+    pkgs.wlogout
+    pkgs.killall
+    pkgs.trashy
+  ];
+
+  mwBar.enable = true;
+  mwHome.enable = true;
+  programs.neovim.defaultEditor = true;
+
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
@@ -103,30 +123,8 @@ in
     shell = pkgs.fish;
   };
 
-  mwBar.enable = true;
-  mwHome.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = [
-    pkgs.neovim
-    pkgs.fish
-    pkgs.wget
-    pkgs.unixtools.ping
-    pkgs.pamixer
-    pkgs.coreboot-configurator
-    pkgs.megasync
-    unstable.avizo
-    pkgs.wlogout
-    pkgs.killall
-  ];
-  
-  programs = {
-    neovim.defaultEditor = true;
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
