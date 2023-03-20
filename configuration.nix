@@ -162,7 +162,7 @@ in
         enable = true;
         userName = "Marcus Whybrow";
         userEmail = "marcus@whybrow.uk";
-        init.defaultBranch = "main";
+        extraConfig.init.defaultBranch = "main";
       };
       gh.enable = true;
     };
