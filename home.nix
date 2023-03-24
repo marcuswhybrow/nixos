@@ -11,7 +11,7 @@
   wayland.windowManager.sway = {
     enable = true;
     config = {
-      menu = "${pkgs.rofi}/bin/rofi --show drun";
+      menu = "${pkgs.rofi}/bin/rofi -show drun";
       terminal = "alacritty";
       input."*" = {
         repeat_delay = "300";
