@@ -30,9 +30,17 @@
       LC_TIME = "en_GB.UTF-8";
     };
 
+    programs.light.enable = true;
+
     services.xserver.enable = true;
-    services.xserver.displayManager.gdm.enable = true;
+    services.xserver.autorun = false;
+
+    # services.xserver.displayManager.gdm.enable = true;
+    services.xserver.displayManager.lightdm.enable = true;
     services.xserver.desktopManager.gnome.enable = true;
+
+    programs.fish.enable = true;
+
     services.xserver = {
       layout = "gb";
       xkbVariant = "";
@@ -60,10 +68,12 @@
     # services.xserver.libinput.enable = true;
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
+    security.sudo.wheelNeedsPassword = false;
     users.users.marcus = {
       isNormalUser = true;
       description = "Marcus Whybrow";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "video" ];
+      shell = pkgs.fish;
       packages = with pkgs; [
         firefox
       #  thunderbird
@@ -89,6 +99,28 @@
        neovim
        git
        gh
+
+       fish
+       wget
+       unixtools.ping
+       pamixer
+       wlogout
+
+       trashy
+       bat
+       exa
+       fd
+       procs
+       sd
+       du-dust
+       ripgrep
+       ripgrep-all
+       tealdeer
+       bandwhich
+       delta
+
+       coreboot-configurator
+       # megasync
     ];
 
     # Some programs need SUID wrappers, can be configured further or are
