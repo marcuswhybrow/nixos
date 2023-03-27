@@ -27,6 +27,7 @@
 	home-manager.nixosModules.home-manager
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
+          system.stateVersion = "22.11";
           custom = {
             platform = "x86_64-linux";
             hardware.cpu = "intel";
