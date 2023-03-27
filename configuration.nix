@@ -30,27 +30,6 @@
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    security.sudo.wheelNeedsPassword = false;
-    users.users.marcus = {
-      isNormalUser = true;
-      description = "Marcus Whybrow";
-      extraGroups = [ "networkmanager" "wheel" "video" ];
-      shell = pkgs.fish;
-      packages = with pkgs; [
-        firefox
-      #  thunderbird
-      ];
-    };
-
-    # Enable automatic login for the user.
-    #services.xserver.displayManager.autoLogin.enable = true;
-    #services.xserver.displayManager.autoLogin.user = "marcus";
-  
-    # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-    #systemd.services."getty@tty1".enable = false;
-    #systemd.services."autovt@tty1".enable = false;
-
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [

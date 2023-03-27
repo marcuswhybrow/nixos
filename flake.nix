@@ -21,6 +21,7 @@
         ./networking.nix
         ./localisation.nix
         ./audio.nix
+        ./users.nix
         ./bar
         ./configuration.nix
 	home-manager.nixosModules.home-manager
@@ -40,6 +41,12 @@
             localisation.timeZone = "Europe/London";
             localisation.locale = "en_GB.UTF-8";
             audio.enable = true;
+            users.marcus = {
+              fullName = "Marcus Whybrow";
+              groups = [ "networkmanager" "wheel" "video" ];
+              shell = pkgs.fish;
+              packages = [ pkgs.firefox ];
+            };
           };
 	  home-manager = {
 	    useGlobalPkgs = true;
