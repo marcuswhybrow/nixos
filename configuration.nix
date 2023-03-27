@@ -6,9 +6,6 @@
       user = "marcus";
     };
 
-    services.xserver.enable = true;
-    services.xserver.autorun = false;
-
     programs.fish.enable = true;
 
     services.xserver = {

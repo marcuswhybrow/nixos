@@ -23,6 +23,7 @@
         ./audio.nix
         ./users.nix
         ./display.nix
+        ./gui.nix
         ./bar
         ./configuration.nix
 	home-manager.nixosModules.home-manager
@@ -49,6 +50,7 @@
               keycode.decrease = 232;
               keycode.increase = 233;
             };
+            gui = { enable = true; autorun = false; };
             users.marcus = {
               fullName = "Marcus Whybrow";
               groups = [ "networkmanager" "wheel" "video" ];
