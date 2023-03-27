@@ -20,13 +20,6 @@
 	natural_scroll = "enabled";
 	tap = "enabled";
       };
-      keycodebindings = {
-      	"67" = "exec ${pkgs.pamixer}/bin/pamixer --toggle-mute";
-      	"68" = "exec ${pkgs.pamixer}/bin/pamixer --decrease 5";
-      	"69" = "exec ${pkgs.pamixer}/bin/pamixer --increase 5";
-      	"232" = "exec ${pkgs.light} -U 10";
-      	"233" = "exec ${pkgs.light} -A 10";
-      };
     };
   };
 
