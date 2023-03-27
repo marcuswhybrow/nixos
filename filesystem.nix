@@ -9,6 +9,7 @@ in {
     boot = {
       device = mkOption { type = types.str; };
       fsType = mkOption { type = types.str; };
+      mountPoint = mkOption { type = types.str; };
     };
     root = {
       device = mkOption { type = types.str; };
@@ -36,7 +37,7 @@ in {
     };
 
     # Declare boot, root, and swap partitions
-    fileSystems."/boot/efi" = {
+    fileSystems.${cfg.boot.mountPoint} = {
       device = cfg.boot.device;
       fsType = cfg.boot.fsType;
     };
