@@ -25,6 +25,7 @@
         ./display.nix
         ./gui.nix
         ./bar
+        ./home-manager/git.nix
 	home-manager.nixosModules.home-manager
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -75,6 +76,11 @@
               groups = [ "networkmanager" "wheel" "video" ];
               shell = pkgs.fish;
               packages = [ pkgs.firefox ];
+              git =  { 
+                enable = true;
+                userName = "Marcus Whybrow";
+                userEmail = "marcus@whybrow.uk";
+              };
               home = {
                 home.stateVersion = stateVersion;
                 home.packages = with pkgs; [ htop alacritty brave ];
@@ -101,14 +107,6 @@
                     vimAlias = true;
                     plugins = with pkgs.vimPlugins; [ vim-fish vim-nix gruvbox ];
                     extraConfig = ''colorscheme gruvbox'';
-                  };
-                  gh.enable = true;
-                  git = {
-                    enable = true;
-                    userName = "Marcus Whybrow";
-                    userEmail = "marcus@whybrow.uk";
-                    extraConfig = { init.defaultBranch = "main"; core.editor = "vim"; };
-                    delta.enable = true;
                   };
                 };
               };
