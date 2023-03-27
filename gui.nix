@@ -12,5 +12,6 @@ in {
       enable = cfg.enable;
       autorun = cfg.autorun;
     };
+    environment.systemPackages = [ pkgs.wlogout ];
   };
 }

@@ -9,6 +9,7 @@ in {
       groups = mkOption { type = with types; listOf str; };
       shell = mkOption { type = types.package; };
       packages = mkOption { type = with types; listOf package; };
+      home = mkOption { type = types.attrs; default = {}; };
     };
   }); };
   config = {
@@ -19,5 +20,11 @@ in {
       description = userConfig.fullName;
       initialPassword = "1234";
     }) cfg;
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      users = mapAttrs (userName: userConfig: userConfig.home) cfg;
+      extraSpecialArgs = { inherit pkgs; };
+    };
   };
 }

@@ -7,6 +7,7 @@
 
   outputs = { self, nixpkgs, home-manager, ... }: {
     nixosConfigurations.marcus-laptop = let
+      stateVersion = "22.11";
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
     in nixpkgs.lib.nixosSystem {
@@ -27,26 +28,17 @@
 	home-manager.nixosModules.home-manager
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
-          system.stateVersion = "22.11";
+          system.stateVersion = stateVersion;
           environment.systemPackages = with pkgs; [
-            neovim
-            git
-            gh
-            wget
-            unixtools.ping
-            pamixer
-            wlogout
-            trashy
-            bat
-            exa
-            fd
-            procs
-            sd
-            du-dust
-            ripgrep
-            ripgrep-all
-            tealdeer
-            bandwhich
+            vim
+
+            # Networking
+            wget unixtools.ping
+
+            # Fast rust tools
+            trashy bat exa fd procs sd du-dust ripgrep ripgrep-all tealdeer bandwhich
+
+            # Utils
             coreboot-configurator
           ];
           programs.fish.enable = true;
@@ -77,19 +69,50 @@
               keycode.increase = 233;
             };
             gui = { enable = true; autorun = false; };
+            bar = { enable = true; user = "marcus"; };
             users.marcus = {
               fullName = "Marcus Whybrow";
               groups = [ "networkmanager" "wheel" "video" ];
               shell = pkgs.fish;
               packages = [ pkgs.firefox ];
+              home = {
+                home.stateVersion = stateVersion;
+                home.packages = with pkgs; [ htop alacritty brave ];
+                wayland.windowManager.sway = {
+                  enable = true;
+                  config = {
+                    bars = [];
+                    menu = "${pkgs.rofi}/bin/rofi -show drun";
+                    terminal = "alacritty";
+                    input."*" = {
+                      repeat_delay = "300";
+                      xkb_layout = "gb";
+                      natural_scroll = "enabled";
+                      tap = "enabled";
+                    };
+                  };
+                };
+                programs = {
+                  rofi = { enable = true; font = "Droid Sans Mono 14"; };
+                  fish.enable = true;
+                  starship.enable = true;
+                  neovim = {
+                    enable = true;
+                    vimAlias = true;
+                    plugins = with pkgs.vimPlugins; [ vim-fish vim-nix gruvbox ];
+                    extraConfig = ''colorscheme gruvbox'';
+                  };
+                  gh.enable = true;
+                  git = {
+                    enable = true;
+                    userName = "Marcus Whybrow";
+                    userEmail = "marcus@whybrow.uk";
+                    extraConfig = { init.defaultBranch = "main"; core.editor = "vim"; };
+                    delta.enable = true;
+                  };
+                };
+              };
             };
-            bar = { enable = true; user = "marcus"; };
-          };
-	  home-manager = {
-	    useGlobalPkgs = true;
-	    useUserPackages = true;
-	    users.marcus = import ./home.nix;
-	    extraSpecialArgs = { inherit pkgs; };
           };
 	}
       ];

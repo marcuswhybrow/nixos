@@ -14,6 +14,7 @@ in {
       pulse.enable = true;
       jack.enable = false;
     };
+    environment.systemPackages = [ pkgs.pamixer ];
   };
 }
 
