@@ -11,6 +11,7 @@
   wayland.windowManager.sway = {
     enable = true;
     config = {
+      bars = []; # disable built-in status bar
       menu = "${pkgs.rofi}/bin/rofi -show drun";
       terminal = "alacritty";
       input."*" = {

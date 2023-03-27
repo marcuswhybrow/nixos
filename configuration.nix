@@ -26,6 +26,11 @@
 
     programs.light.enable = true;
 
+    customModule.bar = {
+      enable = true;
+      user = "marcus";
+    };
+
     services.xserver.enable = true;
     services.xserver.autorun = false;
 

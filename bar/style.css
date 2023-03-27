@@ -1,0 +1,96 @@
+* {
+	border: none;
+	border-radius: 0;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#waybar {
+	background: transparent;
+	color: #888;
+	font-family: monospace;
+	font-size: 13px;
+}
+
+#network:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover,
+#pulseaudio:hover,
+#battery:hover,
+#clock:hover,
+#custom-logout:hover {
+	color: white;
+}
+
+#tray {
+	padding: 0 10px;
+}
+
+.warning {
+	color: orange;
+}
+.critical {
+	color: red;
+}
+
+#network {
+	padding-right: 10px;
+}
+
+#cpu {
+	padding-right: 3px;
+}
+#memory {
+	padding-right: 3px;
+}
+#temperature {
+	padding-right: 10px;
+}
+#disk {
+	padding-right: 3px;
+}
+
+#pulseaudio { 
+	padding-right: 3px;
+}
+#battery {
+	padding-right: 10px;
+}
+
+#clock.year,
+#clock.month,
+#clock.day,
+#clock.hour   { padding-right: 3px }
+#clock.minute { padding-right: 10px }
+
+#custom-logout {
+	padding-right: 15px;
+}
+
+#window {
+}
+
+#workspaces button {
+	border-top: 2px solid transparent;
+	color: #888;
+}
+#workspaces button:hover {
+	background: transparent;
+	border-top: 2px solid transparent;
+	color: white;
+	font-weight: bold;
+}
+#workspaces button.focused {
+	color: white;
+	font-weight: bold;
+}
+#workspaces button.urgent {
+	color: #C9545D;
+}
+
+#mode {
+	padding-left: 10px;
+}
