@@ -25,7 +25,8 @@
         ./bar
         ./configuration.nix
 	home-manager.nixosModules.home-manager
-	{
+        {
+          nix.settings.experimental-features = [ "nix-command" "flakes" ];
           custom = {
             platform = "x86_64-linux";
             hardware.cpu = "intel";

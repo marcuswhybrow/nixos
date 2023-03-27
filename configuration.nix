@@ -1,8 +1,6 @@
 { config, pkgs, ... }: {
 
   config = {
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
     programs.light.enable = true;
 
     customModule.bar = {
