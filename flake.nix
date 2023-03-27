@@ -20,6 +20,7 @@
         ./boot.nix
         ./networking.nix
         ./localisation.nix
+        ./audio.nix
         ./bar
         ./configuration.nix
 	home-manager.nixosModules.home-manager
