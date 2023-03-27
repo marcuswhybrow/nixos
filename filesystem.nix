@@ -4,6 +4,7 @@
   keyFile = "/crypto_keyfile.bin";
   doSwap = cfg.swap.device != null;
   doSwapEncryption = doSwap && cfg.swap.isEncrypted;
+  doEncryption = cfg.root.isEncrypted || cfg.swap.isEncrypted;
 in {
   options.custom.filesystem = {
     boot = {
@@ -34,6 +35,13 @@ in {
           keyFile = keyFile;
         };
       };
+
+      # https://nixos.wiki/wiki/Full_Disk_Encryption#Perf_test
+      availableKernelModules = mkIf doEncryption [
+        # I know aesni_intel exists, but does aesni_amd?
+        "aesni_${config.custom.hardware.cpu}"
+        "cryptd"
+      ];
     };
 
     # Declare boot, root, and swap partitions
