@@ -16,6 +16,8 @@
         ./hardware.nix
         ./boot.nix
         ./filesystem.nix
+        ./networking.nix
+        ./localisation.nix
         ./hardware-configuration.nix
         ./bar
         ./configuration.nix
@@ -32,6 +34,9 @@
               root = { device = "/dev/sda2"; fsType = "ext4"; isEncrypted = true; };
               swap = { device = "/dev/sda3"; isEncrypted = true; };
             };
+            networking.hostName = "marcus-laptop";
+            localisation.timeZone = "Europe/London";
+            localisation.locale = "en_GB.UTF-8";
           };
 	  home-manager = {
 	    useGlobalPkgs = true;
