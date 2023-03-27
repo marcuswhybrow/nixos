@@ -7,7 +7,6 @@
 
   outputs = { self, nixpkgs, home-manager, ... }: {
     nixosConfigurations.marcus-laptop = let
-      stateVersion = "22.11";
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
     in nixpkgs.lib.nixosSystem {
@@ -32,7 +31,7 @@
 	home-manager.nixosModules.home-manager
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
-          system.stateVersion = stateVersion;
+          system.stateVersion = "22.11";
           environment.systemPackages = with pkgs; [
             vim
 
@@ -78,8 +77,7 @@
               fullName = "Marcus Whybrow";
               groups = [ "networkmanager" "wheel" "video" ];
               shell = pkgs.fish;
-              packages = [ pkgs.firefox ];
-              git =  { 
+              git = { 
                 enable = true;
                 userName = "Marcus Whybrow";
                 userEmail = "marcus@whybrow.uk";
@@ -87,12 +85,10 @@
               sway = { enable = true; terminal = "alacritty"; };
               neovim.enable = true;
               rofi.enable = true;
-              home = {
-                home.packages = with pkgs; [ htop alacritty brave ];
-                programs = {
-                  fish.enable = true;
-                  starship.enable = true;
-                };
+              packages = with pkgs; [ htop alacritty brave ];
+              programs = {
+                fish.enable = true;
+                starship.enable = true;
               };
             };
           };

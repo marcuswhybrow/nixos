@@ -9,14 +9,14 @@ in {
       groups = mkOption { type = with types; listOf str; };
       shell = mkOption { type = types.package; };
       packages = mkOption { type = with types; listOf package; };
-      home = mkOption { type = types.attrs; default = {}; };
+      programs = mkOption { type = types.attrs; default = {}; };
     };
   }); };
   config = {
     security.sudo.wheelNeedsPassword = false;
     users.users = mapAttrs (userName: userConfig: {
       isNormalUser = true;
-      inherit (userConfig) shell packages;
+      inherit (userConfig) shell;
       description = userConfig.fullName;
       initialPassword = "1234";
     }) cfg;
@@ -24,7 +24,11 @@ in {
       useGlobalPkgs = true;
       useUserPackages = true;
       users = (mapAttrs (userName: userConfig: userConfig.home) cfg)
-        // (mapAttrs (userName: userConfig: { home.stateVersion = config.system.stateVersion; }) cfg);
+      // (mapAttrs (userName: userConfig: {
+        home.stateVersion = config.system.stateVersion; 
+        home.packages = userConfig.packages;
+        inherit (userConfig) programs;
+      }) cfg);
       extraSpecialArgs = { inherit pkgs; };
     };
   };
