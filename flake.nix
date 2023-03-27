@@ -44,7 +44,11 @@
             localisation.timeZone = "Europe/London";
             localisation.locale = "en_GB.UTF-8";
             audio.enable = true;
-            display.adjustableBrightness.enable = true;
+            display.adjustableBrightness = {
+              enable = true;
+              keycode.decrease = 232;
+              keycode.increase = 233;
+            };
             users.marcus = {
               fullName = "Marcus Whybrow";
               groups = [ "networkmanager" "wheel" "video" ];
