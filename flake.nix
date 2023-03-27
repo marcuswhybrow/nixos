@@ -14,7 +14,7 @@
       system = "x86_64-linux";
       modules = [
         ./hardware.nix
-        ./boot.nix
+        ./kernel.nix
         ./filesystem.nix
         ./networking.nix
         ./localisation.nix
