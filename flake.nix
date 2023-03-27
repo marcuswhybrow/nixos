@@ -39,6 +39,7 @@
             networking.hostName = "marcus-laptop";
             localisation.timeZone = "Europe/London";
             localisation.locale = "en_GB.UTF-8";
+            audio.enable = true;
           };
 	  home-manager = {
 	    useGlobalPkgs = true;
