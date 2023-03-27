@@ -6,12 +6,6 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
     boot.loader.efi.efiSysMountPoint = "/boot/efi";
-    boot.initrd.secrets = {
-      "/crypto_keyfile.bin" = null;
-    };
-
-    boot.initrd.luks.devices."luks-02f056e5-32ae-4b97-b890-02e378279efa".device = "/dev/disk/by-uuid/02f056e5-32ae-4b97-b890-02e378279efa";
-    boot.initrd.luks.devices."luks-02f056e5-32ae-4b97-b890-02e378279efa".keyFile = "/crypto_keyfile.bin";
 
     networking.hostName = "marcus-laptop";
     networking.networkmanager.enable = true;
@@ -135,7 +129,7 @@
     # List services that you want to enable:
 
     # Enable the OpenSSH daemon.
-    # services.openssh.enable = true;
+    services.openssh.enable = true;
 
     # Open ports in the firewall.
     # networking.firewall.allowedTCPPorts = [ ... ];

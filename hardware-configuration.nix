@@ -11,21 +11,26 @@
     boot.kernelModules = [ "kvm-intel" ];
     boot.extraModulePackages = [ ];
 
-    fileSystems."/" =
-      { device = "/dev/disk/by-uuid/f2c169f6-3083-442a-bd62-e17940cf6ca2";
-        fsType = "ext4";
-      };
+    # Assume first partition, on first disk is boot partition
+    fileSystems."/boot/efi" = {
+      device = "/dev/sda1";
+      fsType = "ext4";
+    };
 
-    boot.initrd.luks.devices."luks-af00d292-041b-492b-b3a0-a710f0ed2d2c".device = "/dev/disk/by-uuid/af00d292-041b-492b-b3a0-a710f0ed2d2c";
+    # Assume second partition on first disk is LUKS encrypted root
+    boot.initrd.luks.devices.root.device = "/dev/sda2";
+    fileSystems."/" = {
+      device = "/dev/mapper/root";
+      fsType = "vfat";
+    };
 
-    fileSystems."/boot/efi" =
-      { device = "/dev/disk/by-uuid/0FD3-A11C";
-        fsType = "vfat";
-      };
-
-    swapDevices =
-      [ { device = "/dev/disk/by-uuid/b505b308-5b19-4666-8da9-297678d13b09"; }
-      ];
+    # Assume third partition on first disk in LUKS encrypted swap
+    boot.initrd.luks.devices.swap = {
+      device = "/dev/sda3";
+      keyFile = "/crypto_keyfile.bin";
+    };
+    boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
+    swapDevices = [ { device = "/dev/mapper/swap"; } ];
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
     # (the default) this is the recommended approach. When using systemd-networkd it's
