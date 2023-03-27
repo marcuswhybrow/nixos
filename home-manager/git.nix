@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }: let
-  inherit (lib) mkEnableOption mkOption types;
+  inherit (lib) mkEnableOption mkOption types mkIf;
   inherit (builtins) mapAttrs;
 in {
   options.custom.users = mkOption { type = with types; attrsOf (submodule {
@@ -12,15 +12,17 @@ in {
 
   config = {
     home-manager.users = mapAttrs (userName: userConfig: {
-      programs.gh.enable = true;
-      programs.git = {
-        enable = true;
-        inherit (userConfig.git) userName userEmail;
-        extraConfig = {
-          init.defaultBranch = "main";
-          core.editor = "vim";
+      programs = mkIf userConfig.git.enable {
+        gh.enable = true;
+        git = {
+          enable = true;
+          inherit (userConfig.git) userName userEmail;
+          extraConfig = {
+            init.defaultBranch = "main";
+            core.editor = "vim";
+          };
+          delta.enable = true;
         };
-        delta.enable = true;
       };
     }) config.custom.users;
   };

@@ -27,6 +27,7 @@
         ./bar
         ./home-manager/git.nix
         ./home-manager/sway.nix
+        ./home-manager/neovim.nix
 	home-manager.nixosModules.home-manager
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -83,18 +84,13 @@
                 userEmail = "marcus@whybrow.uk";
               };
               sway = { enable = true; terminal = "alacritty"; };
+              neovim.enable = true;
               home = {
                 home.packages = with pkgs; [ htop alacritty brave ];
                 programs = {
                   rofi = { enable = true; font = "Droid Sans Mono 14"; };
                   fish.enable = true;
                   starship.enable = true;
-                  neovim = {
-                    enable = true;
-                    vimAlias = true;
-                    plugins = with pkgs.vimPlugins; [ vim-fish vim-nix gruvbox ];
-                    extraConfig = ''colorscheme gruvbox'';
-                  };
                 };
               };
             };
