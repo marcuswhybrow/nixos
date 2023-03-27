@@ -14,14 +14,14 @@
     # Assume first partition, on first disk is boot partition
     fileSystems."/boot/efi" = {
       device = "/dev/sda1";
-      fsType = "ext4";
+      fsType = "vfat";
     };
 
     # Assume second partition on first disk is LUKS encrypted root
     boot.initrd.luks.devices.root.device = "/dev/sda2";
     fileSystems."/" = {
       device = "/dev/mapper/root";
-      fsType = "vfat";
+      fsType = "ext4";
     };
 
     # Assume third partition on first disk in LUKS encrypted swap
