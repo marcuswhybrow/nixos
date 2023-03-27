@@ -3,5 +3,8 @@
   cfg = config.custom.platform;
 in {
   options.custom.platform = mkOption { type = types.str; };
-  config.nixpkgs.hostPlatform = mkDefault cfg;
+  config.nixpkgs = {
+    hostPlatform = mkDefault cfg;
+    config.allowUnfree = true;
+  };
 }
