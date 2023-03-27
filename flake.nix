@@ -12,6 +12,7 @@
     in nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
+        ./system.nix
         ./platform.nix
         ./hardware.nix
         ./kernel.nix
@@ -30,24 +31,8 @@
         ./home-manager/rofi.nix
 	home-manager.nixosModules.home-manager
         {
-          nix.settings.experimental-features = [ "nix-command" "flakes" ];
-          system.stateVersion = "22.11";
-          environment.systemPackages = with pkgs; [
-            vim
-
-            # Networking
-            wget unixtools.ping
-
-            # Fast rust tools
-            trashy bat exa fd procs sd du-dust ripgrep ripgrep-all tealdeer bandwhich
-
-            # Utils
-            coreboot-configurator
-          ];
-          programs.fish.enable = true;
-          services.openssh.enable = true;
-          services.printing.enable = true;
           custom = {
+            stateVersion = "22.11";
             platform = "x86_64-linux";
             hardware.cpu = "intel";
             kernel.modules.beforeMountingRoot = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
@@ -73,6 +58,23 @@
             };
             gui = { enable = true; autorun = false; };
             bar = { enable = true; user = "marcus"; };
+            packages = with pkgs; [
+              vim
+
+              # Networking
+              wget unixtools.ping
+
+              # Fast rust tools
+              trashy bat exa fd procs sd du-dust ripgrep ripgrep-all tealdeer bandwhich
+
+              # Utils
+              coreboot-configurator
+            ];
+            programs.fish.enable = true;
+            services = {
+              openssh.enable = true;
+              printing.enable = true;
+            };
             users.marcus = {
               fullName = "Marcus Whybrow";
               groups = [ "networkmanager" "wheel" "video" ];
