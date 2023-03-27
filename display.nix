@@ -29,7 +29,7 @@ in {
     programs.light.enable = mkDefault bright.enable;
     services.actkbd = mkIf doKeyBindings {
       enable = true;
-      bindings = increaseBinding ++ decreaseBinding;
+      bindings = (increaseBinding ++ decreaseBinding);
     };
   };
 }

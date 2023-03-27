@@ -31,8 +31,10 @@
       audio.enable = true;
       display.adjustableBrightness = {
         enable = true;
-        keycode.decrease = 232;
-        keycode.increase = 233;
+        #keycode.decrease = 232;
+        keycode.decrease = 224;
+        #keycode.increase = 233;
+        keycode.increase = 225;
       };
       gui = { enable = true; autorun = false; };
       packages = with pkgs; [
