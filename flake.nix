@@ -1,17 +1,16 @@
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs;
-    home-manager.url = github:nix-community/home-manager;
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: let
-    pkgs = import nixpkgs {
+  outputs = { self, nixpkgs, home-manager, ... }: {
+    nixosConfigurations.marcus-laptop = let
       system = "x86_64-linux";
-    };
-  in {
-    nixosConfigurations.marcus-laptop = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in nixpkgs.lib.nixosSystem {
+      inherit system;
       modules = [
         ./platform.nix
         ./hardware.nix
@@ -25,7 +24,6 @@
         ./display.nix
         ./gui.nix
         ./bar
-        ./configuration.nix
 	home-manager.nixosModules.home-manager
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -34,7 +32,6 @@
             neovim
             git
             gh
-            fish
             wget
             unixtools.ping
             pamixer
@@ -52,6 +49,7 @@
             bandwhich
             coreboot-configurator
           ];
+          programs.fish.enable = true;
           services.openssh.enable = true;
           services.printing.enable = true;
           custom = {
@@ -66,8 +64,12 @@
             };
             boot.mountPoint = "/boot/efi";
             networking.hostName = "marcus-laptop";
-            localisation.timeZone = "Europe/London";
-            localisation.locale = "en_GB.UTF-8";
+            localisation = {
+              timeZone = "Europe/London";
+              locale = "en_GB.UTF-8";
+              layout = "gb";
+              keyMap = "uk";
+            };
             audio.enable = true;
             display.adjustableBrightness = {
               enable = true;
@@ -81,6 +83,7 @@
               shell = pkgs.fish;
               packages = [ pkgs.firefox ];
             };
+            bar = { enable = true; user = "marcus"; };
           };
 	  home-manager = {
 	    useGlobalPkgs = true;

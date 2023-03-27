@@ -2,14 +2,14 @@
 
 let
   inherit (lib) mkEnableOption mkIf mkOption types;
-  cfg = config.customModule.bar;
+  cfg = config.custom.bar;
   alacrittyCmd = "${pkgs.alacritty}/bin/alacritty --command";
   htop = "${pkgs.htop}/bin/htop";
   wlogout = "${pkgs.wlogout}/bin/wlogout";
   pamixer = "${pkgs.pamixer}/bin/pamixer";
 in {
-  options.customModule.bar.enable = mkEnableOption "Marcus' WayBar config";
-  options.customModule.bar.user = mkOption { type = types.str; };
+  options.custom.bar.enable = mkEnableOption "Marcus' WayBar config";
+  options.custom.bar.user = mkOption { type = types.str; };
 
   config = mkIf cfg.enable {
     home-manager.users.${cfg.user}.programs.waybar = {

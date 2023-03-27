@@ -15,6 +15,8 @@ in {
   options.custom.localisation = {
     timeZone = mkOption { type = timezone; };
     locale = mkOption { type = types.str; };
+    keyMap = mkOption { type = types.str; };
+    layout = mkOption { type = types.str; };
   };
 
   config = {
@@ -31,5 +33,7 @@ in {
       "TELEPHONE"
       "TIME"
     ];
+    console.keyMap = cfg.keyMap;
+    services.xserver.layout = cfg.layout;
   };
 }
