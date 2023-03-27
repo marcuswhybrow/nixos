@@ -1,8 +1,6 @@
 { config, pkgs, ... }: {
 
   config = {
-    programs.light.enable = true;
-
     customModule.bar = {
       enable = true;
       user = "marcus";
