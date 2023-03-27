@@ -84,7 +84,6 @@
               };
               sway = { enable = true; terminal = "alacritty"; };
               home = {
-                home.stateVersion = stateVersion;
                 home.packages = with pkgs; [ htop alacritty brave ];
                 programs = {
                   rofi = { enable = true; font = "Droid Sans Mono 14"; };

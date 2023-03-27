@@ -23,7 +23,8 @@ in {
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-      users = mapAttrs (userName: userConfig: userConfig.home) cfg;
+      users = (mapAttrs (userName: userConfig: userConfig.home) cfg)
+        // (mapAttrs (userName: userConfig: { home.stateVersion = config.system.stateVersion; }) cfg);
       extraSpecialArgs = { inherit pkgs; };
     };
   };
