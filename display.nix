@@ -10,7 +10,7 @@
   decreaseBinding = if (bright.keycode.decrease != null) then [{
     keys = [ bright.keycode.decrease ];
     events = [ "key" ];
-    command = "${pkgs.light}/bin/light -A 10";
+    command = "${pkgs.light}/bin/light -U 10";
   }] else [];
 
 in {
