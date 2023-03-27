@@ -16,6 +16,7 @@ in {
     security.sudo.wheelNeedsPassword = false;
     users.users = mapAttrs (userName: userConfig: {
       isNormalUser = true;
+      extraGroups = userConfig.groups;
       inherit (userConfig) shell;
       description = userConfig.fullName;
       initialPassword = "1234";
