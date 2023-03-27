@@ -5,12 +5,6 @@
 
 {
   config = {
-    hardware.enableRedistributableFirmware = lib.mkDefault true;
-    boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
-    boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ "kvm-intel" ];
-    boot.extraModulePackages = [ ];
-
     # Assume first partition, on first disk is boot partition
     fileSystems."/boot/efi" = {
       device = "/dev/sda1";
@@ -40,7 +34,5 @@
     # networking.interfaces.wlp0s12f0.useDHCP = lib.mkDefault true;
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-    hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  
   };
 }
