@@ -26,6 +26,7 @@
         ./gui.nix
         ./bar
         ./home-manager/git.nix
+        ./home-manager/sway.nix
 	home-manager.nixosModules.home-manager
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -81,23 +82,10 @@
                 userName = "Marcus Whybrow";
                 userEmail = "marcus@whybrow.uk";
               };
+              sway = { enable = true; terminal = "alacritty"; };
               home = {
                 home.stateVersion = stateVersion;
                 home.packages = with pkgs; [ htop alacritty brave ];
-                wayland.windowManager.sway = {
-                  enable = true;
-                  config = {
-                    bars = [];
-                    menu = "${pkgs.rofi}/bin/rofi -show drun";
-                    terminal = "alacritty";
-                    input."*" = {
-                      repeat_delay = "300";
-                      xkb_layout = "gb";
-                      natural_scroll = "enabled";
-                      tap = "enabled";
-                    };
-                  };
-                };
                 programs = {
                   rofi = { enable = true; font = "Droid Sans Mono 14"; };
                   fish.enable = true;
