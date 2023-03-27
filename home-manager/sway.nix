@@ -1,11 +1,12 @@
 { config, lib, pkgs, ... }: let
-  inherit (lib) mkEnableOption mkOption types;
+  inherit (lib) mkEnableOption mkOption types mkIf;
   inherit (builtins) mapAttrs;
 in {
   options.custom.users = mkOption { type = with types; attrsOf (submodule {
     options.sway = {
       enable = mkEnableOption "Enable sway window manager";
       terminal = mkOption { type = types.str; };
+      disableBars = mkOption { type = types.bool; default = false; };
     };
   }); };
 
@@ -14,6 +15,7 @@ in {
       wayland.windowManager.sway = {
         inherit (userConfig.sway) enable;
         config = {
+          bars = mkIf userConfig.sway.disableBars [];
           menu = "${pkgs.rofi}/bin/rofi -show drun";
           inherit (userConfig.sway) terminal;
           input."*" = {

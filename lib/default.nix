@@ -13,9 +13,9 @@
       ../display.nix
       ../gui.nix
       ../users.nix
-      ../bar
       ../home-manager/git.nix
       ../home-manager/sway.nix
+      ../home-manager/waybar
       ../home-manager/neovim.nix
       ../home-manager/rofi.nix
       home-manager.nixosModules.home-manager

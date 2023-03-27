@@ -35,7 +35,6 @@
         keycode.increase = 233;
       };
       gui = { enable = true; autorun = false; };
-      bar = { enable = true; user = "marcus"; };
       packages = with pkgs; [
         vim
 
@@ -62,7 +61,12 @@
           userName = "Marcus Whybrow";
           userEmail = "marcus@whybrow.uk";
         };
-        sway = { enable = true; terminal = "alacritty"; };
+        sway = {
+          enable = true;
+          terminal = "alacritty";
+          disableBars = true;
+        };
+        waybar.enable = true;
         neovim.enable = true;
         rofi.enable = true;
         packages = with pkgs; [ htop alacritty brave ];
