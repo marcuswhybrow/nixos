@@ -2,12 +2,15 @@
   inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
   cfg = config.custom.display;
   bright = cfg.adjustableBrightness;
-  increaseBinding = if (bright.keycode.increase != null) then [{
+  doIncrease = bright.keycode.increase != null;
+  doDecrease = bright.keycode.decrease != null;
+  doKeyBindings = bright.enable && (doIncrease || doDecrease);
+  increaseBinding = if doIncrease then [{
     keys = [ bright.keycode.increase ];
     events = [ "key" ];
     command = "${pkgs.light}/bin/light -A 10";
   }] else [];
-  decreaseBinding = if (bright.keycode.decrease != null) then [{
+  decreaseBinding = if doDecrease then [{
     keys = [ bright.keycode.decrease ];
     events = [ "key" ];
     command = "${pkgs.light}/bin/light -U 10";
@@ -23,9 +26,9 @@ in {
   };
 
   config = {
-    programs.light.enable = mkIf bright.enable true;
-    services.actkbd = {
-      enable = mkDefault (bright.keycode.increase != null || bright.keycode.decrease != null);
+    programs.light.enable = mkDefault bright.enable;
+    services.actkbd = mkIf doKeyBindings {
+      enable = true;
       bindings = increaseBinding ++ decreaseBinding;
     };
   };
