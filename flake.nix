@@ -15,6 +15,7 @@
       modules = [
         ./hardware.nix
         ./boot.nix
+        ./filesystem.nix
         ./hardware-configuration.nix
         ./bar
         ./configuration.nix
@@ -25,6 +26,11 @@
             kernel = {
               modules.beforeMountingRoot = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
               virtualisation.enable = true;
+            };
+            filesystem = {
+              boot = { device = "/dev/sda1"; fsType = "vfat"; };
+              root = { device = "/dev/sda2"; fsType = "ext4"; isEncrypted = true; };
+              swap = { device = "/dev/sda3"; isEncrypted = true; };
             };
           };
 	  home-manager = {

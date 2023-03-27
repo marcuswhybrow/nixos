@@ -5,27 +5,6 @@
 
 {
   config = {
-    # Assume first partition, on first disk is boot partition
-    fileSystems."/boot/efi" = {
-      device = "/dev/sda1";
-      fsType = "vfat";
-    };
-
-    # Assume second partition on first disk is LUKS encrypted root
-    boot.initrd.luks.devices.root.device = "/dev/sda2";
-    fileSystems."/" = {
-      device = "/dev/mapper/root";
-      fsType = "ext4";
-    };
-
-    # Assume third partition on first disk in LUKS encrypted swap
-    boot.initrd.luks.devices.swap = {
-      device = "/dev/sda3";
-      keyFile = "/crypto_keyfile.bin";
-    };
-    boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
-    swapDevices = [ { device = "/dev/mapper/swap"; } ];
-
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
     # (the default) this is the recommended approach. When using systemd-networkd it's
     # still possible to use this option, but it's recommended to use it in conjunction
