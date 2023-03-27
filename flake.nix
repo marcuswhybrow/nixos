@@ -30,6 +30,30 @@
         {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
           system.stateVersion = "22.11";
+          environment.systemPackages = with pkgs; [
+            neovim
+            git
+            gh
+            fish
+            wget
+            unixtools.ping
+            pamixer
+            wlogout
+            trashy
+            bat
+            exa
+            fd
+            procs
+            sd
+            du-dust
+            ripgrep
+            ripgrep-all
+            tealdeer
+            bandwhich
+            coreboot-configurator
+          ];
+          services.openssh.enable = true;
+          services.printing.enable = true;
           custom = {
             platform = "x86_64-linux";
             hardware.cpu = "intel";
