@@ -7,8 +7,8 @@
 }
 
 #waybar {
-	background: transparent;
-	color: #888;
+	background: white;
+	color: #222;
 	font-family: monospace;
 	font-size: 13px;
 }
@@ -21,9 +21,6 @@
 #pulseaudio:hover,
 #battery:hover,
 #clock:hover,
-#custom-logout:hover {
-	color: white;
-}
 
 #tray {
 	padding: 0 10px;
@@ -75,16 +72,16 @@
 
 #workspaces button {
 	border-top: 2px solid transparent;
-	color: #888;
+	color: #222;
 }
 #workspaces button:hover {
 	background: transparent;
 	border-top: 2px solid transparent;
-	color: white;
+	color: black;
 	font-weight: bold;
 }
 #workspaces button.focused {
-	color: white;
+	color: black;
 	font-weight: bold;
 }
 #workspaces button.urgent {
