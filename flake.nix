@@ -69,7 +69,11 @@
         alacritty = {
           enable = true;
         };
-        packages = with pkgs; [ htop alacritty brave ];
+        packages = with pkgs; [
+          htop
+          brave
+          vimb
+        ];
         programs = {
           fish.enable = true;
           starship.enable = true;
