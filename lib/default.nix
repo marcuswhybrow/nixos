@@ -18,6 +18,7 @@
       ../home-manager/waybar
       ../home-manager/neovim.nix
       ../home-manager/rofi.nix
+      ../home-manager/alacritty.nix
       home-manager.nixosModules.home-manager
       {
         config.nixpkgs = {

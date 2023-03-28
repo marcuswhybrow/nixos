@@ -63,6 +63,9 @@
         waybar.enable = true;
         neovim.enable = true;
         rofi.enable = true;
+        alacritty = {
+          enable = true;
+        };
         packages = with pkgs; [ htop alacritty brave ];
         programs = {
           fish.enable = true;
