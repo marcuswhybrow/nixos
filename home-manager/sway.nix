@@ -29,6 +29,33 @@ in {
             tap = "enabled";
           };
 
+          output."*" = {
+            background = "#FFFFFF solid_color";
+          };
+          colors = {
+            focused = {
+              border = "#ff0000";
+              background = "#ff0000";
+              text = "#000000";
+              indicator = "#2e9ef4";
+              childBorder = "#666666";
+            };
+            unfocused = {
+              border = "#ffffff";
+              background = "#ffffff";
+              text = "#000000";
+              indicator = "#292d2e";
+              childBorder = "#ffffff";
+            };
+          };
+
+          gaps = {
+            smartBorders = "on";
+            smartGaps = true;
+            inner = 5;
+          };
+
+
           # Home Manager does not support swhkd (Simple Wayland HotKey Daemon)
           # So using Sway keybindings instead
           # Honours command options defined in ../audio.nix

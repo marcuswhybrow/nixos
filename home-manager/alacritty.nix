@@ -21,14 +21,14 @@ in {
             }; */
 
           window.padding = {
-            x = 2;
-            y = 2;
+            x = 5;
+            y = 5;
           };
 
-          # https://github.com/alacritty/alacritty-theme/blob/c13db2aeff025f23155fdf297a45a47d8588a2f1/themes/atom_one_light.yaml
+          # Modified from https://github.com/alacritty/alacritty-theme/blob/c13db2aeff025f23155fdf297a45a47d8588a2f1/themes/atom_one_light.yaml
           colors = {
             primary = {
-              background = "0xf8f8f8";
+              background = "0xffffff";
               foreground = "0x2a2b33";
             };
             normal = {
