@@ -37,14 +37,27 @@ in {
               border = "#ff0000";
               background = "#ff0000";
               text = "#000000";
-              indicator = "#2e9ef4";
+              indicator = "#ff0000";
+
+              # The border of the app with input focus
               childBorder = "#666666";
+            };
+            focusedInactive = {
+              border = "#ffffff";
+              background = "#ffffff";
+              text = "#000000";
+              indicator = "#0000ff";
+              # The border of the app in an inactive group that will
+              # be selected first
+              childBorder = "#eeeeee"; 
             };
             unfocused = {
               border = "#ffffff";
               background = "#ffffff";
               text = "#000000";
-              indicator = "#292d2e";
+              indicator = "#00ff00";
+
+              # The border of all other apps
               childBorder = "#ffffff";
             };
           };
