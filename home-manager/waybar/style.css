@@ -10,20 +10,7 @@
 	background: white;
 	color: #222;
 	font-family: monospace;
-	font-size: 13px;
-}
-
-#network:hover,
-#cpu:hover,
-#memory:hover,
-#disk:hover,
-#temperature:hover,
-#pulseaudio:hover,
-#battery:hover,
-#clock:hover,
-
-#tray {
-	padding: 0 10px;
+	font-size: 10px;
 }
 
 .warning {
@@ -31,6 +18,25 @@
 }
 .critical {
 	color: red;
+}
+
+#network,
+#cpu,
+#memory,
+#temperature,
+#disk,
+#pulseaudio,
+#battery,
+#clock,
+#custom-logout,
+#workspaces,
+#tray,
+#mode {
+	padding-top: 5px;
+}
+
+#tray {
+	padding-right: 10px;
 }
 
 #network {
@@ -57,6 +63,7 @@
 	padding-right: 10px;
 }
 
+#clock.year   { padding-left: 10px }
 #clock.year,
 #clock.month,
 #clock.day,

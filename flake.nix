@@ -32,6 +32,9 @@
       packages = with pkgs; [
         vim
 
+        # Social
+        discord
+
         # Networking
         wget unixtools.ping
 

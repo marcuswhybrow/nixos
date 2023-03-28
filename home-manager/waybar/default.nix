@@ -36,10 +36,16 @@ in {
           height = 30;
 
           modules-left = [
+            "clock#year"
+            "clock#month"
+            "clock#day"
+            "clock#hour"
+            "clock#minute"
+          ];
+          modules-center = [
             "sway/workspaces"
             "sway/mode"
           ];
-          modules-center = [];
           modules-right = [
             "tray"
             "network"
@@ -49,11 +55,6 @@ in {
             "disk"
             "pulseaudio"
             "battery"
-            "clock#year"
-            "clock#month"
-            "clock#day"
-            "clock#hour"
-            "clock#minute"
             "custom/logout"
           ];
 
@@ -108,7 +109,7 @@ in {
           pulseaudio = {
             format = "{volume:03}";
             format-bluetooth = "{volume:03}";
-            format-muted = "<span strikethrough=\"true\" strikethrough_color=\"white\">{volume:03}</span>";
+            format-muted = "<span strikethrough=\"true\" strikethrough_color=\"black\">{volume:03}</span>";
             on-click = "exec ${pamixer} --toggle-mute";
             on-click-right = "exec ${pamixer} --set-volume 100";
             scroll-step = 5;
@@ -116,7 +117,7 @@ in {
 
           battery = {
             format = "{capacity:03}";
-            tooltip-format = "Batter {timeTo}";
+            tooltip-format = "Battery {timeTo}";
             states = {
               good = 95;
               warning = 30;

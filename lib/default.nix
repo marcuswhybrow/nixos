@@ -27,7 +27,10 @@
         };
       }
       {
-        custom = (configFn (import nixpkgs { inherit system; }));
+        custom = (configFn (import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        }));
       }
     ];
   };
