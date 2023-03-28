@@ -2,6 +2,16 @@
   inherit (lib) mkDefault mkOption types mkIf;
   cfg = config.custom.hardware;
   isIntel = cfg.cpu == "intel";
+
+  # Assume Starlabs Starlite keyboard
+  xmodmapConfig = pkgs.writeText "xkb-layout" ''
+    keycode 59 = XF86AudioMute
+    keycode 60 = XF86AudioLowerVolume
+    keycode 61 = XF86AudioRaiseVolume
+  '';
+  sessionCommands = ''
+    ${pkgs.xorg.xmodmap}/bin/xmodmap "${xmodmapConfig}"
+  '';
 in {
   options.custom.hardware = {
     cpu = mkOption { type = types.enum [ "intel" "amd" ]; };
@@ -29,5 +39,10 @@ in {
         libvdpau-va-gl
       ];
     };
+
+    # Run commands "session commands" before starting Xserver or Wayland
+    # https://nixos.wiki/wiki/Keyboard_Layout_Customization
+    services.xserver.displayManager.sessionCommands = sessionCommands;
+    programs.sway.extraSessionCommands = sessionCommands;
   };
 }

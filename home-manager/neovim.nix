@@ -10,6 +10,11 @@ in {
 
   config = {
     home-manager.users = mapAttrs (userName: userConfig: {
+      home.packages = with pkgs; [
+
+        # Wayland system clipboard support for copy ("+y) and paste ("+p)
+        wl-clipboard
+      ];
       programs.neovim = mkIf userConfig.neovim.enable {
         enable = true;
         vimAlias = true;
