@@ -22,8 +22,9 @@ in {
           vim-fish
           vim-nix
           gruvbox
+          catppuccin-nvim # https://github.com/catppuccin/nvim
         ];
-        extraConfig = ''colorscheme gruvbox'';
+        extraConfig = ''colorscheme catppuccin-latte'';
       };
     }) config.custom.users;
   };
