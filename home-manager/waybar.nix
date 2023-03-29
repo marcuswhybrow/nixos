@@ -2,10 +2,10 @@
 
 let
   inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
-  inherit (import ../../utils { inherit lib; }) options forEachUser;
+  inherit (import ../utils { inherit lib; }) options forEachUser;
   inherit (builtins) readFile;
 
-  # Assume the alacritty, htop, wlogout, and pamixer
+  # Assume the alacritty, htop, wlogout, and pamixer, fish
   # TODO: Use options instead
   alacrittyCmd = "${pkgs.alacritty}/bin/alacritty --command";
   htop = "${pkgs.htop}/bin/htop";
@@ -125,9 +125,7 @@ in {
           "custom/logout" = {
             format = "⏻";
             tooltip = false;
-            on-click = ''
-              exec ${rofi}
-            '';
+            on-click = "exec fish -c logout";
           };
         };
 

@@ -43,6 +43,7 @@ in {
           # So using Sway keybindings instead
           # Honours command options defined in ../audio.nix
           keybindings = lib.mkOptionDefault (with config.custom; {
+            "Mod1+Escape" = exec "fish -c logout";
             XF86AudioMute = exec audio.mute;
             XF86AudioLowerVolume = exec audio.lowerVolume;
             XF86AudioRaiseVolume = exec audio.raiseVolume;
