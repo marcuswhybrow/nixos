@@ -1,34 +1,24 @@
 { pkgs, lib, config, ...}:
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption types;
-  inherit (builtins) mapAttrs;
-
+  inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
+  inherit (import ../../utils { inherit lib; }) options forEachUser;
   # Assume the alacritty, htop, wlogout, and pamixer
+  # TODO: Use options instead
   alacrittyCmd = "${pkgs.alacritty}/bin/alacritty --command";
   htop = "${pkgs.htop}/bin/htop";
   wlogout = "${pkgs.wlogout}/bin/wlogout";
   pamixer = "${pkgs.pamixer}/bin/pamixer";
 in {
-  options.custom.users = mkOption { type = with types; attrsOf (submodule {
-    options = {
-      waybar = {
-        enable = mkEnableOption "Marcus' Waybar config";
-      };
-    };
-  }); };
+  options.custom.users = options.mkForEachUser {
+    waybar.enable = mkEnableOption "Marcus' Waybar config";
+  };
 
-  config.home-manager.users = mapAttrs (userName: userConfig: {
-    home.packages = [
-      pkgs.wlogout
-      pkgs.pamixer
-      pkgs.htop
-      pkgs.alacritty
-    ];
-    programs = mkIf userConfig.waybar.enable {
+  config.home-manager.users = forEachUser config (user: {
+    programs = mkIf user.waybar.enable {
       waybar = {
         enable = true;
-        style = builtins.readFile ./style.css;
+        style = mkDefault ./style.css;
         systemd.enable = true;
         settings.mainBar = {
           layer = "bottom";
@@ -140,5 +130,5 @@ in {
 
       };
     };
-  }) config.custom.users;
+  });
 }

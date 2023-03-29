@@ -1,19 +1,18 @@
 { config, lib, pkgs, ... }: let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-  inherit (builtins) mapAttrs;
+  inherit (lib) mkEnableOption mkIf;
+  inherit (import ../utils { inherit lib; }) forEachUser options;
 in {
-  options.custom.users = mkOption { type = with types; attrsOf (submodule {
-    options.rofi = {
+  options.custom.users = options.mkForEachUser {
+    rofi = {
       enable = mkEnableOption "Enable Rofi launcher";
     };
-  }); };
+  };
 
   config = {
-    home-manager.users = mapAttrs (userName: userConfig: {
-      programs.rofi = mkIf userConfig.rofi.enable {
+    home-manager.users = forEachUser config (user: {
+      programs.rofi = mkIf user.rofi.enable {
         enable = true;
-        font = "Droid Sans Mono 14";
       };
-    }) config.custom.users;
+    });
   };
 }

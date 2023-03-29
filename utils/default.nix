@@ -1,6 +1,6 @@
 { lib }: let
-  inherit (builtins) toString replaceStrings;
-  inherit (lib.attrsets) mapAttrsToList;
+  inherit (builtins) toString replaceStrings mapAttrs removeAttrs foldl';
+  inherit (lib.attrsets) mapAttrsToList recursiveUpdate;
   inherit (lib) mkOption types;
   escapeDoubleQuotes = anything: replaceStrings [ ''"'' ] [ ''\"'' ] (toString anything); 
 in {
@@ -25,5 +25,22 @@ in {
       type = types.bool;
       default = true;
     };
+    mkEnum = default: options: mkOption {
+      type = types.enum options;
+      inherit default;
+    };
+    mkForEachUser = options: mkOption {
+      type = with types; attrsOf (submodule { inherit options; });
+    };
   };
+  forEachUser = cfg: f: mapAttrs (userName: userConfig: f (userConfig // {
+    username = userName;
+  })) cfg.custom.users;
+  remapAttrs = attrs: remaps: let
+    remapAttr = attrName: remapFn: let
+      base = removeAttrs attrs [ attrName ];
+      merge = foldl' recursiveUpdate {} (mapAttrsToList remapFn attrs.${attrName});
+    in recursiveUpdate base merge;
+    merges = mapAttrsToList (attrName: remapFn: (remapAttr attrName remapFn)) remaps;
+  in foldl' recursiveUpdate {} merges;
 }

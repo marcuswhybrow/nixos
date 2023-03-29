@@ -13,6 +13,7 @@
       ../display.nix
       ../gui.nix
       ../users.nix
+      ../themes
       ../home-manager/git.nix
       ../home-manager/sway.nix
       ../home-manager/waybar
