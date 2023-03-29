@@ -2,7 +2,14 @@
   inherit (builtins) mapAttrs;
   inherit (nixpkgs.lib) nixosSystem;
 
-  toNixosSystem = hostname: config: nixosSystem {
+  toNixosSystem = hostname: configFn: let
+    nullConfig = configFn null;
+    pkgs = import nixpkgs {
+      inherit (nullConfig) system;
+      config.allowUnfree = nullConfig.allowUnfree;
+    };
+    config = configFn pkgs;
+  in nixosSystem {
     inherit (config) system;
 
     modules = [
@@ -31,8 +38,9 @@
           config.allowUnfree = config.allowUnfree;
         };
       }
-      { custom = removeAttrs config [ "pkgs" "system" ]; }
-      { custom.networking.hostName = hostname; }
+      { networking.hostName = hostname; }
+      { custom = removeAttrs config [ "pkgs" "system" "allowUnfree" "extraConfig" ]; }
+      config.extraConfig
     ];
   };
 in {

@@ -1,35 +1,42 @@
 { config , lib, pkgs, ... }: let
   inherit (lib) mkOption types;
-  inherit (builtins) mapAttrs;
-  cfg = config.custom.users;
+  inherit (builtins) mapAttrs foldl';
+  inherit (import ./utils { inherit lib; }) options forEachUser merge;
 in {
-  options.custom.users = mkOption { type = with types; attrsOf (submodule {
-    options = {
-      fullName = mkOption { type = types.str; };
-      groups = mkOption { type = with types; listOf str; };
-      shell = mkOption { type = types.package; };
-      packages = mkOption { type = with types; listOf package; };
-      programs = mkOption { type = types.attrs; default = {}; };
-    };
-  }); };
+  options.custom.users = options.mkForEachUser {
+    fullName = mkOption { type = types.str; };
+    groups = mkOption { type = with types; listOf str; };
+    shell = mkOption { type = types.package; };
+    packages = mkOption { type = with types; listOf package; };
+    extraConfig = options.mkAttrs {};
+    extraHomeManagerConfig = options.mkAttrs {}; 
+  };
   config = {
     security.sudo.wheelNeedsPassword = false;
-    users.users = mapAttrs (userName: userConfig: {
-      isNormalUser = true;
-      extraGroups = userConfig.groups;
-      inherit (userConfig) shell;
-      description = userConfig.fullName;
-      initialPassword = "1234";
-    }) cfg;
+    users.users = forEachUser config (
+      user: merge [
+        {
+          isNormalUser = true;
+          extraGroups = user.groups;
+          inherit (user) shell;
+          description = user.fullName;
+          initialPassword = "1234";
+        }
+        user.extraConfig
+      ]
+    );
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-      users = (mapAttrs (userName: userConfig: userConfig.home) cfg)
-      // (mapAttrs (userName: userConfig: {
-        home.stateVersion = config.system.stateVersion; 
-        home.packages = userConfig.packages;
-        inherit (userConfig) programs;
-      }) cfg);
+      users =  forEachUser config (
+        user: merge [
+          {
+            home.stateVersion = config.system.stateVersion; 
+            home.packages = user.packages;
+          }
+          user.extraHomeManagerConfig
+        ]
+      );
       extraSpecialArgs = { inherit pkgs; };
     };
   };

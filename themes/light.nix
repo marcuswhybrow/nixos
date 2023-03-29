@@ -2,34 +2,36 @@
   inherit (lib) mkIf;
   inherit (builtins) mapAttrs removeAttrs readFile;
   inherit (lib.attrsets) mapAttrsToList zipAttrs;
-  inherit (import ../utils { inherit lib; }) remapAttrs;
+  inherit (import ../utils { inherit lib; }) mapAttrsToListAndMerge merge;
 in {
   programs.rofi = {
     font = "Droid Sans Mono 14";
   };
 
-  programs.alacritty.settings.colors = remapAttrs {
-    primary = {
-      background = "0xffffff";
-      foreground = "0x2a2b33";
-    };
-    normalAndBright = {
-      black = "0x000000";
-      red = "0xde3d35";
-      green = "0x3e953a";
-      yellow = "0xd2b67b";
-      blue = "0x2f5af3";
-      magenta = "0xa00095";
-      cyan = "0x3e953a";
-    };
-    normal.white = "0xbbbbbb";
-    bright.white = "0xffffff";
-  } {
-    normalAndBright = name: value: {
-      normal.${name} = value;
-      bright.${name} = value;
-    };
-  };
+  programs.alacritty.settings.colors = merge [
+    {
+      primary = {
+        background = "0xffffff";
+        foreground = "0x2a2b33";
+      };
+      normal.white = "0xbbbbbb";
+      bright.white = "0xffffff";
+    }
+    (
+      mapAttrsToListAndMerge (name: value: {
+        normal.${name} = value;
+        bright.${name} = value;
+      }) {
+        black = "0x000000";
+        red = "0xde3d35";
+        green = "0x3e953a";
+        yellow = "0xd2b67b";
+        blue = "0x2f5af3";
+        magenta = "0xa00095";
+        cyan = "0x3e953a";
+      }
+    )
+  ];
 
   # TODO: theme git delta for light background;
   # programs.git.delta.config = {};

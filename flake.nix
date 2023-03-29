@@ -8,13 +8,10 @@
   outputs = { self, nixpkgs, home-manager, ... }: let
     inherit (import ./lib { inherit nixpkgs home-manager; }) mkSystems;
   in mkSystems {
-    marcus-laptop = rec {
+    marcus-laptop = pkgs: {
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
       stateVersion = "22.11";
+      allowUnfree = true;
       hardware.cpu = "intel";
       kernel.modules.beforeMountingRoot = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
       kernel.virtualisation.enable = true;
@@ -34,9 +31,6 @@
       packages = with pkgs; [
         vim
 
-        # Social
-        discord
-
         # Networking
         wget unixtools.ping
 
@@ -46,10 +40,12 @@
         # Utils
         coreboot-configurator
       ];
-      programs.fish.enable = true;
-      services = {
-        openssh.enable = true;
-        printing.enable = true;
+      extraConfig = {
+        programs.fish.enable = true;
+        services = {
+          openssh.enable = true;
+          printing.enable = true;
+        };
       };
       users.marcus = {
         theme = "light";
@@ -76,10 +72,11 @@
           htop
           brave
           vimb
+          discord
         ];
-        programs = {
-          fish.enable = true;
-          starship.enable = true;
+        extraHomeManagerConfig = {
+          programs.fish.enable = true;
+          programs.starship.enable = true;
         };
       };
     };

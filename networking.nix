@@ -3,7 +3,6 @@
   cfg = config.custom.networking;
 in {
   options.custom.networking = {
-    hostName = mkOption { type = types.str; };
     firewall = {
       enable = mkOption { type = types.bool; default = true; };
       open.tcp = mkOption { type = with types; listOf int; default = []; };
@@ -14,13 +13,14 @@ in {
   config = {
     networking = {
       useDHCP = mkDefault true;
-      hostName = cfg.hostName;
       networkmanager.enable = mkDefault true;
       firewall = {
         enable = mkDefault cfg.firewall.enable;
         allowedTCPPorts = cfg.firewall.open.tcp;
         allowedUDPPorts = cfg.firewall.open.udp;
       };
+
+      # Hostname is enforced in ./lib/default.nix
     };
   };
 }

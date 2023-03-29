@@ -1,9 +1,9 @@
 { lib }: let
-  inherit (builtins) toString replaceStrings mapAttrs removeAttrs foldl';
+  inherit (builtins) toString replaceStrings mapAttrs removeAttrs foldl' attrNames;
   inherit (lib.attrsets) mapAttrsToList recursiveUpdate;
   inherit (lib) mkOption types;
   escapeDoubleQuotes = anything: replaceStrings [ ''"'' ] [ ''\"'' ] (toString anything); 
-in {
+in rec {
   inherit escapeDoubleQuotes;
   bash = {
     test = { test, onPass, onFail }: ''$([ ${test} ] && echo "${escapeDoubleQuotes onPass}" || echo "${escapeDoubleQuotes onFail}")'';
@@ -21,6 +21,10 @@ in {
       type = types.int;
       inherit default;
     };
+    mkAttrs = default: mkOption {
+      type = types.attrs;
+      inherit default;
+    };
     mkTrue = mkOption {
       type = types.bool;
       default = true;
@@ -33,14 +37,17 @@ in {
       type = with types; attrsOf (submodule { inherit options; });
     };
   };
+
   forEachUser = cfg: f: mapAttrs (userName: userConfig: f (userConfig // {
     username = userName;
   })) cfg.custom.users;
-  remapAttrs = attrs: remaps: let
-    remapAttr = attrName: remapFn: let
-      base = removeAttrs attrs [ attrName ];
-      merge = foldl' recursiveUpdate {} (mapAttrsToList remapFn attrs.${attrName});
-    in recursiveUpdate base merge;
-    merges = mapAttrsToList (attrName: remapFn: (remapAttr attrName remapFn)) remaps;
-  in foldl' recursiveUpdate {} merges;
+
+  merge = list: foldl' recursiveUpdate {} list;
+
+  mapAttrsToListAndMerge = f: attrs: merge (mapAttrsToList f attrs);
+
+  remapAttrs = attrs: remaps: (let
+    base = removeAttrs attrs (attrNames remaps);
+    results = merge (mapAttrsToList (attrName: remapFn: remapFn attrs.${attrName}) remaps);
+  in recursiveUpdate base results);
 }
