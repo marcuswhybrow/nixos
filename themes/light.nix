@@ -33,8 +33,7 @@ in {
     )
   ];
 
-  # TODO: theme git delta for light background;
-  # programs.git.delta.config = {};
+  programs.git.delta.options.light = true;
 
   programs.neovim = {
     plugins = [
