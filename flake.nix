@@ -73,9 +73,15 @@
           brave
           vimb
           discord
+          obsidian
         ];
         extraHomeManagerConfig = {
-          programs.fish.enable = true;
+          programs.fish = {
+            enable = true;
+            shellAbbrs = {
+              c = "vim ~/.dotfiles";
+            };
+          };
           programs.starship.enable = true;
           xdg.configFile."fish/functions/logout.fish".text = ''
             function logout
