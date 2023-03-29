@@ -6,11 +6,14 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }: let
-    lib = import ./lib { inherit nixpkgs home-manager; };
-    inherit (lib) mkSystem;
-  in { nixosConfigurations = {
-
-    marcus-laptop = mkSystem "x86_64-linux" (pkgs: {
+    inherit (import ./lib { inherit nixpkgs home-manager; }) mkSystems;
+  in mkSystems {
+    marcus-laptop = rec {
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
       stateVersion = "22.11";
       hardware.cpu = "intel";
       kernel.modules.beforeMountingRoot = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
@@ -21,7 +24,6 @@
         swap = { device = "/dev/sda3"; isEncrypted = true; };
       };
       boot.mountPoint = "/boot/efi";
-      networking.hostName = "marcus-laptop";
       localisation = {
         timeZone = "Europe/London";
         locale = "en_GB.UTF-8";
@@ -80,7 +82,7 @@
           starship.enable = true;
         };
       };
-    });
+    };
 
-  }; };
+  };
 }

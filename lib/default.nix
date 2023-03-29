@@ -1,6 +1,10 @@
-{ nixpkgs, home-manager }: {
-  mkSystem = system: configFn: nixpkgs.lib.nixosSystem {
-    inherit system;
+{ nixpkgs, home-manager }: let
+  inherit (builtins) mapAttrs;
+  inherit (nixpkgs.lib) nixosSystem;
+
+  toNixosSystem = hostname: config: nixosSystem {
+    inherit (config) system;
+
     modules = [
       ../system.nix
       ../hardware.nix
@@ -23,16 +27,16 @@
       home-manager.nixosModules.home-manager
       {
         config.nixpkgs = {
-          hostPlatform = system;
-          config.allowUnfree = true;
+          hostPlatform = config.system;
+          config.allowUnfree = config.allowUnfree;
         };
       }
-      {
-        custom = (configFn (import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }));
-      }
+      { custom = removeAttrs config [ "pkgs" "system" ]; }
+      { custom.networking.hostName = hostname; }
     ];
+  };
+in {
+  mkSystems = systemConfigs: {
+    nixosConfigurations = mapAttrs toNixosSystem systemConfigs;
   };
 }
