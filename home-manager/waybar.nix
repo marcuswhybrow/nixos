@@ -125,7 +125,7 @@ in {
           "custom/logout" = {
             format = "⏻";
             tooltip = false;
-            on-click = "exec fish -c logout";
+            on-click = "exec ${pkgs.fish}/bin/fish -c logout";
           };
         };
 
