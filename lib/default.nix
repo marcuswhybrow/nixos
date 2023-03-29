@@ -27,7 +27,7 @@
       ../themes
       ../home-manager/git.nix
       ../home-manager/sway.nix
-      ../home-manager/waybar
+      ../home-manager/waybar.nix
       ../home-manager/neovim.nix
       ../home-manager/rofi.nix
       ../home-manager/alacritty.nix

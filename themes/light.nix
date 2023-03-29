@@ -3,13 +3,22 @@
   inherit (builtins) mapAttrs removeAttrs readFile;
   inherit (lib.attrsets) mapAttrsToList zipAttrs;
   inherit (import ../utils { inherit lib; }) mapAttrsToListAndMerge merge;
+
+  colors = {
+    background = "ffffff";
+    foreground = "000000";
+    accent.background = "000000";
+    accent.foreground = "ffffff";
+    warning = "ffff00";
+    critical = "ff0000";
+  };
 in {
 
   programs.alacritty.settings.colors = merge [
     {
       primary = {
-        background = "0xffffff";
-        foreground = "0x2a2b33";
+        background = "0x${colors.background}";
+        foreground = "0x${colors.foreground}";
       };
       normal.white = "0xbbbbbb";
       bright.white = "0xffffff";
@@ -51,7 +60,7 @@ in {
   };
 
   wayland.windowManager.sway.config = {
-    output."*".background = "#FFFFFF solid_color";
+    output."*".background = "#${colors.background} solid_color";
     colors = {
       focused = {
         border = "#ff0000";
@@ -78,19 +87,60 @@ in {
         indicator = "#00ff00";
 
         # The border of all other apps
-        childBorder = "#ffffff";
+        childBorder = "#${colors.background}";
       };
     };
   };
 
   programs.waybar.style = ''
-    #waybar { background: white; color: #222; }
-    .warning                   { color: orange; }
-    .critical                  { color: red; }
-    #workspaces button         { color: #222; }
-    #workspaces button:hover   { color: black; }
-    #workspaces button.focused { color: black; }
-    #workspaces button.urgent  { color: #C9545D; }
+    * {
+      border: none;
+      border-radius: 0;
+      min-height: 0;
+      margin: 0;
+      padding: 0; }
+    #waybar {
+      background: #${colors.background};
+      color: #${colors.foreground};
+      font-family: monospace;
+      font-size: 10px; }
+    .warning { color: #${colors.warning}; }
+    .critical { color: #${colors.critical}; }
+
+    #network, #cpu, #memory, #temperature,
+    #disk, #pulseaudio, #battery, #clock,
+    #custom-logout, #workspaces, #tray,
+    #mode { padding-top: 5px; }
+
+    #tray        { padding-right: 10px; }
+    #network     { padding-right: 10px; }
+    #cpu         { padding-right: 3px; }
+    #memory      { padding-right: 3px; }
+    #temperature { padding-right: 10px; }
+    #disk        { padding-right: 3px; }
+    #pulseaudio  { padding-right: 3px; }
+    #battery     { padding-right: 10px; }
+
+    #clock.year                                        { padding-left: 10px }
+    #clock.year, #clock.month, #clock.day, #clock.hour { padding-right: 3px }
+    #clock.minute                                      { padding-right: 10px }
+
+    #custom-logout { padding-right: 15px; }
+    #window        {}
+
+    #workspaces button {
+      border-top: 2px solid transparent;
+      color: #222222; }
+    #workspaces button:hover {
+      background: transparent;
+      border-top: 2px solid transparent;
+      color: #${colors.foreground};
+      font-weight: bold; }
+    #workspaces button.focused {
+      color: #${colors.foreground};
+      font-weight: bold; }
+    #workspaces button.urgent { color: #${colors.warning}; }
+    #mode { padding-left: 10px; }
   '';
 
   # Modified from https://github.com/anstellaire/photon-rofi-themes
@@ -100,11 +150,11 @@ in {
   };
   xdg.dataFile."rofi/themes/mw-light.rasi".text = ''
     * {
-        bg:           #ffffff;
-        bg-border:    #000000;
+        bg:           #${colors.background};
+        bg-border:    #${colors.foreground};
         fg:           #333333;
-        accent-bg:    #330000;
-        accent-fg:    #ffffff;
+        accent-bg:    #${colors.accent.background};
+        accent-fg:    #${colors.accent.foreground};
 
         spacing:          10;
 
@@ -167,4 +217,77 @@ in {
         text-color:       inherit;
     }
   '';
+
+  # wlogout is not in home-manager 22.11 but it is in master. I looked at the code:
+  # https://github.com/nix-community/home-manager/blob/765e4007b6f9f111469a25d1df6540e8e0ca73a6/modules/programs/wlogout.nix#L144
+  # I infered I could style it by creating layout and style.css
+
+  # TODO Only set visual parts here (label, text)
+  # and configure the rest in a module
+  xdg.configFile."wlogout/layout".text = ''
+    {
+      "label" : "lock",
+      "action" : "swaylock",
+      "text" : "🔒 Lock",
+      "keybind" : "l"
+    }
+    {
+      "label" : "shutdown",
+      "action" : "systemctl poweroff",
+      "text" : "🔌 Shutdown",
+      "keybind" : "s"
+    }
+    {
+      "label" : "hibernate",
+      "action" : "systemctl hibernate",
+      "text" : "🧸 Hibernate",
+      "keybind" : "h"
+    }
+    {
+      "label" : "suspend",
+      "action" : "systemctl suspend",
+      "text" : "🔌 Suspend",
+      "keybind" : "u"
+    }
+    {
+      "label" : "logout",
+      "action" : "loginctl terminate-user $USER",
+      "text" : "🪵 Logout",
+      "keybind" : "e"
+    }
+    {
+      "label" : "reboot",
+      "action" : "systemctl reboot",
+      "text" : "🔌 Reboot",
+      "keybind" : "r"
+    }
+  '';
+  xdg.configFile."wlogout/style.css".text = ''
+    * {
+      background-image: none;
+    }
+    window {
+      background-color: #${colors.background};
+    }
+    button {
+      color: #${colors.background};
+      background-color: #${colors.foreground};
+
+      border-style: solid;
+      border-width: 2px;
+      border-color: #eeeeee;
+
+      font-size: 30;
+    }
+
+    button:focus, button:active, button:hover {
+      background-color: #${colors.accent.background};
+      color: #${colors.accent.foreground};
+      outline-style: none;
+    }
+
+
+    #reboot { }
+  '';
 }
+

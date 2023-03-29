@@ -5,7 +5,7 @@
 
   # https://i3wm.org/docs/userguide.html#exec
   exec = command: ''exec "${escapeDoubleQuotes command}"'';
-in { 
+in {
   options.custom.users = options.mkForEachUser {
     sway = {
       enable = mkEnableOption "Enable sway window manager";
@@ -14,8 +14,12 @@ in {
     };
   };
 
+
   config = {
     home-manager.users = forEachUser config (user: {
+      home.packages = with pkgs; [
+        wlogout
+      ];
       wayland.windowManager.sway = {
         inherit (user.sway) enable;
         config = {

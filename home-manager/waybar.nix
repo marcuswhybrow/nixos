@@ -3,11 +3,13 @@
 let
   inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
   inherit (import ../../utils { inherit lib; }) options forEachUser;
+  inherit (builtins) readFile;
+
   # Assume the alacritty, htop, wlogout, and pamixer
   # TODO: Use options instead
   alacrittyCmd = "${pkgs.alacritty}/bin/alacritty --command";
   htop = "${pkgs.htop}/bin/htop";
-  wlogout = "${pkgs.wlogout}/bin/wlogout";
+  rofi = "${pkgs.rofi}/bin/rofi";
   pamixer = "${pkgs.pamixer}/bin/pamixer";
 in {
   options.custom.users = options.mkForEachUser {
@@ -18,7 +20,6 @@ in {
     programs = mkIf user.waybar.enable {
       waybar = {
         enable = true;
-        style = mkDefault ./style.css;
         systemd.enable = true;
         settings.mainBar = {
           layer = "bottom";
@@ -124,7 +125,9 @@ in {
           "custom/logout" = {
             format = "⏻";
             tooltip = false;
-            on-click = "exec ${wlogout}";
+            on-click = ''
+              exec ${rofi}
+            '';
           };
         };
 
