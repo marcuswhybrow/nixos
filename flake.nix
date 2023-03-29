@@ -50,6 +50,7 @@
         printing.enable = true;
       };
       users.marcus = {
+        theme = "light";
         fullName = "Marcus Whybrow";
         groups = [ "networkmanager" "wheel" "video" ];
         shell = pkgs.fish;
