@@ -24,7 +24,7 @@ in {
         inherit (user.sway) enable;
         config = {
           bars = mkIf user.sway.disableBars [];
-          menu = "${pkgs.rofi}/bin/rofi -show drun";
+          menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun Launch";
           inherit (user.sway) terminal;
           input."*" = {
             repeat_delay = "300";
