@@ -1,18 +1,18 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   inherit (builtins) mapAttrs;
-  inherit (import ../utils { inherit lib; }) forEachUser;
+  utils = import ../utils { inherit lib; };
 in {
-  options.custom.users = mkOption { type = with types; attrsOf (submodule {
-    options.git = {
+  options.custom.users = utils.options.mkForEachUser {
+    git = {
       enable = mkEnableOption "Enable git tool chain";
       userName = mkOption { type = types.str; };
       userEmail = mkOption { type = types.str; };
     };
-  }); };
+  };
 
   config = {
-    home-manager.users = forEachUser config (user: {
+    home-manager.users = utils.config.mkForEachUser config (user: {
       programs = mkIf user.git.enable {
         gh.enable = true;
         git = {

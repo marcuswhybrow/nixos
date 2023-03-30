@@ -2,7 +2,7 @@
 
 let
   inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
-  inherit (import ../utils { inherit lib; }) options forEachUser;
+  utils = import ../utils { inherit lib; };
   inherit (builtins) readFile;
 
   # Assume the alacritty, htop, wlogout, and pamixer, fish
@@ -12,11 +12,11 @@ let
   rofi = "${pkgs.rofi}/bin/rofi";
   pamixer = "${pkgs.pamixer}/bin/pamixer";
 in {
-  options.custom.users = options.mkForEachUser {
+  options.custom.users = utils.options.mkForEachUser {
     waybar.enable = mkEnableOption "Marcus' Waybar config";
   };
 
-  config.home-manager.users = forEachUser config (user: {
+  config.home-manager.users = utils.config.mkForEachUser config (user: {
     programs = mkIf user.waybar.enable {
       waybar = {
         enable = true;

@@ -1,16 +1,16 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   inherit (builtins) mapAttrs;
-  inherit (import ../utils { inherit lib; }) forEachUser;
+  utils = import ../utils { inherit lib; };
 in {
-  options.custom.users = mkOption { type = with types; attrsOf (submodule {
-    options.alacritty = {
+  options.custom.users = utils.options.mkForEachUser {
+    alacritty = {
       enable = mkEnableOption "Enable alacritty";
     };
-  }); };
+  };
 
   config = {
-    home-manager.users = forEachUser config (user: {
+    home-manager.users = utils.config.mkForEachUser config (user: {
       programs.alacritty = {
         enable = user.alacritty.enable;
         settings = {

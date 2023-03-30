@@ -20,8 +20,6 @@
       ../boot.nix
       ../networking.nix
       ../localisation.nix
-      ../audio.nix
-      ../display.nix
       ../gui.nix
       ../users.nix
       ../themes
@@ -31,6 +29,8 @@
       ../home-manager/neovim.nix
       ../home-manager/rofi.nix
       ../home-manager/alacritty.nix
+      ../home-manager/audio.nix
+      ../home-manager/display.nix
       home-manager.nixosModules.home-manager
       {
         config.nixpkgs = {

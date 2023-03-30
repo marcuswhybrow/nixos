@@ -2,20 +2,23 @@
   inherit (builtins) toString replaceStrings mapAttrs removeAttrs foldl' attrNames;
   inherit (lib.attrsets) mapAttrsToList recursiveUpdate;
   inherit (lib) mkOption types;
-  escapeDoubleQuotes = anything: replaceStrings [ ''"'' ] [ ''\"'' ] (toString anything); 
 in rec {
-  inherit escapeDoubleQuotes;
+
   bash = {
-    test = { test, onPass, onFail }: ''$([ ${test} ] && echo "${escapeDoubleQuotes onPass}" || echo "${escapeDoubleQuotes onFail}")'';
+    test = { test, onPass, onFail }: ''$([ ${test} ] && echo ${toString onPass} || echo "${toString onFail}")'';
     switch = expression: cases: default: let
-      casesStr = toString (mapAttrsToList (name: value: ''"${escapeDoubleQuotes name}") echo "${escapeDoubleQuotes value}";;'') cases);
-      defaultCaseStr = ''*) echo "${escapeDoubleQuotes default}";;'';
+      casesStr = toString (mapAttrsToList (name: value: ''${toString name}) echo ${toString value};;'') cases);
+      defaultCaseStr = ''*) echo ${toString default};;'';
     in ''$(case $(${expression}) in ${casesStr} ${defaultCaseStr} esac)'';
   };
+
   options = {
     mkStr = default: mkOption {
       type = types.str;
       inherit default;
+    };
+    mkNullStr = mkOption {
+      type = with types; nullOr str;
     };
     mkInt = default: mkOption {
       type = types.int;
@@ -38,9 +41,13 @@ in rec {
     };
   };
 
-  forEachUser = cfg: f: mapAttrs (userName: userConfig: f (userConfig // {
-    username = userName;
-  })) cfg.custom.users;
+  config = {
+    mkForEachUser = cfg: f: mapAttrs (userName: userConfig: f (userConfig // {
+      username = userName;
+    })) cfg.custom.users;
+  };
+
+  escapeDoubleQuotes = anything: replaceStrings [ ''"'' ] [ ''\"'' ] (toString anything); 
 
   merge = list: foldl' recursiveUpdate {} list;
 
@@ -50,4 +57,9 @@ in rec {
     base = removeAttrs attrs (attrNames remaps);
     results = merge (mapAttrsToList (attrName: remapFn: remapFn attrs.${attrName}) remaps);
   in recursiveUpdate base results);
+
+  # https://i3wm.org/docs/userguide.html#exec
+  exec = command: ''exec "${escapeDoubleQuotes command}"'';
+
+  smartStep = command: step: bash.switch command { "0" = 1; "1" = step - 1; } step;
 }

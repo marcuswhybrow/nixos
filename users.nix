@@ -1,20 +1,20 @@
 { config , lib, pkgs, ... }: let
   inherit (lib) mkOption types;
   inherit (builtins) mapAttrs foldl';
-  inherit (import ./utils { inherit lib; }) options forEachUser merge;
+  utils = import ./utils { inherit lib; };
 in {
-  options.custom.users = options.mkForEachUser {
+  options.custom.users = utils.options.mkForEachUser {
     fullName = mkOption { type = types.str; };
     groups = mkOption { type = with types; listOf str; };
     shell = mkOption { type = types.package; };
     packages = mkOption { type = with types; listOf package; };
-    extraConfig = options.mkAttrs {};
-    extraHomeManagerConfig = options.mkAttrs {}; 
+    extraConfig = utils.options.mkAttrs {};
+    extraHomeManagerConfig = utils.options.mkAttrs {}; 
   };
   config = {
     security.sudo.wheelNeedsPassword = false;
-    users.users = forEachUser config (
-      user: merge [
+    users.users = utils.config.mkForEachUser config (
+      user: utils.merge [
         {
           isNormalUser = true;
           extraGroups = user.groups;
@@ -28,8 +28,8 @@ in {
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-      users =  forEachUser config (
-        user: merge [
+      users = utils.config.mkForEachUser config (
+        user: utils.merge [
           {
             home.stateVersion = config.system.stateVersion; 
             home.packages = user.packages;

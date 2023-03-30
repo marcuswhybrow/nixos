@@ -1,15 +1,15 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) mkIf mkEnableOption;
-  inherit (import ../utils { inherit lib; }) options forEachUser;
+  utils = import ../utils { inherit lib; };
 in {
-  options.custom.users = options.mkForEachUser {
+  options.custom.users = utils.options.mkForEachUser {
     neovim = {
       enable = mkEnableOption "Enable Neovim";
     };
   };
 
   config = {
-    home-manager.users = forEachUser config (user: {
+    home-manager.users = utils.config.mkForEachUser config (user: {
       home.packages = with pkgs; [
         # Wayland system clipboard support for copy ("+y) and paste ("+p)
         wl-clipboard

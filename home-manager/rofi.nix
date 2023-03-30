@@ -1,15 +1,15 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) mkEnableOption mkIf;
-  inherit (import ../utils { inherit lib; }) forEachUser options;
+  utils = import ../utils { inherit lib; };
 in {
-  options.custom.users = options.mkForEachUser {
+  options.custom.users = utils.options.mkForEachUser {
     rofi = {
       enable = mkEnableOption "Enable Rofi launcher";
     };
   };
 
   config = {
-    home-manager.users = forEachUser config (user: {
+    home-manager.users = utils.config.mkForEachUser config (user: {
       programs.rofi = mkIf user.rofi.enable {
         enable = true;
       };

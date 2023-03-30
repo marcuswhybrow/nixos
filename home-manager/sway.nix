@@ -1,12 +1,9 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) mkEnableOption mkOption types mkIf;
   inherit (builtins) mapAttrs replaceStrings;
-  inherit (import ../utils { inherit lib; }) escapeDoubleQuotes options forEachUser;
-
-  # https://i3wm.org/docs/userguide.html#exec
-  exec = command: ''exec "${escapeDoubleQuotes command}"'';
+  utils = import ../utils { inherit lib; };
 in {
-  options.custom.users = options.mkForEachUser {
+  options.custom.users = utils.options.mkForEachUser {
     sway = {
       enable = mkEnableOption "Enable sway window manager";
       terminal = mkOption { type = types.str; };
@@ -16,7 +13,7 @@ in {
 
 
   config = {
-    home-manager.users = forEachUser config (user: {
+    home-manager.users = utils.config.mkForEachUser config (user: {
       home.packages = with pkgs; [
         wlogout
       ];
@@ -39,19 +36,8 @@ in {
             inner = 5;
           };
 
-          # Home Manager does not support swhkd (Simple Wayland HotKey Daemon)
-          # So using Sway keybindings instead
-          # Honours command options defined in ../audio.nix
           keybindings = lib.mkOptionDefault (with config.custom; {
-            "Mod1+Escape" = exec "fish -c logout";
-            XF86AudioMute = exec audio.mute;
-            XF86AudioLowerVolume = exec audio.lowerVolume;
-            XF86AudioRaiseVolume = exec audio.raiseVolume;
-            XF86AudioPrev = exec audio.prev;
-            XF86AudioPlay = exec audio.play;
-            XF86AudioNext = exec audio.next;
-            XF86MonBrightnessUp = exec display.brightness.up;
-            XF86MonBrightnessDown = exec display.brightness.down;
+            "Mod1+Escape" = utils.exec "fish -c logout";
           });
         };
       };

@@ -1,4 +1,4 @@
-pkgs: {
+pkgs: rec {
   system = "x86_64-linux";
   stateVersion = "22.11";
   allowUnfree = true;
@@ -55,9 +55,7 @@ pkgs: {
     waybar.enable = true;
     neovim.enable = true;
     rofi.enable = true;
-    alacritty = {
-      enable = true;
-    };
+    alacritty.enable = true;
     packages = with pkgs; [
       htop
       brave
@@ -65,7 +63,11 @@ pkgs: {
       discord
       obsidian
     ];
+    audio.step = 5;
     extraHomeManagerConfig = {
+      services.dunst = {
+        enable = true;
+      };
       programs.fish = {
         enable = true;
         shellAbbrs = {
@@ -74,23 +76,51 @@ pkgs: {
         };
       };
       programs.starship.enable = true;
-      xdg.configFile."fish/functions/logout.fish".text = ''
-        function logout
-          echo "\
-          🔒 Lock (swaylock)
-          🪵 Logout (loginctl terminate-user $USER)
-          🌙 Suspend (systemctl suspend)
-          🧸 Hibernate (systemctl hibernate)
-          🐤 Restart (systemctl reboot)
-          🪓 Shutdown (systemctl poweroff)
-          Do Nothing" | \
-          rofi \
-            -dmenu \
-            -p Logout | \
-          rg "\((.*)\)" -or '$1' | \
-          fish
-        end
-      '';
+      xdg.configFile = {
+        "fish/functions/volume.fish".text = ''
+          function volume
+            pamixer $argv > /dev/null
+            
+            set msgTag volume
+            set vol (pamixer --get-volume)
+            set mute (pamixer --get-mute)
+
+            if $mute == "true"
+              dunstify \
+                -a changeVolume \
+                -u low \
+                -i audio-volume-muted \
+                -h string:x-dunst-stack-tag:$msgTag \
+                "Volume muted"
+            else
+              dunstify \
+                -a changeVolume \
+                -u low \
+                -i audio-volume-high \
+                -h string:x-dunst-stack-tag:$msgTag \
+                -h int:value:$vol \
+                "Volume: $vol%"
+            end
+          end
+        '';
+        "fish/functions/logout.fish".text = ''
+          function logout
+            echo "\
+            🔒 Lock (swaylock)
+            🪵 Logout (loginctl terminate-user $USER)
+            🌙 Suspend (systemctl suspend)
+            🧸 Hibernate (systemctl hibernate)
+            🐤 Restart (systemctl reboot)
+            🪓 Shutdown (systemctl poweroff)
+            Do Nothing" | \
+            rofi \
+              -dmenu \
+              -p Logout | \
+            rg "\((.*)\)" -or '$1' | \
+            fish
+          end
+        '';
+      };
     };
   };
 }
