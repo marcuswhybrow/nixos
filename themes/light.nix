@@ -9,7 +9,7 @@
     foreground = "000000";
     accent.background = "000000";
     accent.foreground = "ffffff";
-    warning = "ffff00";
+    warning = "ff8800";
     critical = "ff0000";
   };
 in {
@@ -103,7 +103,7 @@ in {
       background: #${colors.background};
       color: #${colors.foreground};
       font-family: monospace;
-      font-size: 10px; }
+      font-size: 12px; }
     .warning { color: #${colors.warning}; }
     .critical { color: #${colors.critical}; }
 
@@ -118,12 +118,8 @@ in {
     #memory      { padding-right: 3px; }
     #temperature { padding-right: 10px; }
     #disk        { padding-right: 3px; }
-    #pulseaudio  { padding-right: 3px; }
     #battery     { padding-right: 10px; }
-
-    #clock.year                                        { padding-left: 10px }
-    #clock.year, #clock.month, #clock.day, #clock.hour { padding-right: 3px }
-    #clock.minute                                      { padding-right: 10px }
+    #clock       { padding: 0 10px; }
 
     #custom-logout { padding-right: 15px; }
     #window        {}

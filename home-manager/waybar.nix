@@ -11,12 +11,37 @@ let
   htop = "${pkgs.htop}/bin/htop";
   rofi = "${pkgs.rofi}/bin/rofi";
   pamixer = "${pkgs.pamixer}/bin/pamixer";
+  fish = "${pkgs.fish}/bin/fish";
 in {
   options.custom.users = utils.options.mkForEachUser {
     waybar.enable = mkEnableOption "Marcus' Waybar config";
   };
 
   config.home-manager.users = utils.config.mkForEachUser config (user: {
+    home.packages = [
+      pkgs.fish
+      pkgs.ripgrep
+      pkgs.rofi
+    ];
+
+    xdg.configFile."fish/functions/@logout.fish".text = ''
+      function @logout
+        echo "\
+        🔒 Lock (swaylock)
+        🪵 Logout (loginctl terminate-user $USER)
+        🌙 Suspend (systemctl suspend)
+        🧸 Hibernate (systemctl hibernate)
+        🐤 Restart (systemctl reboot)
+        🪓 Shutdown (systemctl poweroff)
+        Do Nothing" | \
+        rofi \
+          -dmenu \
+          -p Logout | \
+        rg "\((.*)\)" -or '$1' | \
+        fish
+      end
+    '';
+
     programs = mkIf user.waybar.enable {
       waybar = {
         enable = true;
@@ -27,11 +52,7 @@ in {
           height = 30;
 
           modules-left = [
-            "clock#year"
-            "clock#month"
-            "clock#day"
-            "clock#hour"
-            "clock#minute"
+            "clock"
           ];
           modules-center = [
             "sway/workspaces"
@@ -44,7 +65,6 @@ in {
             "memory"
             "temperature"
             "disk"
-            "pulseaudio"
             "battery"
             "custom/logout"
           ];
@@ -97,15 +117,6 @@ in {
             on-click = "exec ${alacrittyCmd} ${htop} --sort-key=IO_RATE";
           };
 
-          pulseaudio = {
-            format = "{volume:03}";
-            format-bluetooth = "{volume:03}";
-            format-muted = "<span strikethrough=\"true\" strikethrough_color=\"black\">{volume:03}</span>";
-            on-click = "exec ${pamixer} --toggle-mute";
-            on-click-right = "exec ${pamixer} --set-volume 100";
-            scroll-step = 5;
-          };
-
           battery = {
             format = "{capacity:03}";
             tooltip-format = "Battery {timeTo}";
@@ -116,16 +127,15 @@ in {
             };
           };
 
-          "clock#year"   = { tooltip = false; format = "{:%Y}"; };
-          "clock#month"  = { tooltip = false; format = "{:%m}"; };
-          "clock#day"    = { tooltip = false; format = "{:%d}"; };
-          "clock#hour"   = { tooltip = false; format = "{:%H}"; };
-          "clock#minute" = { tooltip = false; format = "{:%M}"; };
+          "clock" = {
+            tooltip = false;
+            format = "{:%Y-%m-%d %H:%M}";
+          };
 
           "custom/logout" = {
             format = "⏻";
             tooltip = false;
-            on-click = "exec ${pkgs.fish}/bin/fish -c logout";
+            on-click = ''exec ${fish} -c "@logout"'';
           };
         };
 

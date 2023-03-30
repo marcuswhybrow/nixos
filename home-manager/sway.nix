@@ -37,7 +37,7 @@ in {
           };
 
           keybindings = lib.mkOptionDefault (with config.custom; {
-            "Mod1+Escape" = utils.exec "fish -c logout";
+            "Mod1+Escape" = utils.exec ''fish -c "@logout"'';
           });
         };
       };
