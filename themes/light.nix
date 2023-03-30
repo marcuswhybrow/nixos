@@ -140,6 +140,7 @@ in {
   '';
 
   # Modified from https://github.com/anstellaire/photon-rofi-themes
+  # See https://man.archlinux.org/man/rofi-theme.5
   programs.rofi = {
     font = "Droid Sans Mono 10";
     theme = "mw-light";
@@ -151,6 +152,8 @@ in {
         fg:           #333333;
         accent-bg:    #${colors.accent.background};
         accent-fg:    #${colors.accent.foreground};
+
+        secondary-fg: #888888;
 
         spacing:          10;
 
@@ -212,6 +215,12 @@ in {
         background-color: inherit;
         text-color:       inherit;
     }
+
+    message {
+        padding: 0 5px;
+        text-color: @secondary-fg;
+    }
+
   '';
 
   # wlogout is not in home-manager 22.11 but it is in master. I looked at the code:
