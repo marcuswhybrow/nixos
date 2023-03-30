@@ -114,7 +114,7 @@ in {
             format-wifi = "{essid} {signalStrength}% {ipaddr}";
             format-ethernet = "{ipaddr}";
             format-disconnected = "0.0.0.0";
-            on-click = ''exec fish -c "@networking"'';
+            on-click = ''exec ${fish} -c "@networking"'';
           };
 
           cpu = {
