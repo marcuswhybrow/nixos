@@ -26,14 +26,14 @@ in {
 
     xdg.configFile."fish/functions/@logout.fish".text = ''
       function @logout
-        echo "\
-        🔒 Lock (swaylock)
-        🪵 Logout (loginctl terminate-user $USER)
-        🌙 Suspend (systemctl suspend)
-        🧸 Hibernate (systemctl hibernate)
-        🐤 Restart (systemctl reboot)
-        🪓 Shutdown (systemctl poweroff)
-        Do Nothing" | \
+        string join \n \
+          "🔒 Lock (swaylock)" \
+          "🪵 Logout (loginctl terminate-user $USER)" \
+          "🌙 Suspend (systemctl suspend)" \
+          "🧸 Hibernate (systemctl hibernate)" \
+          "🐤 Restart (systemctl reboot)" \
+          "🪓 Shutdown (systemctl poweroff)" \
+          "Do Nothing" | \
         rofi \
           -dmenu \
           -p Logout | \
