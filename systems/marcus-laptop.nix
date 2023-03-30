@@ -69,7 +69,8 @@ pkgs: {
       programs.fish = {
         enable = true;
         shellAbbrs = {
-          c = "vim ~/.dotfiles";
+          c = ''vim ~/.dotfiles/systems/(hostname).nix'';
+          d = ''cd ~/.dotfiles'';
         };
       };
       programs.starship.enable = true;
