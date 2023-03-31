@@ -27,8 +27,8 @@ in {
     xdg.configFile."fish/functions/@logout.fish".text = ''
       function @logout
         string join \n \
-          "🔒 Lock (swaylock)" \
           "🪵 Logout (loginctl terminate-user $USER)" \
+          "🔒 Lock (swaylock)" \
           "🌙 Suspend (systemctl suspend)" \
           "🧸 Hibernate (systemctl hibernate)" \
           "🐤 Restart (systemctl reboot)" \
