@@ -16,6 +16,9 @@
       pkgs = import outputs.nixpkgs {
         inherit (nullConfig) system;
         config.allowUnfree = nullConfig.allowUnfree;
+        overlays = [
+          nullConfig.overlay
+        ];
       };
       config = configFn pkgs;
     in nixosSystem {
@@ -48,7 +51,7 @@
           };
         }
         { networking.hostName = hostname; }
-        { custom = removeAttrs config [ "pkgs" "system" "allowUnfree" "extraConfig" ]; }
+        { custom = removeAttrs config [ "pkgs" "system" "allowUnfree" "extraConfig" "overlay" ]; }
         config.extraConfig
       ];
     };
