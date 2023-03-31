@@ -69,20 +69,40 @@ outputs: pkgs: {
 
         mod=alt
 
+        cutter config gap 5
+        cutter config focus_color 0 0 0
+
         cutter config mouse_mod $mod
 
         cutter bind $mod+shift+e quit
         cutter bind $mod+return exec alacritty
+
+
         cutter bind $mod+left focus left
         cutter bind $mod+right focus right
+        
+        cutter bind $mod+h focus left
+        cutter bind $mod+l focus right
+
+
         cutter bind $mod+shift+left move -10 0
         cutter bind $mod+shift+right move 10 0
         cutter bind $mod+shift+up move 0 -10
         cutter bind $mod+shift+down move 0 10
+
+        cutter bind $mod+shift+h move -10 0
+        cutter bind $mod+shift+j move 0 10
+        cutter bind $mod+shift+k move 0 -10
+        cutter bind $mod+shift+l move 10 0
+
+        cutter bind $mod+shift+p pop_from_column
+
+
         cutter bind $mod+shift+q close
+
         for i in $(seq 1 6); do
                 cutter bind $mod+$i workspace switch $(( i - 1 ))
-                cutter bind $mod+ctrl+$i workspace move $(( i - 1 ))
+                cutter bind $mod+shift+$i workspace move $(( i - 1 ))
         done
 
         cutter bind $mod+shift+space toggle_floating
