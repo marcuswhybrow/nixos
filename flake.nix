@@ -58,6 +58,7 @@
   in {
     nixosConfigurations = mapAttrs toNixosSystem {
       marcus-laptop = import ./marcus-laptop.nix outputs;
+      anne-laptop = import ./anne-laptop.nix outputs;
     };
   };
 }
