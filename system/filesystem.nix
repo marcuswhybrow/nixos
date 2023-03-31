@@ -28,12 +28,10 @@ in {
     # Sort out encryption
     boot.initrd = {
       secrets = mkIf doSwapEncryption { "${keyFile}" = null; };
-      luks.devices = {
-        root.device = mkIf cfg.root.isEncrypted cfg.root.device;
-        swap = mkIf doSwapEncryption {
-          device = cfg.swap.device;
-          keyFile = keyFile;
-        };
+      luks.devices.root.device = mkIf cfg.root.isEncrypted cfg.root.device;
+      luks.devices.swap = mkIf doSwapEncryption {
+        device = cfg.swap.device;
+        keyFile = keyFile;
       };
 
       # https://nixos.wiki/wiki/Full_Disk_Encryption#Perf_test
