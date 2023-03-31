@@ -1,10 +1,10 @@
-{ nixpkgs, home-manager }: let
+outputs: let
   inherit (builtins) mapAttrs;
-  inherit (nixpkgs.lib) nixosSystem;
+  inherit (outputs.nixpkgs.lib) nixosSystem;
 
   toNixosSystem = hostname: configFn: let
     nullConfig = configFn null;
-    pkgs = import nixpkgs {
+    pkgs = import outputs.nixpkgs {
       inherit (nullConfig) system;
       config.allowUnfree = nullConfig.allowUnfree;
     };
@@ -31,7 +31,7 @@
       ../home-manager/alacritty.nix
       ../home-manager/audio.nix
       ../home-manager/display.nix
-      home-manager.nixosModules.home-manager
+      outputs.home-manager.nixosModules.home-manager
       {
         config.nixpkgs = {
           hostPlatform = config.system;
