@@ -16,9 +16,9 @@
       pkgs = import outputs.nixpkgs {
         inherit (nullConfig) system;
         config.allowUnfree = nullConfig.allowUnfree;
-        overlays = [
+        overlays = if (builtins.hasAttr "overlay" nullConfig) then [
           nullConfig.overlay
-        ];
+        ] else [];
       };
       config = configFn pkgs;
     in nixosSystem {
