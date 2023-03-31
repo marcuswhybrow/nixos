@@ -31,8 +31,15 @@ outputs: pkgs: rec {
     coreboot-configurator
 
     dwl
+
+    cage
   ];
   extraConfig = {
+    services.cage = {
+      enable = true;
+      program = "${pkgs.brave}/bin/brave";
+      user = "marcus";
+    };
     programs.fish.enable = true;
     services = {
       openssh.enable = true;
