@@ -112,7 +112,7 @@ in {
           network = {
             interval = 5;
             format-wifi = "{essid} {signalStrength}% {ipaddr}";
-            format-ethernet = "{ipaddr}";
+            format-ethernet = "Wired {ipaddr}";
             format-disconnected = "0.0.0.0";
             on-click = ''exec ${fish} -c "@networking"'';
           };
