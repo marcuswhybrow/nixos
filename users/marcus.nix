@@ -47,6 +47,7 @@ outputs: pkgs: {
       shellAbbrs = {
         c = ''vim ~/.dotfiles/systems/(hostname).nix'';
         d = ''cd ~/.dotfiles'';
+        t = ''vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d).md'';
       };
     };
     programs.starship.enable = true;
