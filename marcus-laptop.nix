@@ -29,17 +29,9 @@ outputs: pkgs: rec {
 
     # Utils
     coreboot-configurator
-
-    dwl
-
-    cage
   ];
   extraConfig = {
-    services.cage = {
-      enable = true;
-      program = "${pkgs.brave}/bin/brave";
-      user = "marcus";
-    };
+    services.getty.autologinUser = "marcus";
     programs.fish.enable = true;
     services = {
       openssh.enable = true;
@@ -48,6 +40,7 @@ outputs: pkgs: rec {
   };
   users = {
     marcus = import ./users/marcus.nix outputs pkgs;
+    anne = import ./users/anne.nix outputs pkgs;
   };
 
   # https://rycee.gitlab.io/home-manager/index.html#_how_do_i_override_the_package_used_by_a_module

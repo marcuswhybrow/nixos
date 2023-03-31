@@ -37,7 +37,6 @@ in {
           user.extraHomeManagerConfig
         ]
       );
-      extraSpecialArgs = { inherit pkgs; };
     };
   };
 }
