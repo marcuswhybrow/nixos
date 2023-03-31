@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) mkOption types;
-  inherit (import ./utils { inherit lib; }) merge;
   cfg = config.custom;
 in {
   options.custom = {

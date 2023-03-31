@@ -1,7 +1,7 @@
 { config , lib, pkgs, ... }: let
   inherit (lib) mkOption types;
   inherit (builtins) mapAttrs foldl';
-  utils = import ./utils { inherit lib; };
+  utils = import ../utils { inherit lib; };
 in {
   options.custom.users = utils.options.mkForEachUser {
     fullName = mkOption { type = types.str; };
