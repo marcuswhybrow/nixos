@@ -25,6 +25,9 @@ outputs: pkgs: rec {
     wget unixtools.ping
   ];
   extraConfig = {
+    # Hide boot messages behind NixOS logo
+    boot.plymouth.enable = true;
+
     services.getty.autologinUser = "anne";
     programs.fish.enable = true;
     services = {
