@@ -3,14 +3,26 @@ outputs: pkgs: rec {
   stateVersion = "22.11";
   allowUnfree = true;
   hardware.cpu = "intel";
-  kernel.modules.beforeMountingRoot = [ "ahci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
+  kernel.modules.beforeMountingRoot = [
+    "uhci_hcd"
+    "ehci_pci"
+    "ata_piix"
+    "ahci"
+    "firewire_ohci"
+    "usb_storage"
+    "sd_mod"
+    "sr_mod"
+    "sdhci_pci"
+  ];
   kernel.virtualisation.enable = true;
   filesystem = {
-    boot = { device = "/dev/sda1"; fsType = "vfat"; mountPoint = "/boot/efi"; };
-    root = { device = "/dev/sda2"; fsType = "ext4"; };
-    swap = { device = "/dev/sda3"; };
+    root = { device = "/dev/sda1"; fsType = "ext4"; };
+    swap = { device = "/dev/sda2"; };
   };
-  boot.mountPoint = "/boot/efi";
+  boot.grub = {
+    enable = true;
+    device = "/dev/sda";
+  };
   localisation = {
     timeZone = "Europe/London";
     locale = "en_GB.UTF-8";

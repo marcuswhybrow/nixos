@@ -10,7 +10,7 @@ in {
     boot = {
       device = mkOption { type = types.str; };
       fsType = mkOption { type = types.str; };
-      mountPoint = mkOption { type = types.str; };
+      mountPoint = mkOption { type = with types; nullOr str; default = null; };
     };
     root = {
       device = mkOption { type = types.str; };
@@ -44,15 +44,17 @@ in {
       ];
     };
 
-    # Declare boot, root, and swap partitions
-    fileSystems.${cfg.boot.mountPoint} = {
-      device = cfg.boot.device;
-      fsType = cfg.boot.fsType;
-    };
-    fileSystems."/" = {
-      device = if cfg.root.isEncrypted then "/dev/mapper/root" else cfg.root.device;
-      fsType = cfg.root.fsType;
-    };
+    fileSystems = {
+      "/" = {
+        device = if cfg.root.isEncrypted then "/dev/mapper/root" else cfg.root.device;
+        fsType = cfg.root.fsType;
+      };
+    } // (if (cfg.boot.mountPoint != null) then {
+      "${cfg.boot.mountPoint}" = {
+        inherit (cfg.boot) device fsType;
+      };
+    } else {});
+
     swapDevices = mkIf doSwap [
       { device = if doSwapEncryption then "/dev/mapper/swap" else cfg.swap.device; }
     ];

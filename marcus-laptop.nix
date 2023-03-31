@@ -10,7 +10,10 @@ outputs: pkgs: rec {
     root = { device = "/dev/sda2"; fsType = "ext4"; isEncrypted = true; };
     swap = { device = "/dev/sda3"; isEncrypted = true; };
   };
-  boot.mountPoint = "/boot/efi";
+  boot.efi = {
+    enable = true;
+    mountPoint = "/boot/efi";
+  };
   localisation = {
     timeZone = "Europe/London";
     locale = "en_GB.UTF-8";
