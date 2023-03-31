@@ -57,7 +57,9 @@ pkgs: rec {
     rofi.enable = true;
     alacritty.enable = true;
     packages = with pkgs; [
-      htop
+      # htop requires lsof when you press `l` on a process
+      htop lsof
+
       brave
       vimb
       discord
