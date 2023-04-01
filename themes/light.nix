@@ -1,8 +1,5 @@
-{ user, config, lib, pkgs, ... }: let
+{ user, config, lib, pkgs, utils, ... }: let
   inherit (lib) mkIf;
-  inherit (builtins) mapAttrs removeAttrs readFile;
-  inherit (lib.attrsets) mapAttrsToList zipAttrs;
-  inherit (import ../utils { inherit lib; }) mapAttrsToListAndMerge merge;
 
   colors = {
     background = "ffffff";
@@ -14,7 +11,7 @@
   };
 in {
 
-  programs.alacritty.settings.colors = merge [
+  programs.alacritty.settings.colors = utils.attrs.merge [
     {
       primary = {
         background = "0x${colors.background}";
@@ -24,7 +21,7 @@ in {
       bright.white = "0xffffff";
     }
     (
-      mapAttrsToListAndMerge (name: value: {
+      utils.attrs.mapAttrsToListAndMerge (name: value: {
         normal.${name} = value;
         bright.${name} = value;
       }) {

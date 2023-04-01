@@ -1,15 +1,23 @@
-{ lib }: let
-  inherit (builtins) toString replaceStrings mapAttrs removeAttrs foldl' attrNames;
+lib: let
+  inherit (builtins) toString replaceStrings mapAttrs removeAttrs foldl' attrNames listToAttrs map;
   inherit (lib.attrsets) mapAttrsToList recursiveUpdate;
   inherit (lib) mkOption types;
-in rec {
+in {
 
-  bash = {
+  bash = rec {
     test = { test, onPass, onFail }: ''$([ ${test} ] && echo ${toString onPass} || echo "${toString onFail}")'';
+
     switch = expression: cases: default: let
       casesStr = toString (mapAttrsToList (name: value: ''${toString name}) echo ${toString value};;'') cases);
       defaultCaseStr = ''*) echo ${toString default};;'';
     in ''$(case $(${expression}) in ${casesStr} ${defaultCaseStr} esac)'';
+
+    smartStep = command: step: switch command { "0" = 1; "1" = step - 1; } step;
+
+    escapeDoubleQuotes = anything: replaceStrings [ ''"'' ] [ ''\"'' ] (toString anything);
+
+    # https://i3wm.org/docs/userguide.html#exec
+    exec = command: ''exec "${escapeDoubleQuotes command}"'';
   };
 
   options = {
@@ -42,24 +50,32 @@ in rec {
   };
 
   config = {
-    mkForEachUser = cfg: f: mapAttrs (userName: userConfig: f (userConfig // {
-      username = userName;
-    })) cfg.custom.users;
+    mkForEachUser = cfg: f: mapAttrs (username: userCfg: f (userCfg // { inherit username; })) cfg.custom.users;
+
+    localeForAll = locale: listToAttrs (map (name: {
+      name = "LC_${name}";
+      value = locale;
+    }) [
+      "ADDRESS"
+      "IDENTIFICATION"
+      "MEASUREMENT"
+      "MONETARY"
+      "NAME"
+      "NUMERIC"
+      "PAPER"
+      "TELEPHONE"
+      "TIME"
+    ]);
   };
 
-  escapeDoubleQuotes = anything: replaceStrings [ ''"'' ] [ ''\"'' ] (toString anything); 
+  attrs = rec {
+    merge = list: foldl' recursiveUpdate {} list;
 
-  merge = list: foldl' recursiveUpdate {} list;
+    mapAttrsToListAndMerge = f: attrs: merge (mapAttrsToList f attrs);
 
-  mapAttrsToListAndMerge = f: attrs: merge (mapAttrsToList f attrs);
-
-  remapAttrs = attrs: remaps: (let
-    base = removeAttrs attrs (attrNames remaps);
-    results = merge (mapAttrsToList (attrName: remapFn: remapFn attrs.${attrName}) remaps);
-  in recursiveUpdate base results);
-
-  # https://i3wm.org/docs/userguide.html#exec
-  exec = command: ''exec "${escapeDoubleQuotes command}"'';
-
-  smartStep = command: step: bash.switch command { "0" = 1; "1" = step - 1; } step;
+    remapAttrs = attrs: remaps: (let
+      base = removeAttrs attrs (attrNames remaps);
+      results = merge (mapAttrsToList (attrName: remapFn: remapFn attrs.${attrName}) remaps);
+    in recursiveUpdate base results);
+  };
 }
