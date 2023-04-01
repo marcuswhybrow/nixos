@@ -60,6 +60,6 @@
     };
 
     boot.plymouth.enable = true;
-    services.getty.autologinUser = "anne";
+    #services.getty.autologinUser = "anne";
   }
 ]
