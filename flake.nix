@@ -46,7 +46,7 @@
       anne-laptop = [
         ./users/anne.nix
         ./users/marcus.nix
-        ./sytems/options/intel-video-acceleration.nix
+        ./systems/options/intel-video-acceleration.nix
         ./systems/anne-laptop.nix
       ];
     };

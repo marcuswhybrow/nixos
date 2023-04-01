@@ -1,21 +1,16 @@
 [
   ({ config, pkgs, helpers, ... }: {
-    environment.systempackages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       vim
 
       # networking
       wget unixtools.ping
     ];
 
-    custom = {
-      hardware.videoacceleration.intel.enable = true;
-      users = [ anne marcus ];
-    };
-
-    time.timezone = "europe/london";
-    i18n.defaultlocale = "en_gb.utf-8";
-    i18n.extralocalesettings = helpers.config.localeForAll config.i18n.defaultlocale;
-    console.keymap = "uk";
+    time.timeZone = "europe/london";
+    i18n.defaultLocale = "en_gb.utf-8";
+    i18n.extraLocaleSettings = helpers.config.localeForAll config.i18n.defaultLocale;
+    console.keyMap = "uk";
 
     services.xserver = {
       enable = true;
@@ -32,11 +27,11 @@
 
   # danger zone
   {
-    system.stateversion = "22.11";
-    nixpkgs.hostplatform = "x86_64-linux";
-    nixpkgs.allowunfree = true;
+    system.stateVersion = "22.11";
+    nixpkgs.hostPlatform = "x86_64-linux";
+    nixpkgs.config.allowUnfree = true;
 
-    boot.initrd.availablekernelmodules = [
+    boot.initrd.availableKernelModules = [
       "uhci_hcd"
       "ehci_pci"
       "ata_piix"
@@ -47,26 +42,24 @@
       "sr_mod"
       "sdhci_pci"
     ];
-    boot.initrd.kernelmodules = [ "kvm-intel" ];
-    boot.kernelmodules = [];
-    boot.extramodulepackages = [];
+    boot.initrd.kernelModules = [ "kvm-intel" ];
 
-    filesystems."/" = { device = "/dev/sda1"; fstype = "ext4"; };
-    swapdevices = [ { device = "/dev/sda2"; } ];
+    fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+    swapDevices = [ { device = "/dev/sda2"; } ];
 
     boot.loader.grub = {
       enable = true;
       device = "/dev/sda";
-      useosprober = true;
+      useOSProber = true;
     };
 
-    hardware.enableredistributablefirmware = true;
+    hardware.enableRedistributableFirmware = true;
     hardware.cpu.intel = {
-      updatemicrocode = mkdefault true;
+      updateMicrocode = true;
       sgx.provision.enable = true; 
     };
 
     boot.plymouth.enable = true;
-    services.getty.autologinuser = "anne";
+    services.getty.autologinUser = "anne";
   }
 ]
