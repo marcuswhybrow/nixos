@@ -7,8 +7,8 @@
       wget unixtools.ping
     ];
 
-    time.timeZone = "europe/london";
-    i18n.defaultLocale = "en_gb.utf-8";
+    time.timeZone = "Europe/London";
+    i18n.defaultLocale = "en_GB.UTF-8";
     i18n.extraLocaleSettings = helpers.config.localeForAll config.i18n.defaultLocale;
     console.keyMap = "uk";
 
