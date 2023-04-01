@@ -282,6 +282,12 @@
           efi.efiSysMountPoint = "/boot/efi";
           efi.canTouchEfiVariables = true;
         };
+
+        hardware.enableRedistributableFirmware
+        hardware.cpu.intel = {
+          updateMicrocode = mkDefault true;
+          sgx.provision.enable = true; 
+        };
       })
     ]; # marcus-laptop
 
