@@ -3,7 +3,7 @@
     users.users.anne = {
       description = "Anne Whybrow";
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "video" ];
+      extraGroups = [ "networkmanager" "wheel" "video" ];
       shell = pkgs.fish;
     };
 
