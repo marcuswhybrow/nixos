@@ -1,4 +1,4 @@
-{ user, config, lib, pkgs, utils, ... }: let
+{ user, config, lib, pkgs, helpers, ... }: let
   inherit (lib) mkIf;
 
   colors = {
@@ -11,7 +11,7 @@
   };
 in {
 
-  programs.alacritty.settings.colors = utils.attrs.merge [
+  programs.alacritty.settings.colors = helpers.attrs.merge [
     {
       primary = {
         background = "0x${colors.background}";
@@ -21,7 +21,7 @@ in {
       bright.white = "0xffffff";
     }
     (
-      utils.attrs.mapAttrsToListAndMerge (name: value: {
+      helpers.attrs.mapAttrsToListAndMerge (name: value: {
         normal.${name} = value;
         bright.${name} = value;
       }) {
