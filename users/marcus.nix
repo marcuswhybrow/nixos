@@ -108,6 +108,13 @@
         c = ''vim ~/.dotfiles/systems/(hostname).nix'';
         d = ''cd ~/.dotfiles'';
         t = ''vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d).md'';
+        y = ''vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d --date yesterday).md'';
+      };
+      programs.fish.functions = {
+        timeline = ''
+          set days (if set --query $argv[1]; echo $argv[1]; else; echo 0; end)
+          vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d --date "$days days ago").md
+        '';
       };
 
       programs.starship.enable = true;
