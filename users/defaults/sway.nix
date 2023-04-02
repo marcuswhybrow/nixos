@@ -7,10 +7,14 @@
     };
 
     config.home-manager.users = helpers.config.mkForEachUser config (user: {
-      home.packages = with pkgs; [ wlogout ];
+      home.packages = with pkgs; [
+        wlogout
+        wl-clipboard
+      ];
       wayland.windowManager.sway = {
         inherit (user.sway) enable;
         config = {
+          modifier = lib.mkDefault "Mod1";
           bars = lib.mkIf user.sway.disableBars [];
           menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun Launch";
           inherit (user.sway) terminal;
@@ -27,8 +31,11 @@
             inner = 5;
           };
 
-          keybindings = lib.mkOptionDefault (with config.custom; {
-            "Mod1+Escape" = helpers.bash.exec ''fish -c "@logout"'';
+          keybindings = lib.mkOptionDefault (with config.custom; let
+            mod = config.home-manager.users.${user.username}.wayland.windowManager.sway.config.modifier;
+          in {
+            "${mod}+Escape" = ''exec fish -c "@logout"'';
+            "${mod}+Shift+Escape" = ''exec fish -c "@waybar toggle"'';
           });
         };
       };
