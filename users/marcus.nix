@@ -163,6 +163,7 @@
         discord
         obsidian
 
+        plex-media-player
       ];
       
       programs.rofi.enable = true;
