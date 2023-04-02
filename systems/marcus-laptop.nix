@@ -28,7 +28,7 @@
       layout = "gb";
     };
 
-    services.getty.autologinUser = "marcus";
+    #services.getty.autologinUser = "marcus";
     programs.fish.enable = true;
     services = {
       openssh.enable = true;
