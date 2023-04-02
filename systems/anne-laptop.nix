@@ -59,7 +59,7 @@
       sgx.provision.enable = true; 
     };
 
-    boot.plymouth.enable = true;
+    boot.plymouth.enable = false;
     services.getty.autologinUser = "anne";
   }
 ]
