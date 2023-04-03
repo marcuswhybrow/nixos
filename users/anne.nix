@@ -1,51 +1,90 @@
-[
-  ({ pkgs, lib, ... }: {
-    users.users.anne = {
-      description = "Anne Whybrow";
-      isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" "video" ];
-      shell = pkgs.fish;
+{ pkgs, lib, ... }: {
+  users.users.anne = {
+    description = "Anne Whybrow";
+    isNormalUser = true;
+    extraGroups = [ "networkmanager" "wheel" "video" ];
+    shell = pkgs.fish;
+  };
+
+  home-manager.users.anne = {
+    home.packages = with pkgs; [
+      brave
+      pcmanfm
+    ];
+
+    themes.light.enable = true;
+
+    programs.alacritty = {
+      enable = true;
+      settings.window.padding = { x = 5; y = 5; };
     };
 
-    custom.users.anne = {
-      theme = "light";
-      audio.volume.step = 5;
-      display.brightness.step = 5;
-      sway = {
-        enable = true;
-        terminal = "alacritty";
-        disableBars = true;
-      };
-      waybar.enable = false;
+    programs.rofi.enable = true;
+
+    programs.fish = {
+      enable = true;
+      loginShellInit = ''sway'';
     };
 
-    home-manager.users.anne = {
-      home.packages = with pkgs; [
-        brave
-        pcmanfm
-      ];
+    programs.starship.enable = true;
 
-      programs.alacritty = {
-        enable = true;
-        settings.window.padding = { x = 5; y = 5; };
-      };
-
-      programs.rofi.enable = true;
-
-      programs.fish = {
-        enable = true;
-        loginShellInit = ''sway'';
-      };
-
-      programs.starship.enable = true;
+    programs.volume = {
+      enable = true;
+      onChange = ''
+        set vol (pamixer --get-volume)
+        set mute (pamixer --get-mute)
+        dunstify \
+          --appname changeVolume \
+          --urgency low \
+          --icon audio-volume-(if test $mute = true; echo "muted"; else; echo "high"; end) \
+          --hints string:x-dunst-stack-tag:volume \
+          (if test $mute = false; echo "--hints int:value:$vol"; else; echo ""; end) \
+          --timeout 2000 \
+          (if test $mute = false; echo '"Volume: $vol%"'; else; echo '"Volume Muted"'; end)
+      '';
     };
-  })
 
-  # Sway: simplified for a new user
-  ({ config, lib, pkgs, ... }: {
-    home-manager.users.anne = {
-      wayland.windowManager.sway.config = rec {
+    programs.brightness = {
+      enable = true;
+      onChange = ''
+        set val (light -G)
+        dunstify \
+          --appname changeBrightness \
+          --urgency low \
+          --hints string:x-dunst-stack-tag:brightness \
+          --hints int:value:$val \
+          --timeout 1000 \
+          "Brightness $val%"
+      '';
+    };
+
+    wayland.windowManager.sway = {
+      enable = true;
+      
+      extraConfig = ''
+        mode anne
+        exec_always systemctl --user stop waybar
+        exec brave
+      '';
+
+      config = rec {
         modifier = "Mod4"; # Super_L
+        bars = [];
+        menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun Launch";
+        terminal = "alacritty";
+
+        input."*" = {
+          repeat_delay = "300";
+          xkb_layout = "gb";
+          natural_scroll = "enabled";
+          tap = "enabled";
+        };
+
+        gaps = {
+          smartBorders = "on";
+          smartGaps = true;
+          inner = 5;
+        };
 
         keybindings = lib.mkOptionDefault {
           "${modifier}+Shift+a" = "mode anne";
@@ -72,13 +111,7 @@
             "Mod1+Control+Shift+Escape" = "mode default";
           };
         };
-
       };
-      wayland.windowManager.sway.extraConfig = ''
-        mode anne
-        exec_always systemctl --user stop waybar
-        exec brave
-      '';
     };
-  })
-]
+  };
+}

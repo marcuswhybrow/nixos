@@ -3,23 +3,6 @@ lib: let
   inherit (lib.attrsets) mapAttrsToList recursiveUpdate;
   inherit (lib) mkOption types;
 in {
-
-  bash = rec {
-    test = { test, onPass, onFail }: ''$([ ${test} ] && echo ${toString onPass} || echo "${toString onFail}")'';
-
-    switch = expression: cases: default: let
-      casesStr = toString (mapAttrsToList (name: value: ''${toString name}) echo ${toString value};;'') cases);
-      defaultCaseStr = ''*) echo ${toString default};;'';
-    in ''$(case $(${expression}) in ${casesStr} ${defaultCaseStr} esac)'';
-
-    smartStep = command: step: switch command { "0" = 1; "1" = step - 1; } step;
-
-    escapeDoubleQuotes = anything: replaceStrings [ ''"'' ] [ ''\"'' ] (toString anything);
-
-    # https://i3wm.org/docs/userguide.html#exec
-    exec = command: ''exec "${escapeDoubleQuotes command}"'';
-  };
-
   options = {
     mkStr = default: mkOption {
       type = types.str;
@@ -44,14 +27,9 @@ in {
       type = types.enum options;
       inherit default;
     };
-    mkForEachUser = options: mkOption {
-      type = with types; attrsOf (submodule { inherit options; });
-    };
   };
 
   config = {
-    mkForEachUser = cfg: f: mapAttrs (username: userCfg: f (userCfg // { inherit username; })) cfg.custom.users;
-
     localeForAll = locale: listToAttrs (map (name: {
       name = "LC_${name}";
       value = locale;
@@ -67,6 +45,10 @@ in {
       "TIME"
     ]);
   };
+
+  homeManager = config: f: mapAttrs f config.home-manager.users;
+
+  system = c: { config = c; };
 
   attrs = rec {
     merge = list: foldl' recursiveUpdate {} list;

@@ -7,46 +7,41 @@
     };
   };
 
-  outputs = outputs: let
-    mkNixosSystems = systems: let
-      mkNixosSystem = hostname: systemModuleListPaths: let
-        allModuleListPaths = systemModuleListPaths ++ [
-          ./modules/enforced-on-all-systems.nix
-          ./modules/intel-accelerated-video-playback.nix
-          ./modules/home-manager.nix
-
-          ./users/defaults/audio.nix
-          ./users/defaults/display.nix
-          ./users/defaults/git.nix
-          ./users/defaults/sway.nix
-          ./users/defaults/waybar.nix
-          ./users/defaults/themes.nix
-        ];
-        moduleLists = map (x: import x) allModuleListPaths;
-      in outputs.nixpkgs.lib.nixosSystem {
-        modules = (builtins.concatLists moduleLists) ++ [
-          {
-            _module.args = {
-              inherit outputs hostname;
-              helpers = import ./utils.nix outputs.nixpkgs.lib;
-            };
-          }
-          outputs.home-manager.nixosModules.home-manager
-        ];
+  outputs = inputs: {
+    nixosConfigurations = builtins.mapAttrs (hostname: systemModules: inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit hostname inputs;
+        helpers = import ./helpers.nix inputs.nixpkgs.lib;
       };
-    in builtins.mapAttrs (mkNixosSystem) systems;
-  in {
-    nixosConfigurations = mkNixosSystems {
+      modules = systemModules ++ [
+        ./systems/options/enforced-on-all-systems.nix
+        ./systems/options/dwl.nix
+        ./systems/options/intel-accelerated-video-playback.nix
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.sharedModules = [
+            ./users/options/brightness.nix
+            ./users/options/git.nix
+            ./users/options/logout.nix
+            ./users/options/networking.nix
+            ./users/options/systemctl-toggle.nix
+            ./users/options/theme-light.nix
+            ./users/options/volume.nix
+            ./users/options/waybar-marcusbar.nix
+          ];
+        }
+      ];
+    }) {
       marcus-laptop = [
+        ./systems/marcus-laptop.nix
         ./users/marcus.nix
         ./users/anne.nix
-        ./systems/marcus-laptop.nix
       ];
 
       anne-laptop = [
+        ./systems/anne-laptop.nix
         ./users/anne.nix
         ./users/marcus.nix
-        ./systems/anne-laptop.nix
       ];
     };
   };
