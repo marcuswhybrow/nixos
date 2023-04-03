@@ -11,8 +11,8 @@
     mkNixosSystems = systems: let
       mkNixosSystem = hostname: systemModuleListPaths: let
         allModuleListPaths = systemModuleListPaths ++ [
+          ./modules/enforced-on-all-systems.nix
           ./modules/intel-accelerated-video-playback.nix
-          ./systems/defaults/defaults.nix
 
           ./users/defaults/home-manager.nix
           ./users/defaults/audio.nix
