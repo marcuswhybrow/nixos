@@ -23,6 +23,8 @@
       openssh.enable = true;
       printing.enable = true;
     };
+
+    hardware.opengl.intelAccelerateVideoPlayback.enable = true;
   })
 
   # danger zone

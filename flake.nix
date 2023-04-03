@@ -11,6 +11,7 @@
     mkNixosSystems = systems: let
       mkNixosSystem = hostname: systemModuleListPaths: let
         allModuleListPaths = systemModuleListPaths ++ [
+          ./modules/intel-accelerated-video-playback.nix
           ./systems/defaults/defaults.nix
 
           ./users/defaults/home-manager.nix
@@ -39,14 +40,12 @@
       marcus-laptop = [
         ./users/marcus.nix
         ./users/anne.nix
-        ./systems/options/intel-video-acceleration.nix
         ./systems/marcus-laptop.nix
       ];
 
       anne-laptop = [
         ./users/anne.nix
         ./users/marcus.nix
-        ./systems/options/intel-video-acceleration.nix
         ./systems/anne-laptop.nix
       ];
     };

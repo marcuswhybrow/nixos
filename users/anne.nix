@@ -77,6 +77,7 @@
       wayland.windowManager.sway.extraConfig = ''
         mode anne
         exec_always systemctl --user stop waybar
+        exec brave
       '';
     };
   })

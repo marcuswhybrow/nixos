@@ -36,6 +36,8 @@
     };
     
     security.sudo.wheelNeedsPassword = false;
+
+    hardware.opengl.intelAcceleratedVideoPlayback.enable = true;
   })
 
   # DANGER ZONE
