@@ -86,15 +86,14 @@
 
     programs.brightness = {
       enable = true;
-      onChange = ''
-        set val (light -G)
+      onChange = { brightness }: ''
         dunstify \
           --appname changeBrightness \
           --urgency low \
           --timeout 2000 \
           --hints string:x-dunst-stack-tag:brightness \
-          --hints int:value:$val \
-          "Brightness $val%"
+          --hints int:value:${brightness} \
+          "Brightness ${brightness}%"
       '';
     };
 
