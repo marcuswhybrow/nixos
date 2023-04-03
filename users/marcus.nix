@@ -141,8 +141,8 @@
           # XF86AudioPrev = ''exec'';
           # XF86AudioPlay = ''exec'';
           # XF86AudioNext = ''exec'';
-          XF86MonBrightnessUp = ''exec fish -c "brightness up"'';
-          XF86MonBrightnessDown = ''exec fish -c "brightness down"'';
+          XF86MonBrightnessUp = ''exec brightness up'';
+          XF86MonBrightnessDown = ''exec brightness down'';
         };
       };
     };
