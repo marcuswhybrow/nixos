@@ -13,8 +13,8 @@
         allModuleListPaths = systemModuleListPaths ++ [
           ./modules/enforced-on-all-systems.nix
           ./modules/intel-accelerated-video-playback.nix
+          ./modules/home-manager.nix
 
-          ./users/defaults/home-manager.nix
           ./users/defaults/audio.nix
           ./users/defaults/display.nix
           ./users/defaults/git.nix
