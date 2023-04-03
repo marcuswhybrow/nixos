@@ -133,7 +133,7 @@
         };
 
         keybindings = lib.mkOptionDefault {
-          "${modifier}+Escape" = ''exec fish -c "logout"'';
+          "${modifier}+Escape" = ''exec logout'';
           "${modifier}+Shift+Escape" = ''exec fish -c "systemctl-toggle waybar"'';
           XF86AudioMute = ''exec fish -c "volume toggle-mute"'';
           XF86AudioLowerVolume = ''exec fish -c "volume down"'';

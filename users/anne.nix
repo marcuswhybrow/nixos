@@ -104,8 +104,8 @@
             XF86AudioLowerVolume = ''exec fish -c "@volume down"'';
             XF86AudioRaiseVolume = ''exec fish -c "@volume up"'';
 
-            XF86MonBrightnessUp = ''exec fish -c "@brightness up"'';
-            XF86MonBrightnessDown = ''exec fish -c "@brightness down"'';
+            XF86MonBrightnessUp = ''exec brightness up'';
+            XF86MonBrightnessDown = ''exec brightness down'';
 
             "${modifier}+Shift+Escape" = ''exec swaynag -t warning -m "Shutdown?" -b "Shutdown" "systemctl poweroff"'';
             "Mod1+Control+Shift+Escape" = "mode default";

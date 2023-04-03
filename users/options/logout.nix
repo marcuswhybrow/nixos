@@ -6,27 +6,23 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    # TODO Remove dependencies
     home.packages = with pkgs; [
       rofi
       ripgrep
-      fish
+      (pkgs.writeShellScriptBin "logout" ''
+        options=(
+          "🪵 Logout (loginctl terminate-user $USER)"
+          "🔒 Lock (swaylock)"
+          "🌙 Suspend (systemctl suspend)"
+          "🧸 Hibernate (systemctl hibernate)"
+          "🐤 Restart (systemctl reboot)"
+          "🪓 Shutdown (systemctl poweroff)"
+          "Do Nothing"
+        )
+        choice=$(printf '%s\n' "''${options[@]}" | rofi -dmenu -p Logout)
+        cmd=$(echo -n $choice | rg "\((.*)\)" -or '$1')
+        $cmd
+      '')
     ];
-
-    programs.fish.functions.logout = ''
-      string join \n \
-        "🪵 Logout (loginctl terminate-user $USER)" \
-        "🔒 Lock (swaylock)" \
-        "🌙 Suspend (systemctl suspend)" \
-        "🧸 Hibernate (systemctl hibernate)" \
-        "🐤 Restart (systemctl reboot)" \
-        "🪓 Shutdown (systemctl poweroff)" \
-        "Do Nothing" | \
-      rofi \
-        -dmenu \
-        -p Logout | \
-      rg "\((.*)\)" -or '$1' | \
-      fish
-    '';
   };
 }
