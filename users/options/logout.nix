@@ -9,6 +9,7 @@ in {
     home.packages = with pkgs; [
       rofi
       ripgrep
+
       (pkgs.writeShellScriptBin "logout" ''
         options=(
           "🪵 Logout (loginctl terminate-user $USER)"
