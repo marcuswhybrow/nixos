@@ -38,7 +38,7 @@
           --icon audio-volume-$([[ ${isMuted} == true ]] && echo "muted" || echo "high") \
           --hints string:x-dunst-stack-tag:volume \
           $([[ ${isMuted} == false ]] && echo "--hints int:value:${volume}") \
-          "$([[ ${isMuted} == false ]] && echo 'Volume: ${volume}%' || echo 'Volume Muted')"
+          "$([[ ${isMuted} == false ]] && echo "Volume: ${volume}%" || echo "Volume Muted")"
       '';
     };
 
