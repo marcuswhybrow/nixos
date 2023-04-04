@@ -1,4 +1,4 @@
-{ config, lib, helpers, ... }: let
+{ config, lib, pkgs, ... }: let
   cfg = config.programs.systemctlToggle;
 in {
   options.programs.systemctlToggle = {
@@ -6,9 +6,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    programs.fish.functions.systemctl-toggle = ''
-      set command (if systemctl --user is-active $argv[1] > /dev/null; echo "stop"; else; echo "start"; end)
-      systemctl --user $command $argv[1]
-    '';
+    home.packages = [
+      (pkgs.writeShellScriptBin "systemctl-toggle" ''
+        command=$(systemctl --user is-active $1 > /dev/null && echo "stop" || echo "start")
+        systemctl --user $command $1
+      '')
+    ];
   };
 }

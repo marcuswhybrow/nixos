@@ -110,6 +110,7 @@
       };
     };
 
+    programs.systemctlToggle.enable = true;
     wayland.windowManager.sway = {
       enable = true;
 
@@ -134,7 +135,7 @@
 
         keybindings = lib.mkOptionDefault {
           "${modifier}+Escape" = ''exec logout'';
-          "${modifier}+Shift+Escape" = ''exec fish -c "systemctl-toggle waybar"'';
+          "${modifier}+Shift+Escape" = ''exec systemctl-toggle waybar'';
           XF86AudioMute = ''exec fish -c "volume toggle-mute"'';
           XF86AudioLowerVolume = ''exec fish -c "volume down"'';
           XF86AudioRaiseVolume = ''exec fish -c "volume up"'';
