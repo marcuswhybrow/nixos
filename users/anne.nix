@@ -30,17 +30,15 @@
 
     programs.volume = {
       enable = true;
-      onChange = ''
-        set vol (pamixer --get-volume)
-        set mute (pamixer --get-mute)
+      onChange = { volume, isMuted }: ''
         dunstify \
           --appname changeVolume \
           --urgency low \
-          --icon audio-volume-(if test $mute = true; echo "muted"; else; echo "high"; end) \
-          --hints string:x-dunst-stack-tag:volume \
-          (if test $mute = false; echo "--hints int:value:$vol"; else; echo ""; end) \
           --timeout 2000 \
-          (if test $mute = false; echo '"Volume: $vol%"'; else; echo '"Volume Muted"'; end)
+          --icon audio-volume-$([[ ${isMuted} == true ]] && echo "muted" || echo "high") \
+          --hints string:x-dunst-stack-tag:volume \
+          $([[ ${isMuted} == false ]] && echo "--hints int:value:${volume}") \
+          "$([[ ${isMuted} == false ]] && echo 'Volume: ${volume}%' || echo 'Volume Muted')"
       '';
     };
 
@@ -100,9 +98,9 @@
             "${modifier}+Shift+Left" = "move left";
             "${modifier}+Escape" = "kill";
 
-            XF86AudioMute = ''exec fish -c "@volume toggle-mute"'';
-            XF86AudioLowerVolume = ''exec fish -c "@volume down"'';
-            XF86AudioRaiseVolume = ''exec fish -c "@volume up"'';
+            XF86AudioMute = ''exec toggle-mute'';
+            XF86AudioLowerVolume = ''exec volume down'';
+            XF86AudioRaiseVolume = ''exec volume up'';
 
             XF86MonBrightnessUp = ''exec brightness up'';
             XF86MonBrightnessDown = ''exec brightness down'';

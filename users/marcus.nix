@@ -70,24 +70,22 @@
 
     programs.volume = {
       enable = true;
-      onChange = ''
-        set vol (pamixer --get-volume)
-        set mute (pamixer --get-mute)
-        dunstify \
+      onChange = { volume, isMuted }: ''
+        ${pkgs.dunst}/bin/dunstify \
           --appname changeVolume \
           --urgency low \
           --timeout 2000 \
-          --icon audio-volume-(if test $mute = true; echo "muted"; else; echo "high"; end) \
+          --icon audio-volume-$([[ ${isMuted} == true ]] && echo "muted" || echo "high") \
           --hints string:x-dunst-stack-tag:volume \
-          (if test $mute = false; echo "--hints int:value:$vol"; else; echo ""; end) \
-          (if test $mute = false; echo '"Volume: $vol%"'; else; echo '"Volume Muted"'; end)
+          $([[ ${isMuted} == false ]] && echo "--hints int:value:${volume}") \
+          "$([[ ${isMuted} == false ]] && echo 'Volume: ${volume}%' || echo 'Volume Muted')"
       '';
     };
 
     programs.brightness = {
       enable = true;
       onChange = { brightness }: ''
-        dunstify \
+        ${pkgs.dunst}/bin/dunstify \
           --appname changeBrightness \
           --urgency low \
           --timeout 2000 \
@@ -136,9 +134,9 @@
         keybindings = lib.mkOptionDefault {
           "${modifier}+Escape" = ''exec logout'';
           "${modifier}+Shift+Escape" = ''exec systemctl-toggle waybar'';
-          XF86AudioMute = ''exec fish -c "volume toggle-mute"'';
-          XF86AudioLowerVolume = ''exec fish -c "volume down"'';
-          XF86AudioRaiseVolume = ''exec fish -c "volume up"'';
+          XF86AudioMute = ''exec toggle-mute'';
+          XF86AudioLowerVolume = ''exec volume down'';
+          XF86AudioRaiseVolume = ''exec volume up'';
           # XF86AudioPrev = ''exec'';
           # XF86AudioPlay = ''exec'';
           # XF86AudioNext = ''exec'';
