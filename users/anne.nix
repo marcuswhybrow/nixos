@@ -88,23 +88,22 @@
 
         modes = lib.mkOptionDefault {
           anne = {
-            "--release Super_L" = ''exec ${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun Apps'';
+            "--release Super_L" = ''exec ${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun -i Apps'';
 
-            "${modifier}+Right" = "focus right";
-            "${modifier}+Left" = "focus left";
+            "${modifier}+Right"       = "focus right";
+            "${modifier}+Left"        = "focus left";
             "${modifier}+Shift+Right" = "move right";
-            "${modifier}+Shift+Left" = "move left";
-            "${modifier}+Escape" = "kill";
+            "${modifier}+Shift+Left"  = "move left";
+            "${modifier}+Escape"      = "kill";
 
-            XF86AudioMute = ''exec toggle-mute'';
-            XF86AudioLowerVolume = ''exec volume down'';
-            XF86AudioRaiseVolume = ''exec volume up'';
+            XF86AudioMute         = ''exec ${pkgs.volume}/bin/volume toggle-mute'';
+            XF86AudioLowerVolume  = ''exec ${pkgs.volume}/bin/volume down'';
+            XF86AudioRaiseVolume  = ''exec ${pkgs.volume}/bin/volume up'';
+            XF86MonBrightnessUp   = ''exec ${pkgs.brightness}/bin/brightness up'';
+            XF86MonBrightnessDown = ''exec ${pkgs.brightness}/bin/brightness down'';
 
-            XF86MonBrightnessUp = ''exec brightness up'';
-            XF86MonBrightnessDown = ''exec brightness down'';
-
-            "${modifier}+Shift+Escape" = ''exec swaynag -t warning -m "Shutdown?" -b "Shutdown" "systemctl poweroff"'';
-            "Mod1+Control+Shift+Escape" = "mode default";
+            "${modifier}+Shift+Escape"  = ''exec swaynag -t warning -m "Shutdown?" -b "Shutdown" "systemctl poweroff"'';
+            "Mod1+Control+Shift+Escape" = ''mode default'';
           };
         };
       };

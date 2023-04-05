@@ -5,9 +5,11 @@
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     networking.url = "./packages/networking";
     brightness.url = "./packages/brightness";
-    volume.url = "./packages/volume";
+    volume.url     = "./packages/volume";
+    logout.url     = "./packages/logout";
   };
 
   outputs = inputs: let
@@ -39,7 +41,6 @@
             sharedModules = [
               { home.stateVersion = config.system.stateVersion; }
               ./users/options/git.nix
-              ./users/options/logout.nix
               ./users/options/systemctl-toggle.nix
               ./users/options/theme-light.nix
               ./users/options/waybar-marcusbar.nix
@@ -52,6 +53,7 @@
         inputs.networking.nixosModules.networking
         inputs.brightness.nixosModules.brightness
         inputs.volume.nixosModules.volume
+        inputs.logout.nixosModules.logout
       ];
     }) {
       marcus-laptop = [

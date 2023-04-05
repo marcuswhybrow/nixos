@@ -109,7 +109,7 @@
         cpu.onClick =     ''alacritty -c htop --soft-key=PERCENT_CPU'';
         memory.onClick =  ''alacritty -c htop --soft-key=PERCENT_MEM'';
         disk.onClick =    ''alacritty -c htop --soft-key=IO_RATE'';
-        logout.onClick =  ''logout'';
+        logout.onClick =  ''${pkgs.logout}/bin/logout'';
       };
     };
 
@@ -121,7 +121,7 @@
         modifier = "Mod1";
         bars = [];
         terminal = "alacritty";
-        menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun Launch";
+        menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -i -display-drun Launch";
 
         input."*" = {
           repeat_delay = "300";
@@ -137,11 +137,11 @@
         };
 
         keybindings = lib.mkOptionDefault {
-          "${modifier}+Escape" = ''exec logout'';
+          "${modifier}+Escape" = ''exec ${pkgs.logout}/bin/logout'';
           "${modifier}+Shift+Escape" = ''exec systemctl-toggle waybar'';
-          XF86AudioMute = ''exec volume toggle-mute'';
-          XF86AudioLowerVolume = ''exec volume down'';
-          XF86AudioRaiseVolume = ''exec volume up'';
+          XF86AudioMute = ''exec ${pkgs.volume}/bin/volume toggle-mute'';
+          XF86AudioLowerVolume = ''exec ${pkgs.volume}/bin/volume down'';
+          XF86AudioRaiseVolume = ''exec ${pkgs.volume}/bin/volume up'';
           # XF86AudioPrev = ''exec'';
           # XF86AudioPlay = ''exec'';
           # XF86AudioNext = ''exec'';

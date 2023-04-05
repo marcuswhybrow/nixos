@@ -7,11 +7,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-N6zyjuH985Poz3UdqWJmQwn5yxMOoO+4hVMgzh+MC5c=",
-        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/brightness",
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/brightness",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/brightness",
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/brightness",
         "type": "path"
       }
     },
@@ -37,18 +37,33 @@
         "type": "github"
       }
     },
-    "networking": {
+    "logout": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-Q5xfRfGU9w5G2NRFlJ1R1YXQh2th7/yn7Am3VEenMS0=",
-        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/networking",
+        "narHash": "sha256-+hchPCLb4r1Se0WeI1QYvKaF1J2EeFlY0tPze201EC8=",
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/logout",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/networking",
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/logout",
+        "type": "path"
+      }
+    },
+    "networking": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-0SE1d98bJQXnRztG2+vei7E1LWUuVHXyq6PtaVCovws=",
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/networking",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/networking",
         "type": "path"
       }
     },
@@ -70,6 +85,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1680588688,
+        "narHash": "sha256-SW95w50Pdw3nivgTuCebtbbPqaCTp9ctnFMNj24vdck=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "3e01f83884b8ed7cbafa784727fb343f1876d56f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1680498889,
         "narHash": "sha256-4nGFBm+oILOO6DPoKTPxVlfkZSxCOY4W25zSRHESK48=",
         "owner": "nixos",
@@ -84,7 +115,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1680122840,
         "narHash": "sha256-zCQ/9iFHzCW5JMYkkHMwgK1/1/kTMgCMHq4THPINpAU=",
@@ -100,7 +131,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1680588688,
         "narHash": "sha256-SW95w50Pdw3nivgTuCebtbbPqaCTp9ctnFMNj24vdck=",
@@ -120,8 +151,9 @@
       "inputs": {
         "brightness": "brightness",
         "home-manager": "home-manager",
+        "logout": "logout",
         "networking": "networking",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "volume": "volume"
       }
     },
@@ -142,16 +174,16 @@
     },
     "volume": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-M6XM03G3tcYlbC0jqs1i6DDbV3d5QIYme/MzOcsIbaE=",
-        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/volume",
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/volume",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/volume",
+        "path": "/nix/store/wrj01s2x4dpljgpdxqh566v5463m7sv0-source/packages/volume",
         "type": "path"
       }
     }

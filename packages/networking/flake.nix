@@ -59,7 +59,7 @@
 
             choice="$(\
               printf '%s\n' "''${options[@]}" | \
-              ${rofi} -dmenu -mesg "$message" --not-case-sensitive -p Networking \
+              ${rofi} -dmenu -mesg "$message" -i -p Networking \
             )"
 
             choiceWithoutIcon="''${choice:3}"
