@@ -10,6 +10,7 @@
     brightness.url = "./packages/brightness";
     volume.url     = "./packages/volume";
     logout.url     = "./packages/logout";
+    toggle.url     = "./packages/toggle";
   };
 
   outputs = inputs: let
@@ -54,6 +55,7 @@
         inputs.brightness.nixosModules.brightness
         inputs.volume.nixosModules.volume
         inputs.logout.nixosModules.logout
+        inputs.toggle.nixosModules.toggle
       ];
     }) {
       marcus-laptop = [

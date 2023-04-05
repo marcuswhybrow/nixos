@@ -113,7 +113,7 @@
       };
     };
 
-    programs.systemctlToggle.enable = true;
+    programs.toggle.enable = true;
     wayland.windowManager.sway = {
       enable = true;
 
@@ -138,7 +138,7 @@
 
         keybindings = lib.mkOptionDefault {
           "${modifier}+Escape" = ''exec ${pkgs.logout}/bin/logout'';
-          "${modifier}+Shift+Escape" = ''exec systemctl-toggle waybar'';
+          "${modifier}+Shift+Escape" = ''exec ${pkgs.toggle}/bin/toggle waybar'';
           XF86AudioMute = ''exec ${pkgs.volume}/bin/volume toggle-mute'';
           XF86AudioLowerVolume = ''exec ${pkgs.volume}/bin/volume down'';
           XF86AudioRaiseVolume = ''exec ${pkgs.volume}/bin/volume up'';

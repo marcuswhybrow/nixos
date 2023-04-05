@@ -1,12 +1,12 @@
 {
-  description = "A ROFI logout interface";
+  description = "A systemctl wrapper to toggle user services";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
   };
 
   outputs = { self, nixpkgs }: let
-    packageName = "logout";
+    packageName = "toggle";
     forAllSystems = nixpkgs.lib.genAttrs [
       "x86_64-linux"
       "x86_64-darwin"
@@ -23,24 +23,18 @@
 
     nixosModules.${packageName} = ({ pkgs, ... }: {
 
-      nixpkgs.overlays = [
-        (final: prev: {
-          ${packageName} = final.callPackage ./${packageName}.nix {};
-        })
-      ];
+      nixpkgs.overlays = [ (final: prev: { ${packageName} = final.callPackage ./${packageName}.nix {}; }) ];
 
       home-manager.sharedModules = [
         ({ config, lib, pkgs, ... }: let
           cfg = config.programs.${packageName};
         in {
           options.programs.${packageName} = {
-            enable = lib.mkEnableOption "Whether to enable Volume CLI";
+            enable = lib.mkEnableOption "Whether to enable Toggle";
           };
 
           config = lib.mkIf cfg.enable {
-            home.packages = with pkgs; [
-              logout
-            ];
+            home.packages = [ pkgs.${packageName} ];
           };
         })
       ];
