@@ -1,13 +1,13 @@
-{ config, lib, helpers, ... }: let
+{ config, lib, types, helpers, ... }: let
   cfg = config.programs.waybar.marcusBar;
 in { 
   options.programs.waybar.marcusBar = {
     enable = lib.mkEnableOption "Whether to enable Marcus' waybar style.";
-    network.onClick = lib.mkOption { type = lib.types.str; };
-    cpu.onClick = lib.mkOption { type = lib.types.str; };
-    memory.onClick = lib.mkOption { type = lib.types.str; };
-    disk.onClick = lib.mkOption { type = lib.types.str; };
-    logout.onClick = lib.mkOption { type = lib.types.str; };
+    network.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
+    cpu.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
+    memory.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
+    disk.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
+    logout.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
   };
 
   config = lib.mkIf cfg.enable {
@@ -44,7 +44,7 @@ in {
         format-wifi = "{essid} {signalStrength}% {ipaddr}";
         format-ethernet = "Wired {ipaddr}";
         format-disconnected = "0.0.0.0";
-        on-click = "exec ${cfg.network.onClick}";
+        on-click = lib.mkIf (cfg.network.onClick != null) "exec ${cfg.network.onClick}";
       };
 
       cpu = {
@@ -60,7 +60,7 @@ in {
       memory = {
         interval = 5;
         format = "{percentage:03}";
-        on-click = "exec ${cfg.memory.onClick}";
+        on-click = lib.mkIf (cfg.memory.onClick != null) "exec ${cfg.memory.onClick}";
         tooltip-format = "{used:0.1f}/{total:0.1f}GB RAM";
         states = {
           warning = 70;
@@ -79,7 +79,7 @@ in {
         interval = 60;
         format = "{percentage_free:03}";
         tooltip-format = "{used} of {total} SSD";
-        on-click = ''exec ${cfg.disk.onClick}'';
+        on-click = lib.mkIf (cfg.disk.onClick != null) ''exec ${cfg.disk.onClick}'';
       };
 
       battery = {
@@ -100,7 +100,7 @@ in {
       "custom/logout" = {
         format = "⏻";
         tooltip = false;
-        on-click = ''exec ${cfg.logout.onClick}'';
+        on-click = lib.mkIf (cfg.logout.onClick != null) ''exec ${cfg.logout.onClick}'';
       };
     };
   };

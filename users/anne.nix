@@ -42,20 +42,6 @@
       '';
     };
 
-    programs.brightness = {
-      enable = true;
-      onChange = { brightness }: ''
-        val=`light -G`
-        dunstify \
-          --appname changeBrightness \
-          --urgency low \
-          --hints string:x-dunst-stack-tag:brightness \
-          --hints int:value:${brightness} \
-          --timeout 1000 \
-          "Brightness ${brightness}%"
-      '';
-    };
-
     wayland.windowManager.sway = {
       enable = true;
       

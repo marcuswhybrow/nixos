@@ -20,7 +20,24 @@
 
       wl-clipboard
       ranger
+
+      networking
+
+      dunst
     ];
+
+    programs.brightness = {
+      enable = true;
+      onChange = ''
+        ${pkgs.dunst}/bin/dunstify \
+        --appname changeBrightness \
+        --urgency low \
+        --timeout 2000 \
+        --hints string:x-dunst-stack-tag:brightness \
+        --hints int:value:$1 \
+        "Brightness $1%"
+      '';
+    };
 
     themes.light.enable = true;
 
@@ -66,7 +83,6 @@
     
     programs.rofi.enable = true;
     programs.logout.enable = true;
-    programs.networking.enable = true;
 
     programs.volume = {
       enable = true;
@@ -82,29 +98,16 @@
       '';
     };
 
-    programs.brightness = {
-      enable = true;
-      onChange = { brightness }: ''
-        ${pkgs.dunst}/bin/dunstify \
-          --appname changeBrightness \
-          --urgency low \
-          --timeout 2000 \
-          --hints string:x-dunst-stack-tag:brightness \
-          --hints int:value:${brightness} \
-          "Brightness ${brightness}%"
-      '';
-    };
-
     programs.waybar = {
       enable = true;
       systemd.enable = true;
       marcusBar = {
         enable = true;
-        network.onClick = ''alacritty -c fish -c network'';
-        cpu.onClick = ''alacritty -c htop --soft-key=PERCENT_CPU'';
-        memory.onClick = ''alacritty -c htop --soft-key=PERCENT_MEM'';
-        disk.onClick = ''alacritty -c htop --soft-key=IO_RATE'';
-        logout.onClick = ''fish -c logout'';
+        network.onClick = ''${pkgs.networking}/bin/networking'';
+        cpu.onClick =     ''alacritty -c htop --soft-key=PERCENT_CPU'';
+        memory.onClick =  ''alacritty -c htop --soft-key=PERCENT_MEM'';
+        disk.onClick =    ''alacritty -c htop --soft-key=IO_RATE'';
+        logout.onClick =  ''logout'';
       };
     };
 
@@ -140,8 +143,8 @@
           # XF86AudioPrev = ''exec'';
           # XF86AudioPlay = ''exec'';
           # XF86AudioNext = ''exec'';
-          XF86MonBrightnessUp = ''exec brightness up'';
-          XF86MonBrightnessDown = ''exec brightness down'';
+          XF86MonBrightnessUp = ''exec ${pkgs.brightness}/bin/brightness up'';
+          XF86MonBrightnessDown = ''exec ${pkgs.brightness}/bin/brightness down'';
         };
       };
     };

@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "brightness": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-Zy5K6XA37U6fPrrJ/OGK4AMMPtD5+PExV/SkYPaeXfw=",
+        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/brightness",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/brightness",
+        "type": "path"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -22,7 +37,54 @@
         "type": "github"
       }
     },
+    "networking": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-Q5xfRfGU9w5G2NRFlJ1R1YXQh2th7/yn7Am3VEenMS0=",
+        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/networking",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/networking",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1680498889,
+        "narHash": "sha256-4nGFBm+oILOO6DPoKTPxVlfkZSxCOY4W25zSRHESK48=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "799d153e4f316143a9db0eb869ecf44d8d4c0356",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1680498889,
+        "narHash": "sha256-4nGFBm+oILOO6DPoKTPxVlfkZSxCOY4W25zSRHESK48=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "799d153e4f316143a9db0eb869ecf44d8d4c0356",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1680122840,
         "narHash": "sha256-zCQ/9iFHzCW5JMYkkHMwgK1/1/kTMgCMHq4THPINpAU=",
@@ -40,8 +102,10 @@
     },
     "root": {
       "inputs": {
+        "brightness": "brightness",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "networking": "networking",
+        "nixpkgs": "nixpkgs_3"
       }
     },
     "utils": {
