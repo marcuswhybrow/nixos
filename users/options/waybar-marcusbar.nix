@@ -39,11 +39,23 @@ in {
         spacing = 10;
       };
 
+
+      # https://github.com/Alexays/Waybar/wiki/Module:-Network
       network = {
-        interval = 5;
-        format-wifi = "{essid} {signalStrength}% {ipaddr}";
-        format-ethernet = "Wired {ipaddr}";
-        format-disconnected = "0.0.0.0";
+        interval = 1;
+
+        format = "127.0.0.1";
+        tooltip = "Networking disabled";
+
+        format-wifi = "⚠️ {ipaddr}";
+        tooltip-format-wifi = "{essid} {signalStrength}% {ipaddr}";
+
+        format-ethernet = "{ipaddr}";
+        tooltip-format-ethernet = "Ethernet {ipaddr}";
+
+        format-disconnected = "127.0.0.1";
+        tooltip-format-disconnected = "Disconnected";
+
         on-click = lib.mkIf (cfg.network.onClick != null) "exec ${cfg.network.onClick}";
       };
 

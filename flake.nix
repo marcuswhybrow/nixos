@@ -42,7 +42,6 @@
             sharedModules = [
               { home.stateVersion = config.system.stateVersion; }
               ./users/options/git.nix
-              ./users/options/systemctl-toggle.nix
               ./users/options/theme-light.nix
               ./users/options/waybar-marcusbar.nix
             ];
