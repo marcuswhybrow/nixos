@@ -7,6 +7,7 @@
     };
     networking.url = "./packages/networking";
     brightness.url = "./packages/brightness";
+    volume.url = "./packages/volume";
   };
 
   outputs = inputs: let
@@ -41,7 +42,6 @@
               ./users/options/logout.nix
               ./users/options/systemctl-toggle.nix
               ./users/options/theme-light.nix
-              ./users/options/volume.nix
               ./users/options/waybar-marcusbar.nix
             ];
           };
@@ -51,6 +51,7 @@
         inputs.home-manager.nixosModules.home-manager
         inputs.networking.nixosModules.networking
         inputs.brightness.nixosModules.brightness
+        inputs.volume.nixosModules.volume
       ];
     }) {
       marcus-laptop = [

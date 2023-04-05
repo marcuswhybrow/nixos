@@ -61,7 +61,10 @@
 
             xdg.configFile."brightness/on-change" = {
               executable = true;
-              text = cfg.onChange;
+              text = ''
+                brightness=$1
+                ${cfg.onChange};
+              '';
             };
           };
         })

@@ -6,12 +6,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-Zy5K6XA37U6fPrrJ/OGK4AMMPtD5+PExV/SkYPaeXfw=",
-        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/brightness",
+        "narHash": "sha256-N6zyjuH985Poz3UdqWJmQwn5yxMOoO+4hVMgzh+MC5c=",
+        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/brightness",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/brightness",
+        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/brightness",
         "type": "path"
       }
     },
@@ -44,11 +44,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-Q5xfRfGU9w5G2NRFlJ1R1YXQh2th7/yn7Am3VEenMS0=",
-        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/networking",
+        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/networking",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/k3h4577vmc9hf33hkszaw86rw8jmyjh8-source/packages/networking",
+        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/networking",
         "type": "path"
       }
     },
@@ -100,12 +100,29 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1680588688,
+        "narHash": "sha256-SW95w50Pdw3nivgTuCebtbbPqaCTp9ctnFMNj24vdck=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "3e01f83884b8ed7cbafa784727fb343f1876d56f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "brightness": "brightness",
         "home-manager": "home-manager",
         "networking": "networking",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_3",
+        "volume": "volume"
       }
     },
     "utils": {
@@ -121,6 +138,21 @@
         "owner": "numtide",
         "repo": "flake-utils",
         "type": "github"
+      }
+    },
+    "volume": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-M6XM03G3tcYlbC0jqs1i6DDbV3d5QIYme/MzOcsIbaE=",
+        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/volume",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/xi9wfzrhq58v8aq66mdndsd4r5w7spx6-source/packages/volume",
+        "type": "path"
       }
     }
   },

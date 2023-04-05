@@ -28,17 +28,30 @@
 
     programs.starship.enable = true;
 
+    programs.brightness = {
+      enable = true;
+      onChange = ''
+        ${pkgs.dunst}/bin/dunstify \
+        --appname changeBrightness \
+        --urgency low \
+        --timeout 2000 \
+        --hints string:x-dunst-stack-tag:brightness \
+        --hints int:value:$brightness \
+        "Brightness $brightness%"
+      '';
+    };
+
     programs.volume = {
       enable = true;
-      onChange = { volume, isMuted }: ''
-        dunstify \
+      onChange = ''
+        ${pkgs.dunst}/bin/dunstify \
           --appname changeVolume \
           --urgency low \
           --timeout 2000 \
-          --icon audio-volume-$([[ ${isMuted} == true ]] && echo "muted" || echo "high") \
+          --icon audio-volume-$([[ $isMuted == true ]] && echo "muted" || echo "high") \
           --hints string:x-dunst-stack-tag:volume \
-          $([[ ${isMuted} == false ]] && echo "--hints int:value:${volume}") \
-          "$([[ ${isMuted} == false ]] && echo "Volume: ${volume}%" || echo "Volume Muted")"
+          $([[ $isMuted == false ]] && echo "--hints int:value:$volume") \
+          "$([[ $isMuted == false ]] && echo "Volume: $volume%" || echo "Volume Muted")"
       '';
     };
 

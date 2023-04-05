@@ -29,15 +29,32 @@
     programs.brightness = {
       enable = true;
       onChange = ''
+        echo "!$brightness!"
         ${pkgs.dunst}/bin/dunstify \
         --appname changeBrightness \
         --urgency low \
         --timeout 2000 \
         --hints string:x-dunst-stack-tag:brightness \
-        --hints int:value:$1 \
-        "Brightness $1%"
+        --hints int:value:$brightness \
+        "Brightness $brightness%"
       '';
     };
+
+    programs.volume = {
+      enable = true;
+      onChange = ''
+        ${pkgs.dunst}/bin/dunstify \
+          --appname changeVolume \
+          --urgency low \
+          --timeout 2000 \
+          --icon audio-volume-$([[ $isMuted == true ]] && echo "muted" || echo "high") \
+          --hints string:x-dunst-stack-tag:volume \
+          $([[ $isMuted == false ]] && echo "--hints int:value:$1") \
+          "$([[ $isMuted == false ]] && echo "Volume: $volume%" || echo "Volume Muted")"
+      '';
+    };
+
+    programs.logout.enable = true;
 
     themes.light.enable = true;
 
@@ -82,21 +99,6 @@
     };
     
     programs.rofi.enable = true;
-    programs.logout.enable = true;
-
-    programs.volume = {
-      enable = true;
-      onChange = { volume, isMuted }: ''
-        ${pkgs.dunst}/bin/dunstify \
-          --appname changeVolume \
-          --urgency low \
-          --timeout 2000 \
-          --icon audio-volume-$([[ ${isMuted} == true ]] && echo "muted" || echo "high") \
-          --hints string:x-dunst-stack-tag:volume \
-          $([[ ${isMuted} == false ]] && echo "--hints int:value:${volume}") \
-          "$([[ ${isMuted} == false ]] && echo "Volume: ${volume}%" || echo "Volume Muted")"
-      '';
-    };
 
     programs.waybar = {
       enable = true;
@@ -137,7 +139,7 @@
         keybindings = lib.mkOptionDefault {
           "${modifier}+Escape" = ''exec logout'';
           "${modifier}+Shift+Escape" = ''exec systemctl-toggle waybar'';
-          XF86AudioMute = ''exec toggle-mute'';
+          XF86AudioMute = ''exec volume toggle-mute'';
           XF86AudioLowerVolume = ''exec volume down'';
           XF86AudioRaiseVolume = ''exec volume up'';
           # XF86AudioPrev = ''exec'';
