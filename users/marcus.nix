@@ -136,7 +136,11 @@
       '';
     };
     
-    programs.rofi.enable = true;
+    programs.rofi = {
+      enable = true;
+      lightTheme = true;
+    };
+
     programs.toggle.enable = true;
 
     programs.waybar = let

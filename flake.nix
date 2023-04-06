@@ -46,6 +46,7 @@
               ./users/options/waybar-marcusbar.nix
               ./users/options/alacritty.nix
               ./users/options/sway.nix
+              ./users/options/rofi.nix
             ];
           };
         })
