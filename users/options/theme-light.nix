@@ -12,30 +12,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    programs.alacritty.settings.colors = helpers.attrs.merge [
-      {
-        primary = {
-          background = "0x${cfg.background}";
-          foreground = "0x${cfg.foreground}";
-        };
-        normal.white = "0xbbbbbb";
-        bright.white = "0xffffff";
-      }
-      (
-        helpers.attrs.mapAttrsToListAndMerge (name: value: {
-          normal.${name} = value;
-          bright.${name} = value;
-        }) {
-          black = "0x000000";
-          red = "0xde3d35";
-          green = "0x3e953a";
-          yellow = "0xd2b67b";
-          blue = "0x2f5af3";
-          magenta = "0xa00095";
-          cyan = "0x3e953a";
-        }
-      )
-    ];
 
     programs.git.delta.options.light = true;
 

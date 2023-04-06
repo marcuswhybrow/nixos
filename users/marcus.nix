@@ -83,20 +83,13 @@
     programs.alacritty = {
       enable = true;
 
+      lightTheme.enable = true;
+      firaCodeNerdFont.enable = true;
+
       # https://github.com/alacritty/alacritty/blob/v0.11.0/alacritty.yml
       settings = {
         window.padding = { x = 10; y = 10; };
         window.opacity = 0.95;
-        font = rec {
-          normal.family = "FiraCode Nerd font";
-          normal.style = "Regular";
-
-          bold.family = normal.family;
-          bold.style = "Bold";
-
-          italic.family = normal.family;
-          italic.style = "Light";
-        };
       };
     };
 

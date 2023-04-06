@@ -44,6 +44,7 @@
               ./users/options/git.nix
               ./users/options/theme-light.nix
               ./users/options/waybar-marcusbar.nix
+              ./users/options/alacritty.nix
             ];
           };
         })
