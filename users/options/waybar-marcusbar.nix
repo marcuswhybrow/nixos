@@ -44,7 +44,7 @@ in {
       network = {
         interval = 1;
 
-        format = "127.0.0.1";
+        format = "🌐";
         tooltip = "Networking disabled";
 
         format-wifi = "⚠️ {ipaddr}";
@@ -94,8 +94,12 @@ in {
         on-click = lib.mkIf (cfg.disk.onClick != null) ''exec ${cfg.disk.onClick}'';
       };
 
+      # https://github.com/Alexays/Waybar/wiki/Module:-Battery
       battery = {
+        interval = 1;
         format = "{capacity:03}";
+        format-charging = "{capacity:03}";
+        format-discharging = "{capacity:03}";
         tooltip-format = "Battery {timeTo}";
         states = {
           good = 95;

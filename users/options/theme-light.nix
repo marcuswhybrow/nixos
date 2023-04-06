@@ -117,6 +117,7 @@ in {
       #temperature { padding-right: 10px; }
       #disk        { padding-right: 3px; }
       #battery     { padding-right: 10px; }
+      #battery.charging { color: green; }
       #clock       { padding: 0 10px; }
 
       #custom-logout { padding-right: 15px; }
