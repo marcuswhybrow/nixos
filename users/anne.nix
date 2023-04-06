@@ -12,14 +12,17 @@
       pcmanfm
     ];
 
-    themes.light.enable = true;
-
     programs.alacritty = {
       enable = true;
       settings.window.padding = { x = 5; y = 5; };
+      lightTheme = true;
+      firaCodeNerdFont = true;
     };
 
-    programs.rofi.enable = true;
+    programs.rofi = {
+      enable = true;
+      lightTheme = true;
+    };
 
     programs.fish = {
       enable = true;
@@ -27,6 +30,11 @@
     };
 
     programs.starship.enable = true;
+
+    services.dunst = {
+      enable = true;
+      lightTheme = true;
+    };
 
     programs.brightness = {
       enable = true;
@@ -57,6 +65,7 @@
 
     wayland.windowManager.sway = {
       enable = true;
+      lightTheme = true;
       
       extraConfig = ''
         mode anne

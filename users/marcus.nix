@@ -23,9 +23,12 @@
       ranger
 
       networking
-
-      dunst
     ];
+
+    services.dunst = {
+      enable = true;
+      lightTheme = true;
+    };
 
     programs.brightness = {
       enable = true;
@@ -57,10 +60,6 @@
 
     programs.logout.enable = true;
 
-    themes.light = {
-      enable = true;
-    };
-
     programs.fish = {
       enable = true;
       shellAbbrs = {
@@ -83,8 +82,8 @@
     programs.alacritty = {
       enable = true;
 
-      lightTheme.enable = true;
-      firaCodeNerdFont.enable = true;
+      lightTheme = true;
+      firaCodeNerdFont = true;
 
       # https://github.com/alacritty/alacritty/blob/v0.11.0/alacritty.yml
       settings = {
@@ -178,7 +177,7 @@
           tap = "enabled";
         };
 
-        output."*".background = ''~/Downloads/wallpaper-seafoam.jpg fill'';
+        output."*".background = ''~/Downloads/wallpaper-inkwater.jpg fill'';
 
         gaps = {
           smartBorders = "off";

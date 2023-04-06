@@ -2,11 +2,11 @@
   cfg = config.programs.alacritty;
 in {
   options.programs.alacritty = {
-    lightTheme.enable = lib.mkEnableOption "Whether to enable a light color theme";
-    firaCodeNerdFont.enable = lib.mkEnableOption "Whether set Alacritty's font to FiraCode Nerd Font";
+    lightTheme = lib.mkEnableOption "Whether to enable a light color theme";
+    firaCodeNerdFont = lib.mkEnableOption "Whether set Alacritty's font to FiraCode Nerd Font";
   };
 
-  config.programs.alacritty.settings.colors = lib.mkIf cfg.lightTheme.enable {
+  config.programs.alacritty.settings.colors = lib.mkIf cfg.lightTheme {
     primary = {
       background = lib.mkDefault "0xffffff";
       foreground = lib.mkDefault "0x000000";
@@ -35,7 +35,7 @@ in {
     };
   };
 
-  config.programs.alacritty.settings.font = lib.mkIf cfg.firaCodeNerdFont.enable (let
+  config.programs.alacritty.settings.font = lib.mkIf cfg.firaCodeNerdFont (let
     fontFamily = "FiraCode Nerd Font";
   in {
     normal.family = fontFamily;

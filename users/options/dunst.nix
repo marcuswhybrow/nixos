@@ -1,17 +1,11 @@
-{ config, pkgs, lib, types, helpers, ... }: let
-  cfg = config.themes.light;
+{ config, pkgs, lib, types, ... }: let
+  cfg = config.services.dunst;
 in {
-  options.themes.light = {
-    enable = lib.mkEnableOption "Whether to enable the light theme for GUI applications";
-    background = lib.mkOption { type = lib.types.str; default = "ffffff"; };
-    foreground = lib.mkOption { type = lib.types.str; default = "000000"; };
-    accent.background = lib.mkOption { type = lib.types.str; default = "000000"; };
-    accent.foreground = lib.mkOption { type = lib.types.str; default = "ffffff"; };
-    warning = lib.mkOption { type = lib.types.str; default = "ff8800"; };
-    critical = lib.mkOption { type = lib.types.str; default = "ff0000"; };
+  options.services.dunst = {
+    lightTheme = lib.mkEnableOption "Whether to enable a light theme";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.lightTheme {
     # https://gitlab.manjaro.org/profiles-and-settings/manjaro-theme-settings/-/blob/master/skel/.config/dunst/dunstrc
     # See man 5 dunst
     xdg.configFile."dunst/dunstrc".text = ''
@@ -68,6 +62,6 @@ in {
         urgency = low
         timeout = 2000
     '';
+
   };
 }
-
