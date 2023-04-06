@@ -24,7 +24,12 @@
       networking
 
       dunst
+
+      fira-code
+      fira-code-symbols
     ];
+
+    fonts.fontconfig.enable = true;
 
     programs.brightness = {
       enable = true;
