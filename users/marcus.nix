@@ -114,6 +114,20 @@
       plugins = with pkgs.vimPlugins; [
         vim-fish
         vim-nix
+
+        # Docs for install Vim/NeoVim packages with Nix
+        # https://github.com/NixOS/nixpkgs/blob/b740337fb5b41e893d456e3b6cd5b62b6dad5098/doc/languages-frameworks/vim.section.md
+
+        # https://github.com/xiyaowong/transparent.nvim
+        (pkgs.vimUtils.buildVimPluginFrom2Nix {
+          name = "transparent.nvim";
+          src = pkgs.fetchFromGitHub {
+            owner = "xiyaowong";
+            repo = "transparent.nvim";
+            rev = "2d8d650fc8a3b8da6a01031295547295eb473b7d";
+            hash = "sha256-6NmVgXlA7Afwwf+XEXJRAp1LIvaFTEQbxg1u1Hqoq1A=";
+          };
+        })
       ];
     };
     
