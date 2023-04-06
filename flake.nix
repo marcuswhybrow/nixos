@@ -45,6 +45,7 @@
               ./users/options/theme-light.nix
               ./users/options/waybar-marcusbar.nix
               ./users/options/alacritty.nix
+              ./users/options/sway.nix
             ];
           };
         })

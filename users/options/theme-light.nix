@@ -12,39 +12,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.sway.config = {
-      output."*".background = lib.mkDefault ''#${cfg.background} solid_color'';
-      colors = {
-        focused = {
-          border = "#ff0000";
-          background = "#ff0000";
-          text = "#000000";
-          indicator = "#ff0000";
-
-          # The border of the app with input focus
-          childBorder = "#666666";
-        };
-        focusedInactive = {
-          border = "#ffffff";
-          background = "#ffffff";
-          text = "#000000";
-          indicator = "#0000ff";
-          # The border of the app in an inactive group that will
-          # be selected first
-          childBorder = "#eeeeee"; 
-        };
-        unfocused = {
-          border = "#ffffff";
-          background = "#ffffff";
-          text = "#000000";
-          indicator = "#00ff00";
-
-          # The border of all other apps
-          childBorder = "#${cfg.background}";
-        };
-      };
-    };
-
     # Modified from https://github.com/anstellaire/photon-rofi-themes
     # See https://man.archlinux.org/man/rofi-theme.5
     programs.rofi = {

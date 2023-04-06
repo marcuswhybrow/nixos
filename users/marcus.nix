@@ -98,6 +98,7 @@
       enable = true;
       userName = "Marcus Whybrow";
       userEmail = "marcus@whybrow.uk";
+      delta.options.light = true;
     };
 
     programs.neovim = {
@@ -136,6 +137,7 @@
     };
     
     programs.rofi.enable = true;
+    programs.toggle.enable = true;
 
     programs.waybar = let
       alacritty = "${pkgs.alacritty}/bin/alacritty";
@@ -152,11 +154,12 @@
       };
     };
 
-    programs.toggle.enable = true;
+
     wayland.windowManager.sway = let
       modifier = "Mod1";
     in {
       enable = true;
+      lightTheme = true;
 
       config = {
         inherit modifier;
