@@ -59,7 +59,6 @@
 
     themes.light = {
       enable = true;
-      colors.waybar.primary = "1e88eb";
     };
 
     programs.fish = {
@@ -144,7 +143,7 @@
         memory.onClick =  ''${alacritty} -e htop --sort-key=PERCENT_MEM'';
         disk.onClick =    ''${alacritty} -e htop --sort-key=IO_RATE'';
         date.onClick =    ''${pkgs.xdg-utils}/bin/xdg-open https://calendar.proton.me/u/1'';
-        colors.primary = "1e88eb";
+        colors.primary = "#1e88eb";
       };
     };
 
