@@ -82,6 +82,18 @@
         in ''
           mkdir $out;
           cp -r ${script}/* $out
+
+          mkdir -p $out/share/applications
+
+          cat > $out/share/applications/networking.desktop << EOF
+          [Desktop Entry]
+          Version=1.0
+          Name=Networking
+          GenericName=Turn WiFi and Ethernet on or off
+          Terminal=false
+          Type=Application
+          Exec=$out/bin/networking
+          EOF
         '';
       };
     });
