@@ -156,7 +156,7 @@
         output."*".background = ''~/Downloads/wallpaper-seafoam.jpg fill'';
 
         gaps = {
-          smartBorders = "on";
+          smartBorders = "off";
           smartGaps = false;
           inner = 10;
         };
