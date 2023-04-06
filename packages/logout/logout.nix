@@ -25,7 +25,7 @@
           -i \
       )
 
-      choiceText="''${choice:3}"
+      choiceText="''${choice:2}"
 
       case "$choiceText" in
         Logout)    loginctl terminate-user $USER;;
