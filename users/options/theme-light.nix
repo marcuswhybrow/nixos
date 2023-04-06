@@ -1,4 +1,4 @@
-{ config, pkgs, lib, helpers, ... }: let
+{ config, pkgs, lib, types, helpers, ... }: let
   cfg = config.themes.light;
 in {
   options.themes.light = {
@@ -9,6 +9,8 @@ in {
     accent.foreground = lib.mkOption { type = lib.types.str; default = "ffffff"; };
     warning = lib.mkOption { type = lib.types.str; default = "ff8800"; };
     critical = lib.mkOption { type = lib.types.str; default = "ff0000"; };
+
+    colors.waybar.primary = lib.mkOption { type = types.str; default = "cccccc"; };
   };
 
   config = lib.mkIf cfg.enable {
@@ -58,7 +60,7 @@ in {
     };
 
     wayland.windowManager.sway.config = {
-      output."*".background = "#${cfg.background} solid_color";
+      output."*".background = lib.mkDefault ''#${cfg.background} solid_color'';
       colors = {
         focused = {
           border = "#ff0000";
@@ -90,52 +92,94 @@ in {
       };
     };
 
-    programs.waybar.style = ''
+    programs.waybar.settings.mainBar = {
+      position = "bottom";
+      mode = "hide";
+      margin = "100 100";
+      height = null;
+      width = null;
+    };
+
+    # https://github.com/Alexays/Waybar/wiki/Styling
+    # Uses GTK CSS (https://docs.gtk.org/gtk3/css-properties.html)
+    programs.waybar.style = let
+      primaryColour = cfg.colors.waybar.primary;
+    in ''
       * {
         border: none;
         border-radius: 0;
         min-height: 0;
         margin: 0;
-        padding: 0; }
+      }
       #waybar {
-        background: #${cfg.background};
         color: #${cfg.foreground};
-        font-family: monospace;
-        font-size: 12px; }
+        font-family: "FiraCode Nerd Font";
+        font-size: 18px;
+
+        background: rgba(255,255,255,0.96);
+        border-radius: 4px;
+        border: 4px solid #${primaryColour};
+      }
       .warning { color: #${cfg.warning}; }
       .critical { color: #${cfg.critical}; }
 
       #network, #cpu, #memory, #temperature,
       #disk, #pulseaudio, #battery, #clock,
       #custom-logout, #workspaces, #tray,
-      #mode { padding-top: 5px; }
+      #mode {
+        background: transparent;
+        padding: 0;
+        margin: 25px 15px;
+      }
 
-      #tray        { padding-right: 10px; }
-      #network     { padding-right: 10px; }
-      #cpu         { padding-right: 3px; }
-      #memory      { padding-right: 3px; }
-      #temperature { padding-right: 10px; }
-      #disk        { padding-right: 3px; }
-      #battery     { padding-right: 10px; }
+      #workspaces {
+        background: transparent;
+        margin-left: 25px;
+        margin-right: 0;
+      }
+
+      #mode {
+        font-size: 12px;
+        margin-right: 0;
+        background: #ff0000;
+        border-radius: 4px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 0 5px;
+      }
+
+      #clock.date {
+        color: #${primaryColour};
+      }
+      #clock.time {
+        margin-left: 0;
+        margin-right: 25px;
+      }
+
+      #memory .icon {
+        color: red;
+      }
+
       #battery.charging { color: green; }
-      #clock       { padding: 0 10px; }
-
-      #custom-logout { padding-right: 15px; }
-      #window        {}
 
       #workspaces button {
         border-top: 2px solid transparent;
-        color: #222222; }
+        color: #${primaryColour};
+        margin: 0;
+        padding: 0;
+      }
       #workspaces button:hover {
-        background: transparent;
         border-top: 2px solid transparent;
-        color: #${cfg.foreground};
-        font-weight: bold; }
+        color: #000000;
+        font-weight: bold;
+      }
       #workspaces button.focused {
-        color: #${cfg.foreground};
-        font-weight: bold; }
-      #workspaces button.urgent { color: #${cfg.warning}; }
-      #mode { padding-left: 10px; }
+        color: #000000;
+        font-weight: bold;
+      }
+      #workspaces button.urgent {
+        color: #${cfg.warning};
+      }
     '';
 
     # Modified from https://github.com/anstellaire/photon-rofi-themes

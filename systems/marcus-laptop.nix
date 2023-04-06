@@ -12,6 +12,24 @@
     coreboot-configurator
   ];
 
+  # https://nixos.wiki/wiki/Fonts
+  fonts.fonts = with pkgs; [
+    font-awesome
+
+    (nerdfonts.override {
+      fonts = [
+        # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
+        "FiraCode"
+        "FiraMono"
+        "Terminus"
+      ];
+    })
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "FiraCode Nerd Font Mono" ];
+  };
+
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
   #i18n.extraLocaleSettings = helpers.config.localeForAll config.i18n.defaultLocale;

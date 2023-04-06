@@ -1,6 +1,6 @@
-{ config, lib, types, helpers, ... }: let
+{ config, lib, pkgs, types, helpers, ... }: let
   cfg = config.programs.waybar.marcusBar;
-in { 
+in {
   options.programs.waybar.marcusBar = {
     enable = lib.mkEnableOption "Whether to enable Marcus' waybar style.";
     network.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
@@ -8,30 +8,47 @@ in {
     memory.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
     disk.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
     logout.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
+    date.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
+    colors = {
+      primary = lib.mkOption { type = types.str; default = "cccccc"; };
+    };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = let
+    # I want to use the glyphsfrom Font Awesome, but use a different font for text.
+    # Waybar used Pango Markup (https://docs.gtk.org/Pango/pango_markup.html)
+    # Pango will try differnt fonts until a gylph is found.
+    # However Awesome Font and Nerd Fonts complete for some glyphs.
+    # Pango has no way way to specify a CSS class for styling later.
+    # So I'm using a nix function to explicity use Font Awesome for icons.
+    icon = text: ''<span color="#${cfg.colors.primary}" font_family="Font Awesome 6 Free">${text}</span>'';
+  in lib.mkIf cfg.enable {
+    home.packages = with pkgs; [ font-awesome ];
+    fonts.fontconfig.enable = true;
+
+    # https://github.com/Alexays/Waybar/wiki/Configuration
     programs.waybar.settings.mainBar = {
-      layer = "bottom";
-      position = "top";
-      height = 30;
+      layer = lib.mkDefault "top";
+      position = lib.mkDefault "top";
+      mode = lib.mkDefault "hide";
+      ipc = lib.mkDefault true;
 
       modules-left = [
-        "clock"
-      ];
-      modules-center = [
         "sway/workspaces"
         "sway/mode"
-      ];
-      modules-right = [
         "tray"
+      ];
+      modules-center = [
         "network"
         "cpu"
         "memory"
         "temperature"
         "disk"
         "battery"
-        "custom/logout"
+      ];
+      modules-right = [
+        "clock#date"
+        "clock#time"
       ];
 
       tray = {
@@ -44,24 +61,24 @@ in {
       network = {
         interval = 1;
 
-        format = "🌐";
+        format = "${icon ""} Disabled";
         tooltip = "Networking disabled";
 
-        format-wifi = "⚠️ {ipaddr}";
+        format-wifi = "${icon ""} {signalStrength:02}%";
         tooltip-format-wifi = "{essid} {signalStrength}% {ipaddr}";
 
-        format-ethernet = "{ipaddr}";
+        format-ethernet = "${icon ""} Eth";
         tooltip-format-ethernet = "Ethernet {ipaddr}";
 
-        format-disconnected = "127.0.0.1";
+        format-disconnected = "${icon ""} Disconnected";
         tooltip-format-disconnected = "Disconnected";
 
         on-click = lib.mkIf (cfg.network.onClick != null) "exec ${cfg.network.onClick}";
       };
 
       cpu = {
-        format = "{usage:03}";
-        interval = 5;
+        format = "${icon ""} {usage:02}%";
+        interval = 1;
         on-click = "exec ${cfg.cpu.onClick}";
         states = {
           warning = 70;
@@ -70,8 +87,8 @@ in {
       };
 
       memory = {
-        interval = 5;
-        format = "{percentage:03}";
+        interval = 1;
+        format = ''${icon ""} {percentage:02}%'';
         on-click = lib.mkIf (cfg.memory.onClick != null) "exec ${cfg.memory.onClick}";
         tooltip-format = "{used:0.1f}/{total:0.1f}GB RAM";
         states = {
@@ -81,15 +98,15 @@ in {
       };
 
       temperature = {
-        interval = 5;
-        format = "{temperatureC:03}";
+        interval = 1;
+        format = "${icon ""} {temperatureC:02}°C";
         tooltip-format = "{temperatureC}°C";
         critical-threshold = 80;
       };
 
       disk = {
         interval = 60;
-        format = "{percentage_free:03}";
+        format = "${icon ""} {percentage_used:02}%";
         tooltip-format = "{used} of {total} SSD";
         on-click = lib.mkIf (cfg.disk.onClick != null) ''exec ${cfg.disk.onClick}'';
       };
@@ -97,26 +114,36 @@ in {
       # https://github.com/Alexays/Waybar/wiki/Module:-Battery
       battery = {
         interval = 1;
-        format = "{capacity:03}";
-        format-charging = "{capacity:03}";
-        format-discharging = "{capacity:03}";
-        tooltip-format = "Battery {timeTo}";
+        format = "${icon ""} {capacity:02}%";
+        tooltip-format = "{timeTo}";
+
+        format-charging = "${icon ""} {capacity}%";
+        tooltip-format-charging = "{timeTo}";
+
+        format-discharging = "${icon ""} {capacity}%";
+        tooltip-format-discharging = "{timeTo}";
+
         states = {
           good = 95;
-          warning = 30;
-          critical = 15;
+          warning = 20;
+          critical = 10;
         };
       };
 
-      "clock" = {
+      "clock#date" = {
         tooltip = false;
-        format = "{:%Y-%m-%d %H:%M}";
+
+        # https://fmt.dev/dev/syntax.html#chrono-specs
+        format = "{:%d %b %Y}";
+        on-click = lib.mkIf (cfg.date.onClick != null) ''exec ${cfg.date.onClick}'';
+      };
+      "clock#time" = {
+        tooltip = false;
+        format = "{:%H:%M}";
       };
 
-      "custom/logout" = {
-        format = "⏻";
-        tooltip = false;
-        on-click = lib.mkIf (cfg.logout.onClick != null) ''exec ${cfg.logout.onClick}'';
+      "sway/mode" = {
+        format = "<sup>{}</sup>";
       };
     };
   };

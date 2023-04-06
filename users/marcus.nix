@@ -18,18 +18,14 @@
 
       plex-media-player
 
+      swaybg
       wl-clipboard
       ranger
 
       networking
 
       dunst
-
-      fira-code
-      fira-code-symbols
     ];
-
-    fonts.fontconfig.enable = true;
 
     programs.brightness = {
       enable = true;
@@ -61,7 +57,10 @@
 
     programs.logout.enable = true;
 
-    themes.light.enable = true;
+    themes.light = {
+      enable = true;
+      colors.waybar.primary = "1e88eb";
+    };
 
     programs.fish = {
       enable = true;
@@ -84,7 +83,22 @@
 
     programs.alacritty = {
       enable = true;
-      settings.window.padding = { x = 5; y = 5; };
+
+      # https://github.com/alacritty/alacritty/blob/v0.11.0/alacritty.yml
+      settings = {
+        window.padding = { x = 10; y = 10; };
+        window.opacity = 0.95;
+        font = rec {
+          normal.family = "FiraCode Nerd font";
+          normal.style = "Regular";
+
+          bold.family = normal.family;
+          bold.style = "Bold";
+
+          italic.family = normal.family;
+          italic.style = "Light";
+        };
+      };
     };
 
     programs.gh.enable = true;
@@ -105,25 +119,29 @@
     
     programs.rofi.enable = true;
 
-    programs.waybar = {
+    programs.waybar = let
+      alacritty = "${pkgs.alacritty}/bin/alacritty";
+    in {
       enable = true;
-      systemd.enable = true;
       marcusBar = {
         enable = true;
         network.onClick = ''${pkgs.networking}/bin/networking'';
-        cpu.onClick =     ''alacritty -c htop --soft-key=PERCENT_CPU'';
-        memory.onClick =  ''alacritty -c htop --soft-key=PERCENT_MEM'';
-        disk.onClick =    ''alacritty -c htop --soft-key=IO_RATE'';
-        logout.onClick =  ''${pkgs.logout}/bin/logout'';
+        cpu.onClick =     ''${alacritty} -e htop --sort-key=PERCENT_CPU'';
+        memory.onClick =  ''${alacritty} -e htop --sort-key=PERCENT_MEM'';
+        disk.onClick =    ''${alacritty} -e htop --sort-key=IO_RATE'';
+        date.onClick =    ''${pkgs.xdg-utils}/bin/xdg-open https://calendar.proton.me/u/1'';
+        colors.primary = "1e88eb";
       };
     };
 
     programs.toggle.enable = true;
-    wayland.windowManager.sway = {
+    wayland.windowManager.sway = let
+      modifier = "Mod1";
+    in {
       enable = true;
 
-      config = rec {
-        modifier = "Mod1";
+      config = {
+        inherit modifier;
         bars = [];
         terminal = "alacritty";
         menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -i -display-drun Launch";
@@ -135,10 +153,12 @@
           tap = "enabled";
         };
 
+        output."*".background = ''~/Downloads/wallpaper-seafoam.jpg fill'';
+
         gaps = {
           smartBorders = "on";
-          smartGaps = true;
-          inner = 5;
+          smartGaps = false;
+          inner = 10;
         };
 
         keybindings = lib.mkOptionDefault {
@@ -154,6 +174,19 @@
           XF86MonBrightnessDown = ''exec ${pkgs.brightness}/bin/brightness down'';
         };
       };
+
+      # Ordinarily waybar would lauch itself, but you can't do that if you want
+      # to use "hide" mode so it appears only when holding the Sway modifier key.
+      # https://github.com/Alexays/Waybar/wiki/Configuration
+      # https://github.com/Alexays/Waybar/pull/1244
+      extraConfig = ''
+        bar {
+          swaybar_command waybar
+          mode hide
+          hidden_state hide
+          modifier ${modifier}
+        }
+      '';
     };
   };
 }
