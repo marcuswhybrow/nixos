@@ -12,27 +12,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-
-    programs.git.delta.options.light = true;
-
-    programs.neovim = {
-      plugins = [
-        (pkgs.vimUtils.buildVimPluginFrom2Nix rec {
-          pname = "github-nvim-theme";
-          version = "0.0.7";
-          src = pkgs.fetchFromGitHub {
-            owner = "projekt0n";
-            repo = "github-nvim-theme";
-            rev = "refs/tags/v${version}";
-            sha256 = "sha256-Qm9ffdkHfG5+PLQ8PbOeFMywBbKVGqX8886clQbJzyg=";
-          };
-        })
-      ];
-      extraConfig = ''
-        colorscheme github_light
-      '';
-    };
-
     wayland.windowManager.sway.config = {
       output."*".background = lib.mkDefault ''#${cfg.background} solid_color'';
       colors = {
