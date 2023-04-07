@@ -1,4 +1,4 @@
-{ config, lib, pkgs, types, helpers, ... }: let
+{ config, lib, pkgs, types, ... }: let
   cfg = config.programs.waybar.marcusBar;
 in {
   options.programs.waybar.marcusBar = {

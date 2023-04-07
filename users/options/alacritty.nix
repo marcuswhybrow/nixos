@@ -1,4 +1,4 @@
-{ config, pkgs, lib, types, helpers, ... }: let
+{ config, pkgs, lib, types, ... }: let
   cfg = config.programs.alacritty;
 in {
   options.programs.alacritty = {

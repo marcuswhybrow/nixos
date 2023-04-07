@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }: {
+{ lib, pkgs, config, helpers, ... }: {
   environment.systemPackages = with pkgs; [
     vim
 
@@ -32,7 +32,7 @@
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
-  #i18n.extraLocaleSettings = helpers.config.localeForAll config.i18n.defaultLocale;
+  i18n.extraLocaleSettings = helpers.config.localeForAll config.i18n.defaultLocale;
   console.keyMap = "uk";
 
   services.xserver = {
