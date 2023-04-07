@@ -36,7 +36,6 @@
     programs.brightness = {
       enable = true;
       onChange = ''
-        echo "!$brightness!"
         ${pkgs.dunst}/bin/dunstify \
         --appname changeBrightness \
         --urgency low \
