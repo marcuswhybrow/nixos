@@ -122,10 +122,10 @@ in {
         format = "${icon ""} {capacity:02}%";
         tooltip-format = "{timeTo}";
 
-        format-charging = "${icon ""} {capacity}%";
+        format-charging = "${icon ""} {capacity:02}%";
         tooltip-format-charging = "{timeTo}";
 
-        format-discharging = "${icon ""} {capacity}%";
+        format-discharging = "${icon ""} {capacity:02}%";
         tooltip-format-discharging = "{timeTo}";
 
         states = {

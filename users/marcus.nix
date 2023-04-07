@@ -6,7 +6,9 @@
     shell = pkgs.fish;
   };
 
-  home-manager.users.marcus = {
+  home-manager.users.marcus = let
+    primaryColor = "#1e88eb";
+  in {
 
     home.packages = with pkgs; [
       # htop requires lsof when you press `l` on a process
@@ -29,6 +31,8 @@
     services.dunst = {
       enable = true;
       lightTheme = true;
+      frame.color = primaryColor;
+      foreground = primaryColor;
     };
 
     programs.brightness = {
@@ -69,6 +73,7 @@
         y = ''vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d --date yesterday).md'';
       };
       functions = {
+        fish_greeting = "";
         timeline = ''
           set days (if set --query $argv[1]; echo $argv[1]; else; echo 0; end)
           vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d --date "$days days ago").md
@@ -167,7 +172,7 @@
         memory.onClick =  ''${alacritty} -e htop --sort-key=PERCENT_MEM'';
         disk.onClick =    ''${alacritty} -e htop --sort-key=IO_RATE'';
         date.onClick =    ''${pkgs.xdg-utils}/bin/xdg-open https://calendar.proton.me/u/1'';
-        colors.primary = "#1e88eb";
+        colors.primary = primaryColor;
       };
     };
 
