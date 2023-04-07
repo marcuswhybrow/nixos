@@ -4,9 +4,9 @@
   ];
 
   config.home-manager.users.marcus = {
-    home.packages = with pkgs; [
-      networking
-    ];
+    programs.networking.enable = true;
+    programs.alacritty.enable = true;
+    programs.htop.enable = true;
 
     programs.waybar = let
       alacritty = "${pkgs.alacritty}/bin/alacritty";
