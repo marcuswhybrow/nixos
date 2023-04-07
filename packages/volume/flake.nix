@@ -61,7 +61,7 @@
               executable = true;
               text = ''
                 export step=${toString cfg.step}
-                export unmuteOnChange=${toString cfg.unmuteOnChange}
+                export unmuteOnChange=${if cfg.unmuteOnChange then "true" else "false"}
               '';
             };
 

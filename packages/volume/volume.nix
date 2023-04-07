@@ -13,6 +13,7 @@
       [[ -f $config/init ]] && source $config/init
 
       step=''${step:-5}
+      unmuteOnChange=''${unmuteOnChange:-true}
 
       muteArgs=$([[ $unmuteOnChange == true ]] && echo "--unmute")
 
