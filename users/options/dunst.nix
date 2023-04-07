@@ -8,11 +8,17 @@ in {
     padding = lib.mkOption { type = types.int; default = 20; };
     background = lib.mkOption { type = types.str; default = "#ffffff"; };
     foreground = lib.mkOption { type = types.str; default = "#000000"; };
+    highlight = lib.mkOption { type = types.str; default = "#000000"; };
+    progressBar = {
+      height = lib.mkOption { type = types.int; default = 20; };
+      frame.width = lib.mkOption {type = types.int; default = 3; };
+    };
   };
 
   config = lib.mkIf cfg.lightTheme {
     # https://gitlab.manjaro.org/profiles-and-settings/manjaro-theme-settings/-/blob/master/skel/.config/dunst/dunstrc
     # See man 5 dunst
+    # TODO Use or fix services.dunst.settings
     xdg.configFile."dunst/dunstrc".text = ''
       [global]
         origin = top-right
@@ -34,8 +40,8 @@ in {
 
         dmenu = "${pkgs.rofi}/bin/rofi -show dmenu -p Notification"
 
-        progress_bar_height = 20
-        progress_bar_frame_width = 2
+        progress_bar_height = ${toString cfg.progressBar.height}
+        progress_bar_frame_width = ${toString cfg.progressBar.frame.width}
 
         # distance between notifications
         gap_size = 10
@@ -44,6 +50,7 @@ in {
 
         background = "${cfg.background}"
         foreground = "${cfg.foreground}"
+        highlight = "${cfg.highlight}"
 
 
       [urgency_low]

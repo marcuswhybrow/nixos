@@ -46,8 +46,12 @@
     programs.rofi.lightTheme = true;
     programs.git.delta.options.light = true;
 
-    services.dunst.lightTheme = true;
-    services.dunst.frame.color = primaryColor;
-    services.dunst.foreground = primaryColor;
+    services.dunst = {
+      lightTheme = true;
+      frame.color = primaryColor;  # border
+      foreground = primaryColor;   # text
+      highlight = primaryColor;    # progress bar
+      progressBar.height = 30;
+    };
   };
 }

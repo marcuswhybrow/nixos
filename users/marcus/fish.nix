@@ -3,8 +3,8 @@
     programs.fish = {
       enable = true;
       shellAbbrs = {
-        c = ''vim ~/.dotfiles/systems/(hostname).nix'';
         d = ''cd ~/.dotfiles'';
+        c = ''cd ~/.dotfiles && vim users/(whoami)/default.nix'';
         config= ''cd ~/.config'';
 
         t = ''vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d).md'';
