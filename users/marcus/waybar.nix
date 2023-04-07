@@ -12,13 +12,14 @@
       alacritty = "${pkgs.alacritty}/bin/alacritty";
     in {
       enable = true;
-      marcusBar = {
+      marcusBar = rec {
         enable = true;
-        network.onClick = ''${pkgs.networking}/bin/networking'';
-        cpu.onClick =     ''${alacritty} -e htop --sort-key=PERCENT_CPU'';
-        memory.onClick =  ''${alacritty} -e htop --sort-key=PERCENT_MEM'';
-        disk.onClick =    ''${alacritty} -e htop --sort-key=IO_RATE'';
-        date.onClick =    ''${pkgs.xdg-utils}/bin/xdg-open https://calendar.proton.me/u/1'';
+        network.onClick =   ''${pkgs.networking}/bin/networking'';
+        wifiAlarm.onClick = network.onClick;
+        cpu.onClick =       ''${alacritty} -e htop --sort-key=PERCENT_CPU'';
+        memory.onClick =    ''${alacritty} -e htop --sort-key=PERCENT_MEM'';
+        disk.onClick =      ''${alacritty} -e htop --sort-key=IO_RATE'';
+        date.onClick =      ''${pkgs.xdg-utils}/bin/xdg-open https://calendar.proton.me/u/1'';
       };
     };
   };

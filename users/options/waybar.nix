@@ -10,6 +10,7 @@ in {
     disk.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
     logout.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
     date.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
+    wifiAlarm.onClick = lib.mkOption { type = with types; nullOr str; default = null; };
 
     colors = {
       primary = lib.mkOption { type = types.str; default = "#cccccc"; };
@@ -44,6 +45,7 @@ in {
         "tray"
       ];
       modules-center = [
+        "custom/wifi-alarm"
         "network"
         "cpu"
         "memory"
@@ -81,10 +83,24 @@ in {
         on-click = lib.mkIf (cfg.network.onClick != null) "exec ${cfg.network.onClick}";
       };
 
+      "custom/wifi-alarm" = {
+        # This detmines if the WiFi radio is one, when the connection is not a wireless interface
+        # Ref: https://unix.stackexchange.com/questions/260235/command-to-detect-if-internet-connection-is-wired-or-wireless
+        exec = ''
+          ip route get 8.8.8.8 2> /dev/null | \
+          grep -Po 'dev \K\w+' | \
+           grep -qFf - /proc/net/wireless \
+          || [[ $(nmcli radio wifi) == enabled ]] \
+          && echo '⚠️'
+        '';
+        interval = 5;
+        on-click = lib.mkIf (cfg.wifiAlarm.onClick != null) "exec ${cfg.wifiAlarm.onClick}";
+      };
+
       cpu = {
         format = "${icon ""} {usage:02}%";
         interval = 1;
-        on-click = "exec ${cfg.cpu.onClick}";
+        on-click = lib.mkIf (cfg.cpu.onClick != null) "exec ${cfg.cpu.onClick}";
         states = {
           warning = 70;
           critical = 90;
@@ -184,6 +200,10 @@ in {
         background: transparent;
         padding: 0;
         margin: 25px 15px;
+      }
+
+      #custom.wifi-alarm {
+
       }
 
       #workspaces {
