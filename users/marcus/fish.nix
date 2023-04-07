@@ -15,7 +15,7 @@
 
         gs = ''git status'';
         ga = ''git add .'';
-        gc = ''git commit -am'';
+        gc = ''git commit -am "'';
         gp = ''git push'';
       };
       functions = {
