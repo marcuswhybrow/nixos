@@ -7,8 +7,6 @@
   };
 
   home-manager.users.marcus = {
-    # https://unsplash.com/photos/wQLAGv4_OYs
-    wayland.windowManager.sway.config.output."*".background = ''~/Downloads/wallpaper-inkwater.jpg fill'';
 
     home.packages = with pkgs; [
       # htop requires lsof when you press `l` on a process
@@ -123,9 +121,23 @@
             sha256 = "sha256-Qm9ffdkHfG5+PLQ8PbOeFMywBbKVGqX8886clQbJzyg=";
           };
         })
+
+        # https://github.com/nvim-telescope/telescope.nvim
+        plenary-nvim
+        nvim-web-devicons
+        telescope-fzf-native-nvim
+        telescope-nvim
+        nvim-treesitter
+
+        nvim-surround
       ];
 
+      # https://github.com/nanotee/nvim-lua-guide
       extraLuaConfig = ''
+        -- https://vi.stackexchange.com/questions/3/how-can-i-show-relative-line-numbers
+        vim.api.nvim_command('set number')
+        vim.api.nvim_command('set relativenumber')
+
         require("github-theme").setup({
           transparent = true,
           theme_style = "light",
@@ -178,6 +190,9 @@
           tap = "enabled";
         };
 
+        # https://unsplash.com/photos/wQLAGv4_OYs
+        output."*".background = ''~/Downloads/wallpaper-inkwater.jpg fill'';
+
         gaps = {
           smartBorders = "off";
           smartGaps = false;
@@ -195,6 +210,7 @@
           # XF86AudioNext = ''exec'';
           XF86MonBrightnessUp = ''exec ${pkgs.brightness}/bin/brightness up'';
           XF86MonBrightnessDown = ''exec ${pkgs.brightness}/bin/brightness down'';
+          "Mod4+S" = ''exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save active'';
         };
       };
 
