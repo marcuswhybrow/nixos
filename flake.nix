@@ -62,14 +62,14 @@
     }) {
       marcus-laptop = [
         ./systems/marcus-laptop.nix
-        ./users/marcus.nix
+        ./users/marcus
         ./users/anne.nix
       ];
 
       anne-laptop = [
         ./systems/anne-laptop.nix
         ./users/anne.nix
-        ./users/marcus.nix
+        ./users/marcus
       ];
     };
   };
