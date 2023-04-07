@@ -7,6 +7,9 @@
   };
 
   home-manager.users.marcus = {
+    # https://unsplash.com/photos/wQLAGv4_OYs
+    wayland.windowManager.sway.config.output."*".background = ''~/Downloads/wallpaper-inkwater.jpg fill'';
+
     home.packages = with pkgs; [
       # htop requires lsof when you press `l` on a process
       htop lsof
@@ -157,7 +160,6 @@
       };
     };
 
-
     wayland.windowManager.sway = let
       modifier = "Mod1";
     in {
@@ -176,8 +178,6 @@
           natural_scroll = "enabled";
           tap = "enabled";
         };
-
-        output."*".background = ''~/Downloads/wallpaper-inkwater.jpg fill'';
 
         gaps = {
           smartBorders = "off";
