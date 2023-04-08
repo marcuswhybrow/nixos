@@ -3,91 +3,102 @@
 in {
   options.programs.rofi = {
     lightTheme = lib.mkEnableOption "Whether to enable a light theme";
+    border.width = lib.mkOption { type = types.int; default = 4; };
+    border.color = lib.mkOption { type = types.str; default = "#000000"; };
+    element.selected.color = lib.mkOption { type = types.str; default = "#000000"; };
   };
 
   config = lib.mkIf cfg.lightTheme {
     # Modified from https://github.com/anstellaire/photon-rofi-themes
     # See https://man.archlinux.org/man/rofi-theme.5
-    programs.rofi = {
-      font = "FiraCode Nerd Font";
-      theme = "mw-light";
-    };
+    programs.rofi.theme = "mw-light";
 
+    # https://github.com/newmanls/rofi-themes-collection/blob/master/themes/nord-oneline.rasi
+    # https://github.com/davatorium/rofi/blob/next/doc/rofi-theme.5.markdown
+    # This is not CSS
     xdg.dataFile."rofi/themes/mw-light.rasi".text = ''
       * {
-          bg:           #ffffff;
-          bg-border:    #000000;
-          fg:           #333333;
-          accent-bg:    #000000;
-          accent-fg:    #ffffff;
-
-          secondary-fg: #888888;
-
-          spacing:          10;
-
-          background-color: @bg;
+        font: "FiraCode-Nerd-Font 12";
+        spacing: 0px;
+        margin: 0px;
+        padding: 0px;
       }
 
       window {
-          width:            40%;
-          border:           2;
-          padding:          5;
-          background-color: @bg;
-          border-color:     @bg-border;
+        location: south;
+        transparency: "real";
+        background-color: transparent;
+        width: 100%;
+        margin: 100px; 
+        spacing: 20px;
+        children: [ horibox ];
       }
 
-      inputbar {
-          spacing:    0px;
-          padding:    5px 5px 0px 5px;
-          text-color: @fg;
-          children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+      horibox {
+        orientation: horizontal;
+        children: [ prompt, entry, listview ];
+        background-color: #ffffff;
+        border-color: ${cfg.border.color};
+        border: ${toString cfg.border.width}px;
+        border-radius: ${toString cfg.border.width}px;
+        padding: 24px 20px;
+        spacing: 10px;
       }
 
       prompt {
-          spacing:    0;
-          text-color: @fg;
-      }
-
-      textbox-prompt-colon {
-          expand:     false;
-          str:        ":";
-          margin:     0px 0.3em 0em 0em ;
-          text-color: @fg;
+        text-color: #000000;
+        spacing: 0px;
       }
 
       entry {
-          spacing:    5px;
-          text-color: @fg;
+        placeholder: "Filter...";
+        placeholder-color: #888888;
+        expand: false;
+        width: 10em;
       }
 
       listview {
-          fixed-height: 0;
-          spacing:      0px;
-          scrollbar:    false;
-          lines:        20;
+        layout: horizontal;
+        spacing: 10px;
       }
 
       element {
-          border:  0;
-          padding: 5px 5px 5px 5px;
-          background-color: @bg;
-          text-color:       @fg;
+        text-color: #888888;
+        spacing: 10px;
+        padding: 0;
       }
 
-      element.selected {
-          background-color: @accent-bg;
-          text-color:       @accent-fg;
+      element-icon {
+        size: 1em;
+        background-color: transparent;
       }
 
       element-text {
-          background-color: inherit;
-          text-color:       inherit;
+        text-color: inherit;
+        background-color: transparent;
       }
 
-      message {
-          padding: 0 5px;
-          text-color: @secondary-fg;
+      element normal urgent {
+        text-color: #ff0000;
       }
+
+      element normal active {
+        text-color: #0000ff;
+      }
+
+      element selected {
+        text-color: ${cfg.element.selected.color};
+      }
+
+      element selected normal {
+      }
+
+      element selected urgent {
+      }
+
+      element selected active {
+      }
+
 
     '';
 

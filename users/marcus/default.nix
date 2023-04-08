@@ -43,8 +43,12 @@
     programs.waybar.marcusBar.colors.primary = primaryColor;
     programs.alacritty.lightTheme = true;
     programs.alacritty.settings.window.opacity = 0.95;
-    programs.rofi.lightTheme = true;
     programs.git.delta.options.light = true;
+
+    programs.rofi = {
+      lightTheme = true;
+      border.color = primaryColor;
+    };
 
     services.dunst = {
       lightTheme = true;

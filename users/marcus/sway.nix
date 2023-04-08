@@ -49,7 +49,7 @@
         inherit modifier;
         bars = [];
         terminal = "alacritty";
-        menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -i -display-drun Launch";
+        menu = ''${pkgs.rofi}/bin/rofi -show drun -i -drun-display-format {name} -theme-str 'horibox { children: [ entry, listview ]; } entry { placeholder: "Launch..."; }' '';
 
         input."*" = {
           repeat_delay = "300";
