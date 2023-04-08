@@ -80,6 +80,8 @@
           XF86MonBrightnessUp = ''exec ${pkgs.brightness}/bin/brightness up'';
           XF86MonBrightnessDown = ''exec ${pkgs.brightness}/bin/brightness down'';
           "Print" = ''exec "${screenshotNotification}; ${pkgs.sway-contrib.grimshot}/bin/grimshot save output"'';
+          "Mod4+B" = ''exec ${pkgs.brave}/bin/brave'';
+          "Mod4+D" = ''exec "${pkgs.alacritty}/bin/alacritty --working-directory ~/.dotfiles --command vim .'';
         };
       };
 
