@@ -36,6 +36,7 @@
       '';
     };
 
+
     programs.rofi.enable = true;
 
     wayland.windowManager.sway = let
@@ -66,7 +67,9 @@
           inner = 10;
         };
 
-        keybindings = lib.mkOptionDefault {
+        keybindings = let
+          screenshotNotification = ''${pkgs.dunst}/bin/dunstify --appname screenshot --urgency low --timeout 500 Screenshot'';
+        in lib.mkOptionDefault {
           "${modifier}+Escape" = ''exec ${pkgs.logout}/bin/logout'';
           XF86AudioMute = ''exec ${pkgs.volume}/bin/volume toggle-mute'';
           XF86AudioLowerVolume = ''exec ${pkgs.volume}/bin/volume down'';
@@ -76,7 +79,7 @@
           # XF86AudioNext = ''exec'';
           XF86MonBrightnessUp = ''exec ${pkgs.brightness}/bin/brightness up'';
           XF86MonBrightnessDown = ''exec ${pkgs.brightness}/bin/brightness down'';
-          "Mod4+S" = ''exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save active'';
+          "Print" = ''exec "${screenshotNotification}; ${pkgs.sway-contrib.grimshot}/bin/grimshot save output"'';
         };
       };
 
