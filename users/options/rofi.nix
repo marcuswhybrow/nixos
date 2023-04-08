@@ -36,7 +36,7 @@ in {
 
       horibox {
         orientation: horizontal;
-        children: [ prompt, entry, listview ];
+        children: [ entry, listview ];
         background-color: #ffffff;
         border-color: ${cfg.border.color};
         border: ${toString cfg.border.width}px;

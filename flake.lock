@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1680968260,
-        "narHash": "sha256-g6+lLtSrdcCmsY57xD6Y9Z/h528MJW9LOo8OIj3gc0E=",
+        "lastModified": 1680988228,
+        "narHash": "sha256-HOrXj8JWkosT5FkiZQ223qDOXjZBi+028IzHfFc88eo=",
         "owner": "marcuswhybrow",
         "repo": "cheeky-scripts",
-        "rev": "f18284d0be69b800e9e355ade70caf490a9ad1a3",
+        "rev": "25608773168375bb31501ebdbf336927e72e5f0c",
         "type": "github"
       },
       "original": {
