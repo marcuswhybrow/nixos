@@ -13,12 +13,11 @@
     };
   };
 
-  outputs = inputs: let
-    helpers = import ./helpers.nix inputs.nixpkgs.lib;
-  in {
+  outputs = inputs: {
     nixosConfigurations = builtins.mapAttrs (hostname: systemModules: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit hostname inputs helpers;
+        inherit hostname inputs;
+        helpers = import ./helpers.nix inputs.nixpkgs.lib;
       };
       modules = systemModules ++ [
         ({ config, hostname, lib, helpers, ... }: {
