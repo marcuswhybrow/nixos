@@ -15,15 +15,13 @@
 
         gs = ''git status'';
         ga = ''git add .'';
-        gc = ''git commit -am "'';
+        gc = ''git commit -am'';
         gp = ''git push'';
+        gd = ''git diff'';
       };
+
       functions = {
         fish_greeting = "";
-        timeline = ''
-          set days (if set --query $argv[1]; echo $argv[1]; else; echo 0; end)
-          vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d --date "$days days ago").md
-        '';
       };
       loginShellInit = ''sway'';
     };
