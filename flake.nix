@@ -11,11 +11,6 @@
       url = "github:marcuswhybrow/cheeky-scripts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    brightness.url = "./packages/brightness";
-    volume.url     = "./packages/volume";
-    logout.url     = "./packages/logout";
-    toggle.url     = "./packages/toggle";
   };
 
   outputs = inputs: let
@@ -59,10 +54,6 @@
         ./systems/options/intel-accelerated-video-playback.nix
         inputs.home-manager.nixosModules.home-manager
         inputs.cheeky-scripts.nixosModules.allScripts
-        inputs.brightness.nixosModules.brightness
-        inputs.volume.nixosModules.volume
-        inputs.logout.nixosModules.logout
-        inputs.toggle.nixosModules.toggle
       ];
     }) {
       marcus-laptop = [
