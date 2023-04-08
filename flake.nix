@@ -17,26 +17,24 @@
     nixosConfigurations = builtins.mapAttrs (hostname: systemModules: inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit hostname inputs;
+        inherit (inputs.nixpkgs.lib) types;
         helpers = import ./helpers.nix inputs.nixpkgs.lib;
       };
       modules = systemModules ++ [
-        ({ config, hostname, lib, helpers, ... }: {
+        ({ config, hostname, lib, types, helpers, ... }: {
           nix.settings.experimental-features = [
             "nix-command"
             "flakes"
           ];
           networking = {
-            useDHCP = lib.mkDefault true;
             hostName = hostname; 
             networkmanager.enable = lib.mkDefault true;
-            firewall.enable = lib.mkDefault true;
           };
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = {
-              inherit hostname inputs helpers;
-              inherit (inputs.nixpkgs.lib) types;
+              inherit hostname inputs helpers types;
             };
             sharedModules = [
               { home.stateVersion = config.system.stateVersion; }
