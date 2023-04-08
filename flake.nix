@@ -50,7 +50,7 @@
         ./systems/options/dwl.nix
         ./systems/options/intel-accelerated-video-playback.nix
         inputs.home-manager.nixosModules.home-manager
-        inputs.cheeky-scripts.nixosModules.allScripts
+        inputs.cheeky-scripts.nixosModules.cheeky-scripts
       ];
     }) {
       marcus-laptop = [
