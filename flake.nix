@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
@@ -46,6 +47,12 @@
               ./users/options/dunst.nix
             ];
           };
+          nixpkgs.overlays = [
+            (final: prev: {
+              # Allows cherry picking of unstable packages
+              unstable = import inputs.nixpkgs-unstable { inherit (final) system; };
+            })
+          ];
         })
         ./systems/options/dwl.nix
         ./systems/options/intel-accelerated-video-playback.nix

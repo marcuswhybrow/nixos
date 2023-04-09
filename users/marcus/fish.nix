@@ -26,6 +26,10 @@
       loginShellInit = ''sway'';
     };
 
-    programs.starship.enable = true;
+    programs.starship = {
+      enable = true;
+      package = pkgs.unstable.starship;
+      settings.nix_shell.heuristic = true;
+    };
   };
 }
