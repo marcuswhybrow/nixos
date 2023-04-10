@@ -23,7 +23,10 @@
       functions = {
         fish_greeting = "";
       };
-      loginShellInit = ''sway'';
+
+      # The `dbus-run-session` part allows sway to access Windows SMB
+      # shares without errors. (https://nixos.wiki/wiki/Samba)
+      loginShellInit = ''dbus-run-session sway'';
     };
 
     programs.starship = {
