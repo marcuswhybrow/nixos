@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }: {
   imports = [
     ./telescope.nix
+    ./bufferline.nix
   ];
 
   config.home-manager.users.marcus = {
@@ -10,6 +11,8 @@
       plugins = with pkgs.vimPlugins; [
         vim-fish
         vim-nix
+        vim-go
+        rust-vim
 
         # Docs for install Vim/NeoVim packages with Nix
         # https://github.com/NixOS/nixpkgs/blob/b740337fb5b41e893d456e3b6cd5b62b6dad5098/doc/languages-frameworks/vim.section.md
@@ -43,6 +46,10 @@
             error = "#ff0000"
           }
         })
+
+        -- Rust (https://github.com/rust-lang/rust.vim/)
+        vim.api.nvim_command('syntax enable')
+        vim.api.nvim_command('filetype plugin indent on')
       '';
     };
   };

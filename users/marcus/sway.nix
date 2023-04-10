@@ -85,6 +85,12 @@
         };
       };
 
+      extraConfigEarly = ''
+        # Automatically float
+        for_window [class="mpv"] floating enable
+        for_window [class="feh"] floating enable
+      '';
+
       # Ordinarily waybar would lauch itself, but you can't do that if you want
       # to use "hide" mode so it appears only when holding the Sway modifier key.
       # https://github.com/Alexays/Waybar/wiki/Configuration
