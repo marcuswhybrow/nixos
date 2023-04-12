@@ -1,4 +1,4 @@
-{ config, pkgs, lib, types, ... }: let
+{ config, lib, ... }: let
   cfg = config.wayland.windowManager.sway;
 in {
   options.wayland.windowManager.sway = {
@@ -15,7 +15,7 @@ in {
         indicator = "#ff0000";
 
         # The border of the app with input focus
-        childBorder = "#666666";
+        childBorder = "#ff441e";
       };
       focusedInactive = {
         border = "#ffffff";
@@ -24,7 +24,7 @@ in {
         indicator = "#0000ff";
         # The border of the app in an inactive group that will
         # be selected first
-        childBorder = "#eeeeee"; 
+        childBorder = "#ffffff00"; 
       };
       unfocused = {
         border = "#ffffff";
@@ -33,7 +33,7 @@ in {
         indicator = "#00ff00";
 
         # The border of all other apps
-        childBorder = "#ffffff";
+        childBorder = "#dddddd";
       };
     };
   };
