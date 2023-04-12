@@ -42,6 +42,16 @@
       })
       vim-nix
       lualine-nvim
+      (pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+        pname = "github-nvim-theme";
+        version = "0.0.7";
+        src = pkgs.fetchFromGitHub {
+          owner = "projekt0n";
+          repo = pname;
+          rev = "v${version}";
+          sha256 = "sha256-Qm9ffdkHfG5+PLQ8PbOeFMywBbKVGqX8886clQbJzyg=";
+        };
+      })
     ];
 
     # https://github.com/NixOS/nixpkgs/blob/db24d86dd8a4769c50d6b7295e81aa280cd93f35/pkgs/applications/editors/neovim/wrapper.nix#L13
@@ -55,10 +65,12 @@
 
   luaInit = pkgs.writeText "init.lua" ''
     do
-      -- Line numbers
+      vim.api.nvim_command('set cmdheight=1')
+
       vim.api.nvim_command('set number')
       vim.api.nvim_command('set relativenumber')
     end
+
 
     do
       -- Keymaps
@@ -113,73 +125,195 @@
     end
 
     do
+      -- color theme
+      require("github-theme").setup({
+        transparent = true,
+        hide_inactive_statusline = false,
+      })
+      vim.cmd('colorscheme github_light')
+    end
+
+    do
       -- Lualine
 
       -- https://neovim.io/doc/user/options.html#'showtabline'
       vim.api.nvim_set_option('showtabline', 0)
+      vim.api.nvim_command(':hi! link StatusLine lualine_z_inactive')
+      vim.api.nvim_command(':hi! link StatusLineNC lualine_z_inactive')
+      vim.api.nvim_command(':hi! link SignColumn Normal')
 
-      local colors = {
-        blue   = '#80a0ff',
-        cyan   = '#79dac8',
-        black  = '#000000',
-        white  = '#ffffff',
-        red    = '#ff5189',
-        violet = '#d183e8',
-        grey   = '#cccccc',
+
+      local filename = {
+        'filename',
+        file_status = true,
+        newfile_status = true,
+        path = 1,
+        shorting_target = 40,
+        symbols = {
+          modified = '[+]',
+          readonly = '[-]',
+          unnamed = '[No Name]',
+          newfile = '[New]',
+        },
+        padding = { left = 1, right = 0 },
       }
+
+      local filetype = {
+        'filetype',
+        colored = false,
+        icon_only = true,
+        padding = { left = 1, right = 1 },
+      }
+
+      local diff = {
+        'diff',
+        colored = false,
+        diff_color = {
+          added    = 'DiffAdd',
+          modified = 'DiffChange',
+          removed  = 'DiffDelete',
+        },
+        symbols = {
+          added = '+',
+          modified = '~',
+          removed = '-'
+        },
+      }
+
+      local branch = {
+        'branch',
+        icon = { '', align='right' },
+        padding = { left = 1, right = 0 },
+      }
+
+      local diagnostics = {
+        sources = { 'nvim_lsp', 'nvim_diagnostic' },
+        sections = { 'error', 'warn', 'info', 'hint' },
+
+        diagnostics_color = {
+          error = 'DiagnosticError',
+          warn  = 'DiagnosticWarn',
+          info  = 'DiagnosticInfo',
+          hint  = 'DiagnosticHint',
+        },
+        symbols = {
+          error = 'E',
+          warn = 'W',
+          info = 'I',
+          hint = 'H'
+        },
+        colored = true,
+        update_in_insert = false,
+        always_visible = true,
+      }
+
+      local location = {
+        'location',
+        padding = { left = 0, right = 1 },
+      }
+
+      local progress = {
+        'progress',
+        padding = { left = 1, right = 0 },
+      }
+
+      local active = { bg = '#eaeaed', fg = '#000000' }
+      local inactive = { bg = '#eeeeee', fg = '#000000' }
+      local insert = { fg = '#000000', bg = '#80a0ff' }
+      local visual = { fg = '#000000', bg = '#79dac8' }
+      local replace = { fg = '#000000', bg = '#ff5189' }
+      local command = { fg = '#000000', bg = '#d183e8' }
+
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = '#dddddd' })
+      vim.api.nvim_command('hi SignColumn ctermbg=none')
+
+      local allParts = function(s)
+        return { a = s, b = s, c = s, x = s, y = s, z = s }
+      end
 
       require('lualine').setup({
         options = {
-          globalstatus = false,
-          theme = {
-            normal = {
-              a = { fg = colors.black, bg = 'NONE' },
-              b = { fg = colors.black, bg = 'NONE' },
-              c = { fg = colors.black, bg = 'NONE' },
-              x = { fg = colors.black, bg = 'NONE' },
-              y = { fg = colors.black, bg = 'NONE' },
-              z = { fg = colors.black, bg = 'NONE' },
-            },
-
-            insert = { a = { fg = colors.black, bg = colors.blue } },
-            visual = { a = { fg = colors.black, bg = colors.cyan } },
-            replace = { a = { fg = colors.black, bg = colors.red } },
-
-            inactive = {
-              a = { fg = colors.black, bg = 'NONE' },
-              b = { fg = colors.black, bg = 'NONE' },
-              c = { fg = colors.black, bg = 'NONE' },
-              x = { fg = colors.black, bg = 'NONE' },
-              y = { fg = colors.black, bg = 'NONE' },
-              z = { fg = colors.black, bg = 'NONE' },
-            },
-          },
+          globalstatus = true,
           component_separators = ''',
           section_separators = ''',
-        },
-        sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {
-            'mode',
-            'filename',
+          always_divide_middle = true,
+
+          theme = {
+            normal = {
+              a = active,
+              b = active,
+              c = active,
+              x = active,
+              y = active,
+              z = active,
+            },
+
+            insert = allParts(insert),
+            visual = allParts(visual),
+            replace = allParts(replace),
+
+            inactive = {
+              a = inactive,
+              b = inactive,
+              c = inactive,
+              x = inactive,
+              y = inactive,
+              z = inactive,
+            },
           },
         },
+
+        --[[
+        winbar = {
+          lualine_a = { filename },
+          lualine_b = {},
+        },
+
+        winbar_inactive = {
+          lualine_a = { filename },
+          lualine_b = {},
+        },
+        --]]
+
+        sections = {
+          lualine_a = {
+            filename,
+          },
+          lualine_b = {
+            filetype,
+            branch,
+            diff,
+          },
+          lualine_c = {
+            diagnostics,
+          },
+          lualine_x = {},
+          lualine_y = {
+            progress,
+            location,
+          },
+          lualine_z = {
+            'mode',
+          },
+        },
+
         inactive_sections = {
-          lualine_a = {},
+          lualine_a = { filename },
           lualine_b = {},
           lualine_c = {},
           lualine_x = {},
           lualine_y = {},
-          lualine_z = { 'filename' },
+          lualine_z = {},
         },
+
         extensions = {},
       })
     end
 
+    do
+      -- colors
+      vim.api.nvim_set_hl(0, 'SignColumn', { fg = 'black', bg = 'NONE' })
+    end
   '';
 
   pathPkgs = with pkgs; [
