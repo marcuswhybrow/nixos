@@ -231,8 +231,17 @@
         vim.keymap.set("n", "<leader>gr", "<cmd>Telescope lsp_references<cr>", { buffer = true })
       end)
 
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       require'lspconfig'.gopls.setup{}
       require'lspconfig'.nil_ls.setup{}
+      require'lspconfig'.bashls.setup{}
+      require'lspconfig'.rust_analyzer.setup{}
+      require'lspconfig'.html.setup{}
+      require'lspconfig'.cssls.setup{}
+      require'lspconfig'.jsonls.setup{}
+      require'lspconfig'.eslint.setup{}
+      require'lspconfig'.yamlls.setup{}
+      require'lspconfig'.marksman.setup{}
 
       -- Manual formatting (instead of buffer_autoformat() above)
       --[[
@@ -506,6 +515,12 @@
   pathPkgs = with pkgs; [
     nil
     gopls
+    nodePackages.bash-language-server
+    nodePackages.vscode-langservers-extracted # html css json eslint
+    nodePackages.yaml-language-server
+    rust-analyzer
+    marksman # markdown
+    # https://github.com/hangyav/textLSP has no package
   ];
 
   wrapperScript = pkgs.writeShellScript "vim" ''
