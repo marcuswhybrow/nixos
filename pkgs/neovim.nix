@@ -56,6 +56,7 @@
       undotree
       vim-fugitive
       cmp-nvim-lsp
+      cmp-nvim-lua
       cmp-buffer
       cmp-path
       cmp-cmdline
@@ -211,42 +212,78 @@
     end
 
     do 
-      -- LSP
-      local lsp = require('lsp-zero').preset({})
-
-      lsp.on_attach(function(client, bufnr)
-        lsp.default_keymaps({buffer = bufnr})
-      end)
-
-      lsp.setup_servers({
-        'gopls',
-        'nil_ls',
+      -- LSP & CMP
+      local lsp = require('lsp-zero').preset({
+        -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#manage_nvim_cmp
+        manage_nvim_cmp = {
+          set_sources = "recommended",
+          set_basic_mappings = true,
+          set_extra_mappins = false, 
+          use_luasnip = false,
+          set_format = true,
+          documentation_window = true,
+        }
       })
 
-      local lspconfig = require('lspconfig')
+      lsp.on_attach(function(client, bufnr)
+        lsp.default_keymaps({ buffer = bufnr })
+        lsp.buffer_autoformat()
+        vim.keymap.set("n", "<leader>gr", "<cmd>Telescope lsp_references<cr>", { buffer = true })
+      end)
+
+      require'lspconfig'.gopls.setup{}
+      require'lspconfig'.nil_ls.setup{}
+
+      -- Manual formatting (instead of buffer_autoformat() above)
+      --[[
+      lsp.format_on_save({
+        servers = {
+          ["lua_ls"] = {"lua"},
+        }
+      })
+      --]]
+
+      lsp.set_sign_icons({
+        error = '✘',
+        warn = '▲',
+        hint = '⚑',
+        info = '»',
+      })
 
       lsp.setup()
-    end
 
-    do
-      -- CMP
       local cmp = require('cmp')
       local cmp_action = require('lsp-zero').cmp_action()
 
       cmp.setup({
-        sources = cmp.config.sources({
-          sources = {
-            { name = "path" },
-            { name = "nvim_lsp" },
-          }, {
-            { name = "buffer" },
-          },
-        }),
+        preselect = "item",
 
-        mapping = cmp.mapping.preset.insert({
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        }),
+        completion = {
+          completeopt = "menu,menuone,noinsert",
+        },
+
+        sources = {
+          { name = "path" },
+          { name = "nvim_lsp" },
+          { name = "buffer" },
+          { name = "nvim_lua" },
+        },
+
+        mapping = {
+          ["<Tab>"] = cmp_action.tab_complete(),
+          ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
+
+          ["J"] = cmp_action.tab_complete(),
+          ["K"] = cmp_action.select_prev_or_fallback(),
+          ["L"] = cmp.mapping.confirm({ select = false }),
+
+          ["<Down>"] = cmp_action.tab_complete(),
+          ["<Up>"] = cmp_action.select_prev_or_fallback(),
+          ["<Right>"] = cmp.mapping.confirm({ select = false }),
+
+
+          ["<CR>"] = cmp.mapping.confirm({ select = false }),
+        },
       })
 
       cmp.setup.filetype("gitcommit", {
@@ -272,10 +309,6 @@
           { name = "cmdline" },
         })
       })
-
-      require("lspconfig")[ "nil_ls" ].setup {
-        capabilites = require("cmp_nvim_lsp").default_capabilities(),
-      }
     end
 
     do
