@@ -2,6 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
@@ -9,7 +10,6 @@
     };
 
     cheeky-scripts.url = "github:marcuswhybrow/cheeky-scripts";
-    marcus-neovim.url = "github:marcuswhybrow/marcus-neovim";
   };
 
   outputs = inputs: {
@@ -53,6 +53,7 @@
               inputs = {
                 marcus-neovim = inputs.marcus-neovim.packages.${pkgs.system}.marcus-neovim;
               };
+              custom = inputs.self.packages.${pkgs.system};
             })
           ];
         })
@@ -74,5 +75,14 @@
         ./users/marcus
       ];
     };
-  };
+  } // inputs.flake-utils.lib.eachDefaultSystem (system: let
+    pkgs = inputs.nixpkgs.legacyPackages.${system};
+  in {
+    packages = {
+      neovim = pkgs.callPackage ./pkgs/neovim.nix {};
+      alacritty = pkgs.callPackage ./pkgs/alacritty.nix {};
+      private = pkgs.callPackage ./pkgs/private.nix {};
+    };
+    apps.neovim = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.neovim}/bin/vim"; };
+  });
 }

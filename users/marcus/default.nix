@@ -7,7 +7,9 @@
     ./git.nix
   ];
 
-  config.users.users.marcus = {
+  config.users.users.marcus = let
+    terminalPadding = 20;
+  in {
     description = "Marcus Whybrow";
     isNormalUser = true;
     shell = pkgs.fish;
@@ -17,7 +19,26 @@
       "video"
     ];
 
-    packages = with pkgs; [
+    packages = let 
+      marcus.alacritty = pkgs.custom.alacritty.override {
+        padding = terminalPadding;
+        opacity = 0.95;
+      };
+      marcus.neovim = pkgs.custom.neovim.override {
+        beforeNeovimOpens = ''
+          ${marcus.alacritty}/bin/alacritty msg config \
+            window.padding.x=0 \
+            window.padding.y=0
+          ${pkgs.wtype}/bin/wtype -M ctrl 0
+        '';
+        afterNeovimCloses = ''
+          ${marcus.alacritty}/bin/alacritty msg config \
+            window.padding.x=${toString terminalPadding} \
+            window.padding.y=${toString terminalPadding}
+          ${pkgs.wtype}/bin/wtype -M ctrl 0
+        '';
+      };
+    in with pkgs; [
       # htop requires lsof when you press `l` on a process
       htop lsof
 
@@ -30,7 +51,9 @@
 
       ranger
 
-      inputs.marcus-neovim
+      marcus.alacritty
+      marcus.neovim
+      custom.private
     ];
   };
 
@@ -41,8 +64,6 @@
     # Composition
 
     programs.waybar.marcusBar.colors.primary = primaryColor;
-    programs.alacritty.lightTheme = true;
-    programs.alacritty.settings.window.opacity = 0.95;
     programs.git.delta.options.light = true;
 
     programs.rofi = {
