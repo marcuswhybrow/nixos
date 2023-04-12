@@ -1,10 +1,9 @@
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./sway.nix
     ./waybar.nix
     ./fish.nix
     ./alacritty.nix
-    ./neovim
     ./git.nix
   ];
 
@@ -17,6 +16,7 @@
       "wheel"
       "video"
     ];
+    packages = [];
   };
 
   config.home-manager.users.marcus = let
@@ -35,6 +35,8 @@
       plex-media-player
 
       ranger
+
+      inputs.marcus-neovim
     ];
 
 

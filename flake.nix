@@ -8,10 +8,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cheeky-scripts = {
-      url = "github:marcuswhybrow/cheeky-scripts";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    cheeky-scripts.url = "github:marcuswhybrow/cheeky-scripts";
+    marcus-neovim.url = "github:marcuswhybrow/marcus-neovim";
   };
 
   outputs = inputs: {
@@ -21,8 +19,9 @@
         inherit (inputs.nixpkgs.lib) types;
         helpers = import ./helpers.nix inputs.nixpkgs.lib;
       };
+
       modules = systemModules ++ [
-        ({ config, hostname, lib, types, helpers, ... }: {
+        ({ config, hostname, lib, types, pkgs, helpers, ... }: {
           nix.settings.experimental-features = [
             "nix-command"
             "flakes"
@@ -49,8 +48,11 @@
           };
           nixpkgs.overlays = [
             (final: prev: {
-              # Allows cherry picking of unstable packages
+              # Allows cherry picking of unstable packages with `pkgs.unstable`
               unstable = import inputs.nixpkgs-unstable { inherit (final) system; };
+              inputs = {
+                marcus-neovim = inputs.marcus-neovim.packages.${pkgs.system}.marcus-neovim;
+              };
             })
           ];
         })
