@@ -16,14 +16,8 @@
       "wheel"
       "video"
     ];
-    packages = [];
-  };
 
-  config.home-manager.users.marcus = let
-    primaryColor = "#1e88eb";
-  in {
-
-    home.packages = with pkgs; [
+    packages = with pkgs; [
       # htop requires lsof when you press `l` on a process
       htop lsof
 
@@ -38,7 +32,11 @@
 
       inputs.marcus-neovim
     ];
+  };
 
+  config.home-manager.users.marcus = let
+    primaryColor = "#1e88eb";
+  in {
 
     # Composition
 
