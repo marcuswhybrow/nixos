@@ -55,6 +55,13 @@
       harpoon
       undotree
       vim-fugitive
+      cmp-nvim-lsp
+      cmp-buffer
+      cmp-path
+      cmp-cmdline
+      cmp-cmdline-history
+      nvim-cmp
+      cmp-git
     ];
 
     # https://github.com/NixOS/nixpkgs/blob/db24d86dd8a4769c50d6b7295e81aa280cd93f35/pkgs/applications/editors/neovim/wrapper.nix#L13
@@ -206,7 +213,6 @@
     do 
       -- LSP
       local lsp = require('lsp-zero').preset({})
-      local lspconfig = require('lspconfig')
 
       lsp.on_attach(function(client, bufnr)
         lsp.default_keymaps({buffer = bufnr})
@@ -217,7 +223,59 @@
         'nil_ls',
       })
 
+      local lspconfig = require('lspconfig')
+
       lsp.setup()
+    end
+
+    do
+      -- CMP
+      local cmp = require('cmp')
+      local cmp_action = require('lsp-zero').cmp_action()
+
+      cmp.setup({
+        sources = cmp.config.sources({
+          sources = {
+            { name = "path" },
+            { name = "nvim_lsp" },
+          }, {
+            { name = "buffer" },
+          },
+        }),
+
+        mapping = cmp.mapping.preset.insert({
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        }),
+      })
+
+      cmp.setup.filetype("gitcommit", {
+        source = cmp.config.sources({
+          { name = "cmp_git" },
+        }, {
+          { name = "buffer" },
+        })
+      })
+
+      cmp.setup.cmdline({ "/", "?" }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer" },
+        },
+      })
+
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          { name = "cmdline" },
+        })
+      })
+
+      require("lspconfig")[ "nil_ls" ].setup {
+        capabilites = require("cmp_nvim_lsp").default_capabilities(),
+      }
     end
 
     do
