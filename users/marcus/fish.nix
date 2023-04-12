@@ -21,7 +21,7 @@
       };
 
       functions = {
-        fish_greeting = "";
+        fish_greeting = ''echo "$(whoami) @ $(hostname)"'';
       };
 
       # The `dbus-run-session` part allows sway to access Windows SMB
