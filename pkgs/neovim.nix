@@ -52,6 +52,9 @@
           sha256 = "sha256-Qm9ffdkHfG5+PLQ8PbOeFMywBbKVGqX8886clQbJzyg=";
         };
       })
+      harpoon
+      undotree
+      vim-fugitive
     ];
 
     # https://github.com/NixOS/nixpkgs/blob/db24d86dd8a4769c50d6b7295e81aa280cd93f35/pkgs/applications/editors/neovim/wrapper.nix#L13
@@ -68,7 +71,40 @@
       vim.api.nvim_command('set cmdheight=1')
 
       vim.api.nvim_command('set number')
-      vim.api.nvim_command('set relativenumber')
+    end
+
+    do
+      -- Settings
+      vim.opt.nu = true
+      vim.opt.relativenumber = true
+
+      vim.opt.tabstop = 2
+      vim.opt.softtabstop = 2
+      vim.opt.shiftwidth = 2
+      vim.opt.expandtab = true
+
+      vim.opt.smartindent = true
+
+      vim.opt.wrap = false
+
+      -- Long term undos
+      vim.opt.swapfile = false
+      vim.opt.backup = false
+      vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+      vim.opt.undofile = true
+
+      vim.opt.hlsearch = false
+      vim.opt.incsearch = true
+
+      vim.opt.termguicolors = true
+
+      vim.opt.scrolloff = 8
+      vim.opt.signcolumn = "yes"
+      vim.opt.isfname:append("@-@")
+
+      vim.opt.updatetime = 50
+
+      vim.opt.colorcolumn = "80"
     end
 
 
@@ -85,6 +121,66 @@
           vim.api.nvim_set_option('laststatus', 0)
         end
       end)
+
+      -- Move visual blocks up and down
+      vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+      vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+      -- Conflate lines
+      vim.keymap.set("n", "J", "mzJ`z")
+      -- Page up/down also centers screen 
+      vim.keymap.set("n", "<C-d>", "<C-d>zz")
+      vim.keymap.set("n", "<C-u>", "<C-u>zz")
+      -- Next/prev search also centers screen
+      vim.keymap.set("n", "n", "nzzzv")
+      vim.keymap.set("n", "N", "Nzzzv")
+
+      -- Paste over selection
+      vim.keymap.set("x", "<leader>p", "\"_dP")
+      
+      -- Yank to system clipboard
+      vim.keymap.set("n", "<leader>y", "\"+y")
+      vim.keymap.set("v", "<leader>y", "\"+y")
+      vim.keymap.set("n", "<leader>Y", "\"+Y")
+
+      -- Delete to void register
+      vim.keymap.set("n", "<leader>d", "\"_d")
+      vim.keymap.set("v", "<leader>d", "\"_d")
+
+      -- Unmap Q
+      vim.keymap.set("n", "Q", "<nop>")
+
+      --vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+
+      -- https://neovim.io/doc/user/quickfix.html
+      --vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
+      --vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+      --vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
+      --vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+
+      vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+    end
+
+    do
+      -- Fugitive
+      vim.keymap.set("n", "<leader>g", vim.cmd.Git)
+    end
+
+    do
+      -- Undotree
+      vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+    end
+
+    do
+      -- Harpoon
+      local mark = require("harpoon.mark")
+      local ui = require("harpoon.ui")
+      vim.keymap.set("n", "<leader>a", mark.add_file)
+      vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu) 
+      vim.keymap.set("n", "<C-h>", function() ui.nav_file(1) end) 
+      vim.keymap.set("n", "<C-j>", function() ui.nav_file(2) end) 
+      vim.keymap.set("n", "<C-k>", function() ui.nav_file(3) end) 
+      vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end) 
     end
 
     do
