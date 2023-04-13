@@ -26,29 +26,6 @@
         family: ${font}
         style: 'Light'
   '';
-        /*
-      primary:
-        background: '0xffffff'
-        foreground: '0x000000'
-      normal:
-        white: '0xbbbbbb'
-        black: '0x000000'
-        red: '0xde3d35'
-        green: '0x3e953a'
-        yellow: '0xd2b67b'
-        blue: '0x2f5af3'
-        magenta: '0xa00095'
-        cyan: '0x3e953a'
-      bright:
-        white: '0xffffff'
-        black: '0x000000'
-        red: '0xde3d35'
-        green: '0x3e953a'
-        yellow: '0xd2b67b'
-        blue: '0x2f5af3'
-        magenta: '0xa00095'
-        cyan: '0x3e953a'
-        */
 in stdenv.mkDerivation {
   pname = "private";
   version = "unstable";
