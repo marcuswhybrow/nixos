@@ -1,17 +1,18 @@
 {
   pkgs,
   stdenv,
-  toJSON,
-  recursiveUpdate,
   makeBinaryWrapper,
+  lib,
 
   primaryColor ? "#000000",
   warningColor ? "#ff8800",
   criticalColor ? "#ff0000",
-  terminalCmdPrefix ? null,
   extraConfig ? {},
   iconFont ? "Font Awesome 6 Free",
 }: let
+  inherit (lib) recursiveUpdate;
+  inherit (builtins) toJSON;
+
   config = let
     # I want to use the glyphsfrom Font Awesome, but use a different font for text.
     # Waybar used Pango Markup (https://docs.gtk.org/Pango/pango_markup.html)
@@ -247,7 +248,9 @@ in stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp ${pkgs.waybar}/* $out
+    cp -r ${pkgs.waybar}/share $out/
+    cp ${config} $out/config
+    cp ${style} $out/style.css
     makeWrapper ${pkgs.waybar}/bin/waybar $out/bin/waybar \
       --add-flags "--config ${config} --style ${style}"
   '';

@@ -50,9 +50,7 @@
             (final: prev: {
               # Allows cherry picking of unstable packages with `pkgs.unstable`
               unstable = import inputs.nixpkgs-unstable { inherit (final) system; };
-              inputs = {
-                marcus-neovim = inputs.marcus-neovim.packages.${pkgs.system}.marcus-neovim;
-              };
+
               custom = inputs.self.packages.${pkgs.system};
             })
           ];
@@ -82,6 +80,7 @@
       neovim = pkgs.callPackage ./pkgs/neovim.nix {};
       alacritty = pkgs.callPackage ./pkgs/alacritty.nix {};
       private = pkgs.callPackage ./pkgs/private.nix {};
+      waybar = pkgs.callPackage ./pkgs/waybar.nix {};
     };
     apps.neovim = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.neovim}/bin/vim"; };
   });
