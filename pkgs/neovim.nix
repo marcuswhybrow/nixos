@@ -282,9 +282,11 @@
           ["<Tab>"] = cmp_action.tab_complete(),
           ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
 
+          --[[
           ["J"] = cmp_action.tab_complete(),
           ["K"] = cmp_action.select_prev_or_fallback(),
           ["L"] = cmp.mapping.confirm({ select = false }),
+          --]]
 
           ["<Down>"] = cmp_action.tab_complete(),
           ["<Up>"] = cmp_action.select_prev_or_fallback(),
