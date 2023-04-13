@@ -3,7 +3,7 @@
   stdenv,
   makeBinaryWrapper,
 
-  padding ? 0,
+  padding ? 20,
   opacity ? 1,
   fish ? pkgs.fish,
 }: let
@@ -70,7 +70,7 @@ in stdenv.mkDerivation {
     Version=1.0
     Name=Private
     GenericName=Private fish shell with dark Alacritty theme
-    Terminal=true
+    Terminal=false
     Type=Application
     Exec=$out/bin/private
     EOF
