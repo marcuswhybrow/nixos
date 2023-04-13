@@ -1,23 +1,19 @@
 { pkgs, lib, ... }: {
+
   users.users.anne = {
     description = "Anne Whybrow";
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" ];
     shell = pkgs.fish;
+    packages = with pkgs; [
+      brave
+      pcmanfm
+
+      marcus.alacritty
+    ];
   };
 
   home-manager.users.anne = {
-    home.packages = with pkgs; [
-      brave
-      pcmanfm
-    ];
-
-    programs.alacritty = {
-      enable = true;
-      settings.window.padding = { x = 5; y = 5; };
-      lightTheme = true;
-      firaCodeNerdFont = true;
-    };
 
     programs.rofi = {
       enable = true;

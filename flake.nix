@@ -39,8 +39,6 @@
             sharedModules = [
               { home.stateVersion = config.system.stateVersion; }
               ./users/options/git.nix
-              ./users/options/waybar.nix
-              ./users/options/alacritty.nix
               ./users/options/sway.nix
               ./users/options/rofi.nix
               ./users/options/dunst.nix
