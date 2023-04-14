@@ -37,6 +37,7 @@ in {
           inherit primaryColor;
           warningColor = "#ff8800";
           criticalColor = "#ff0000";
+          iconFont = "Font Awesome 6 Free";
           extraConfig = let 
             openInAlacritty = "${alacritty} --command";
             htop = "${pkgs.htop}/bin/htop";
@@ -81,13 +82,20 @@ in {
       marcus.neovim
       marcus.waybar
 
+      # I tried packaging git tooling.
+      # 1. The config file locations cannot be overriden
+      # 2. makeWrapper --add-flags can wrap config that way,
+      #    but they must come before or after any arguments.
+      #    Before: `git <flags> commit` fails.
+      #    After: `git commit -m "" <flags>` become non-overridable.
+      # 3. Alternative implementation might be wrappable (gitoxide?)
+      git gh delta
+
       custom.private
     ];
   };
 
   config.home-manager.users.marcus = {
-    programs.git.delta.options.light = true;
-
     programs.rofi = {
       lightTheme = true;
       border.color = primaryColor;

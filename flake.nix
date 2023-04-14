@@ -38,7 +38,6 @@
             };
             sharedModules = [
               { home.stateVersion = config.system.stateVersion; }
-              ./users/options/git.nix
               ./users/options/sway.nix
               ./users/options/rofi.nix
               ./users/options/dunst.nix
@@ -79,6 +78,7 @@
       alacritty = pkgs.callPackage ./pkgs/alacritty.nix {};
       private = pkgs.callPackage ./pkgs/private.nix {};
       waybar = pkgs.callPackage ./pkgs/waybar.nix {};
+      git = pkgs.callPackage ./pkgs/git.nix {};
     };
     apps.neovim = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.neovim}/bin/vim"; };
   });
