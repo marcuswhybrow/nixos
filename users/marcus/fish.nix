@@ -2,13 +2,17 @@
   config.home-manager.users.marcus = {
     programs.fish = {
       enable = true;
-      shellAbbrs = {
-        d = ''cd ~/.dotfiles'';
-        c = ''cd ~/.dotfiles && vim users/(whoami)/default.nix'';
-        config= ''cd ~/.config'';
+      shellAbbrs = let
+        nixos = "~/.nixos";
+        config = "~/.config";
+        obsidian = "~/obsidian/Personal";
+      in {
+        d = ''cd ${nixos}'';
+        c = ''cd ${nixos} && vim users/(whoami)/default.nix'';
+        config= ''cd ${config}'';
 
-        t = ''vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d).md'';
-        y = ''vim ~/obsidian/Personal/Timeline/(date +%Y-%m-%d --date yesterday).md'';
+        t = ''vim ${obsidian}/Timeline/(date +%Y-%m-%d).md'';
+        y = ''vim ${obsidian}/Timeline/(date +%Y-%m-%d --date yesterday).md'';
 
         osswitch = ''sudo nixos-rebuild switch'';
         ostest = ''sudo nixos-rebuild test'';

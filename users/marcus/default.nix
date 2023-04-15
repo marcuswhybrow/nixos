@@ -5,7 +5,6 @@ in {
   imports = [
     ./sway.nix
     ./fish.nix
-    ./git.nix
   ];
 
   config.nixpkgs.overlays = [
