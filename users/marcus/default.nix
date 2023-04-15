@@ -56,9 +56,12 @@ in {
         };
 
         dunst = prev.custom.dunst.override {
-          extraConfig.global.frame_color = primaryColor;
-          extraConfig.global.foreground = primaryColor;
-          extraConfig.global.highlight = primaryColor;
+          extraConfig.global = {
+            dmenu = "${pkgs.marcus.rofi}/bin/rofi -show dmenu -p Notification";
+            frame_color = primaryColor;
+            foreground = primaryColor;
+            highlight = primaryColor;
+          };
         };
       };
     })
