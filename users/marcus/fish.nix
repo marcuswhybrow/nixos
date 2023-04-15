@@ -30,7 +30,9 @@
 
       # The `dbus-run-session` part allows sway to access Windows SMB
       # shares without errors. (https://nixos.wiki/wiki/Samba)
-      loginShellInit = ''dbus-run-session sway'';
+      loginShellInit = ''
+        ${pkgs.dbus}/bin/dbus-run-session ${pkgs.marcus.sway}/bin/sway
+      '';
     };
 
     programs.starship = {

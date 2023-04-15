@@ -1,14 +1,79 @@
 { pkgs, lib, ... }: {
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      anne = {
+        sway = prev.custom.sway.override {
+          replaceConfig = ''
+            font pango:monospace 8.000000
+            floating_modifier Mod4
+            default_border pixel 2
+            default_floating_border pixel 2
+            hide_edge_borders none
+            focus_wrapping no
+            focus_follows_mouse yes
+            focus_on_window_activation smart
+            mouse_warping output
+            workspace_layout default
+            workspace_auto_back_and_forth no
+
+            client.focused #ff0000 #ff0000 #000000 #ff0000 #ff441e
+            client.focused_inactive #ffffff #ffffff #000000 #0000ff #ffffff00
+            client.unfocused #ffffff #ffffff #000000 #00ff00 #dddddd
+            client.urgent #2f343a #900000 #ffffff #900000 #900000
+            client.placeholder #000000 #0c0c0c #ffffff #000000 #0c0c0c
+            client.background #ffffff
+
+            input "*" {
+              natural_scroll enabled
+              repeat_delay 300
+              tap enabled
+              xkb_layout gb
+            }
+
+            output "*" {
+              background #ffffff solid_color
+            }
+
+            bindsym --release Super_L exec ${final.rofi}/bin/rofi -show drun -show-icons -display-drun -i Apps
+            bindsym Mod1+Control+Shift+Escape mode default
+            bindsym Mod4+Escape kill
+            bindsym Mod4+Left focus left
+            bindsym Mod4+Right focus right
+            bindsym Mod4+Shift+Escape exec ${prev.custom.sway}/bin/swaynag -t warning -m "Shutdown?" -b "Shutdown" "systemctl poweroff"
+            bindsym Mod4+Shift+Left move left
+            bindsym Mod4+Shift+Right move right
+
+            bindsym XF86AudioLowerVolume exec ${final.volume}/bin/volume down
+            bindsym XF86AudioMute exec ${final.volume}/bin/volume toggle-mute
+            bindsym XF86AudioRaiseVolume exec ${final.volume}/bin/volume up
+            bindsym XF86MonBrightnessDown exec ${final.brightness}/bin/brightness down
+            bindsym XF86MonBrightnessUp exec ${final.brightness}/bin/brightness up
+
+
+            gaps inner 5
+            smart_gaps on
+            smart_borders on
+
+            exec "${final.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; systemctl --user start sway-session.target"
+            exec ${final.brave}/bin/brave
+          '';
+        };
+      };
+    })
+  ];
+
   users.users.anne = {
     description = "Anne Whybrow";
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" ];
     shell = pkgs.fish;
+
     packages = with pkgs; [
       brave
       pcmanfm
 
+      anne.sway
       marcus.alacritty
       marcus.rofi
       marcus.dunst
@@ -20,7 +85,7 @@
   in {
     programs.fish = {
       enable = true;
-      loginShellInit = ''sway'';
+      loginShellInit = ''${pkgs.anne.sway}/bin/sway'';
     };
 
     programs.starship.enable = true;
@@ -50,61 +115,6 @@
           $([[ $isMuted == false ]] && echo "--hints int:value:$volume") \
           "$([[ $isMuted == false ]] && echo "Volume: $volume%" || echo "Volume Muted")"
       '';
-    };
-
-    wayland.windowManager.sway = {
-      enable = true;
-      lightTheme = true;
-      
-      extraConfig = ''
-        mode anne
-        exec brave
-      '';
-
-      config = rec {
-        modifier = "Mod4"; # Super_L
-        bars = [];
-        menu = "${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun Launch";
-        terminal = "alacritty";
-
-        input."*" = {
-          repeat_delay = "300";
-          xkb_layout = "gb";
-          natural_scroll = "enabled";
-          tap = "enabled";
-        };
-
-        gaps = {
-          smartBorders = "on";
-          smartGaps = true;
-          inner = 5;
-        };
-
-        keybindings = lib.mkOptionDefault {
-          "${modifier}+Shift+a" = "mode anne";
-        };
-
-        modes = lib.mkOptionDefault {
-          anne = {
-            "--release Super_L" = ''exec ${pkgs.rofi}/bin/rofi -show drun -show-icons -display-drun -i Apps'';
-
-            "${modifier}+Right"       = "focus right";
-            "${modifier}+Left"        = "focus left";
-            "${modifier}+Shift+Right" = "move right";
-            "${modifier}+Shift+Left"  = "move left";
-            "${modifier}+Escape"      = "kill";
-
-            XF86AudioMute         = ''exec ${pkgs.volume}/bin/volume toggle-mute'';
-            XF86AudioLowerVolume  = ''exec ${pkgs.volume}/bin/volume down'';
-            XF86AudioRaiseVolume  = ''exec ${pkgs.volume}/bin/volume up'';
-            XF86MonBrightnessUp   = ''exec ${pkgs.brightness}/bin/brightness up'';
-            XF86MonBrightnessDown = ''exec ${pkgs.brightness}/bin/brightness down'';
-
-            "${modifier}+Shift+Escape"  = ''exec swaynag -t warning -m "Shutdown?" -b "Shutdown" "systemctl poweroff"'';
-            "Mod1+Control+Shift+Escape" = ''mode default'';
-          };
-        };
-      };
     };
   };
 }

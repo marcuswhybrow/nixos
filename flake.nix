@@ -38,7 +38,6 @@
             };
             sharedModules = [
               { home.stateVersion = config.system.stateVersion; }
-              ./users/options/sway.nix
             ];
           };
           nixpkgs.overlays = [
@@ -79,7 +78,9 @@
       git = pkgs.callPackage ./pkgs/git.nix {};
       rofi = pkgs.callPackage ./pkgs/rofi.nix {};
       dunst = pkgs.callPackage ./pkgs/dunst.nix {};
+      sway = pkgs.callPackage ./pkgs/sway.nix {};
     };
     apps.neovim = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.neovim}/bin/vim"; };
+    apps.sway = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.sway}/bin/sway"; };
   });
 }
