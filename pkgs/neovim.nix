@@ -431,7 +431,7 @@
 
       require('lualine').setup({
         options = {
-          globalstatus = true,
+          globalstatus = false,
           component_separators = ''',
           section_separators = ''',
           always_divide_middle = true,
