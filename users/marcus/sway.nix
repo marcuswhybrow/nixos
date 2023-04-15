@@ -36,9 +36,6 @@
       '';
     };
 
-
-    programs.rofi.enable = true;
-
     wayland.windowManager.sway = let
       modifier = "Mod1";
     in {
@@ -49,7 +46,7 @@
         inherit modifier;
         bars = [];
         terminal = "alacritty";
-        menu = ''${pkgs.rofi}/bin/rofi -show drun -i -drun-display-format {name} -theme-str 'entry { placeholder: "Launch"; }' '';
+        menu = ''${pkgs.marcus.rofi}/bin/rofi -show drun -i -drun-display-format {name} -theme-str 'entry { placeholder: "Launch"; }' '';
 
         input."*" = {
           repeat_delay = "300";

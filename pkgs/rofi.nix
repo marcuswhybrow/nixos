@@ -1,22 +1,31 @@
-{ config, pkgs, lib, types, ... }: let
-  cfg = config.programs.rofi;
-in {
-  options.programs.rofi = {
-    lightTheme = lib.mkEnableOption "Whether to enable a light theme";
-    border.width = lib.mkOption { type = types.int; default = 4; };
-    border.color = lib.mkOption { type = types.str; default = "#000000"; };
-    element.selected.color = lib.mkOption { type = types.str; default = "#000000"; };
-  };
+{
+  stdenv,
+  pkgs,
+  makeBinaryWrapper,
+  makeWrapper,
 
-  config = lib.mkIf cfg.lightTheme {
-    # Modified from https://github.com/anstellaire/photon-rofi-themes
-    # See https://man.archlinux.org/man/rofi-theme.5
-    programs.rofi.theme = "mw-light";
+  borderWidth ? 4,
+  borderColor ? "#000000",
+  selectionColor ? "#000000",
+}: stdenv.mkDerivation {
+  pname = "rofi";
+  version = "unstable";
+  src = ./.;
 
-    # https://github.com/newmanls/rofi-themes-collection/blob/master/themes/nord-oneline.rasi
-    # https://github.com/davatorium/rofi/blob/next/doc/rofi-theme.5.markdown
-    # This is not CSS
-    xdg.dataFile."rofi/themes/mw-light.rasi".text = ''
+  nativeBuildInputs = [ makeWrapper ];
+
+  installPhase = let
+    config = pkgs.writeText "config.rasi" ''
+      configuration {
+        location: 0;
+        xoffset: 0;
+        yoffset: 0;
+      }
+
+      @theme "${theme}"
+    '';
+
+    theme = pkgs.writeText "theme.rasi" ''
       * {
         font: "FiraCode-Nerd-Font 12";
         spacing: 0px;
@@ -38,9 +47,9 @@ in {
         orientation: horizontal;
         children: [ entry, listview ];
         background-color: #ffffff;
-        border-color: ${cfg.border.color};
-        border: ${toString cfg.border.width}px;
-        border-radius: ${toString cfg.border.width}px;
+        border-color: ${borderColor};
+        border: ${toString borderWidth}px;
+        border-radius: ${toString borderWidth}px;
         padding: 24px 20px;
         spacing: 10px;
       }
@@ -87,20 +96,18 @@ in {
       }
 
       element selected {
-        text-color: ${cfg.element.selected.color};
+        text-color: ${selectionColor};
       }
 
-      element selected normal {
-      }
-
-      element selected urgent {
-      }
-
-      element selected active {
-      }
-
-
+      element selected normal {}
+      element selected urgent {}
+      element selected active {}
     '';
-
-  };
+  in ''
+    mkdir -p $out/bin
+    cp -r ${pkgs.rofi}/* $out
+    rm $out/bin/rofi
+    makeWrapper ${pkgs.rofi}/bin/rofi $out/bin/rofi \
+      --add-flags "-config ${config}"
+  '';
 }

@@ -50,6 +50,10 @@ in {
             date.on-click = ''${open} https://calendar.proton.me/u/1'';
           };
         };
+
+        rofi = prev.custom.rofi.override {
+          borderColor = primaryColor;
+        };
       };
     })
   ];
@@ -80,6 +84,7 @@ in {
       marcus.alacritty
       marcus.neovim
       marcus.waybar
+      marcus.rofi
 
       # I tried packaging git tooling.
       # 1. The config file locations cannot be overriden
@@ -95,11 +100,6 @@ in {
   };
 
   config.home-manager.users.marcus = {
-    programs.rofi = {
-      lightTheme = true;
-      border.color = primaryColor;
-    };
-
     services.dunst = {
       lightTheme = true;
       frame.color = primaryColor;  # border

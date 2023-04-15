@@ -10,16 +10,11 @@
       pcmanfm
 
       marcus.alacritty
+      marcus.rofi
     ];
   };
 
   home-manager.users.anne = {
-
-    programs.rofi = {
-      enable = true;
-      lightTheme = true;
-    };
-
     programs.fish = {
       enable = true;
       loginShellInit = ''sway'';
