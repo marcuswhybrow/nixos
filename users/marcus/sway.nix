@@ -5,14 +5,13 @@
   ];
 
   config.home-manager.users.marcus = {
-    services.dunst.enable = true;
     programs.toggle.enable = false;
     programs.logout.enable = true;
 
     programs.brightness = {
       enable = true;
       onChange = ''
-        ${pkgs.dunst}/bin/dunstify \
+        ${pkgs.marcus.dunst}/bin/dunstify \
         --appname changeBrightness \
         --urgency low \
         --timeout 2000 \
@@ -25,7 +24,7 @@
     programs.volume = {
       enable = true;
       onChange = ''
-        ${pkgs.dunst}/bin/dunstify \
+        ${pkgs.marcus.dunst}/bin/dunstify \
           --appname changeVolume \
           --urgency low \
           --timeout 2000 \
@@ -65,7 +64,7 @@
         };
 
         keybindings = let
-          screenshotNotification = ''${pkgs.dunst}/bin/dunstify --appname screenshot --urgency low --timeout 500 Screenshot'';
+          screenshotNotification = ''${pkgs.marcus.dunst}/bin/dunstify --appname screenshot --urgency low --timeout 500 Screenshot'';
         in lib.mkOptionDefault {
           "${modifier}+Escape" = ''exec ${pkgs.logout}/bin/logout'';
           XF86AudioMute = ''exec ${pkgs.volume}/bin/volume toggle-mute'';

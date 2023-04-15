@@ -54,6 +54,12 @@ in {
         rofi = prev.custom.rofi.override {
           borderColor = primaryColor;
         };
+
+        dunst = prev.custom.dunst.override {
+          extraConfig.global.frame_color = primaryColor;
+          extraConfig.global.foreground = primaryColor;
+          extraConfig.global.highlight = primaryColor;
+        };
       };
     })
   ];
@@ -85,27 +91,11 @@ in {
       marcus.neovim
       marcus.waybar
       marcus.rofi
+      marcus.dunst
 
-      # I tried packaging git tooling.
-      # 1. The config file locations cannot be overriden
-      # 2. makeWrapper --add-flags can wrap config that way,
-      #    but they must come before or after any arguments.
-      #    Before: `git <flags> commit` fails.
-      #    After: `git commit -m "" <flags>` become non-overridable.
-      # 3. Alternative implementation might be wrappable (gitoxide?)
       git gh delta
 
       custom.private
     ];
-  };
-
-  config.home-manager.users.marcus = {
-    services.dunst = {
-      lightTheme = true;
-      frame.color = primaryColor;  # border
-      foreground = primaryColor;   # text
-      highlight = primaryColor;    # progress bar
-      progressBar.height = 30;
-    };
   };
 }

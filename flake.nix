@@ -39,7 +39,6 @@
             sharedModules = [
               { home.stateVersion = config.system.stateVersion; }
               ./users/options/sway.nix
-              ./users/options/dunst.nix
             ];
           };
           nixpkgs.overlays = [
@@ -79,6 +78,7 @@
       waybar = pkgs.callPackage ./pkgs/waybar.nix {};
       git = pkgs.callPackage ./pkgs/git.nix {};
       rofi = pkgs.callPackage ./pkgs/rofi.nix {};
+      dunst = pkgs.callPackage ./pkgs/dunst.nix {};
     };
     apps.neovim = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.neovim}/bin/vim"; };
   });

@@ -11,10 +11,13 @@
 
       marcus.alacritty
       marcus.rofi
+      marcus.dunst
     ];
   };
 
-  home-manager.users.anne = {
+  home-manager.users.anne = let
+    notify = "${pkgs.libnotify}/bin/notify-send";
+  in {
     programs.fish = {
       enable = true;
       loginShellInit = ''sway'';
@@ -22,15 +25,10 @@
 
     programs.starship.enable = true;
 
-    services.dunst = {
-      enable = true;
-      lightTheme = true;
-    };
-
     programs.brightness = {
       enable = true;
       onChange = ''
-        ${pkgs.dunst}/bin/dunstify \
+        ${notify} \
         --appname changeBrightness \
         --urgency low \
         --timeout 2000 \
@@ -43,7 +41,7 @@
     programs.volume = {
       enable = true;
       onChange = ''
-        ${pkgs.dunst}/bin/dunstify \
+        ${notify} \
           --appname changeVolume \
           --urgency low \
           --timeout 2000 \
