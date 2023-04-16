@@ -1,12 +1,11 @@
 {
   pkgs,
   lib, 
-  stdenv, 
   makeBinaryWrapper,
 
   beforeNeovimOpens ? "",
   afterNeovimCloses ? "",
-
+  vimAlias ? false,
 }: let
   neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (pkgs.neovimUtils.makeNeovimConfig {
     # https://github.com/NixOS/nixpkgs/blob/db24d86dd8a4769c50d6b7295e81aa280cd93f35/pkgs/applications/editors/neovim/utils.nix#L24
@@ -68,7 +67,7 @@
     # https://github.com/NixOS/nixpkgs/blob/db24d86dd8a4769c50d6b7295e81aa280cd93f35/pkgs/applications/editors/neovim/wrapper.nix#L13
     extraName = "";
     withPython2 = false;
-    vimAlias = true; # defaults to false
+    vimAlias = false; # doing this manually in builder
     viAlias = false;
     wrapRc = false;
     neovimRcContent = "";
@@ -514,33 +513,33 @@
     end
   '';
 
-  pathPkgs = with pkgs; [
-    nil
-    gopls
-    nodePackages.bash-language-server
-    nodePackages.vscode-langservers-extracted # html css json eslint
-    nodePackages.yaml-language-server
-    rust-analyzer
-    marksman # markdown
-    # https://github.com/hangyav/textLSP has no package
-  ];
-
-  wrapperScript = pkgs.writeShellScript "vim" ''
+  wrapperScript = pkgs.writeShellScript "neovim" ''
     ${beforeNeovimOpens}
     ${neovim}/bin/nvim -u ${luaInit} "$@"
     ${afterNeovimCloses}
   '';
-in stdenv.mkDerivation {
-  pname = "neovim";
-  version = "unstable";
-  src = ./.;
-
+in pkgs.runCommand "neovim" {
   nativeBuildInputs = [ makeBinaryWrapper ];
+} ''
+  mkdir -p $out
+  ln -s ${neovim}/* $out
 
-  installPhase = ''
-    mkdir -p $out/bin
+  rm $out/bin
+  mkdir $out/bin
+  ln -s ${neovim}/bin/* $out/bin
 
-    makeWrapper ${wrapperScript} $out/bin/vim \
-      --suffix PATH : ${lib.makeBinPath pathPkgs}
-  '';
-}
+  rm $out/bin/nvim
+  makeWrapper ${wrapperScript} $out/bin/neovim \
+    --suffix PATH : ${lib.makeBinPath (with pkgs; [
+      nil
+      gopls
+      nodePackages.bash-language-server
+      nodePackages.vscode-langservers-extracted # html css json eslint
+      nodePackages.yaml-language-server
+      rust-analyzer
+      marksman # markdown
+      # https://github.com/hangyav/textLSP has no package
+    ])}
+
+  ${if vimAlias then "ln -s $out/bin/neovim $out/bin/vim" else ""}
+''

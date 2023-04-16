@@ -3,7 +3,7 @@
   makeWrapper,
 
   replaceConfig ? "",
-}: pkgs.runCommand "sway-wrapped" {
+}: pkgs.runCommand "sway" {
   nativeBuildInputs = [ makeWrapper ];
 } (let
   defaultConfig = ''

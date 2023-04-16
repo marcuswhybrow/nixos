@@ -1,14 +1,21 @@
-{ config, pkgs, helpers, ... }: helpers.system {
+{ config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     vim
-
-    # networking
-    wget unixtools.ping
   ];
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
-  i18n.extraLocaleSettings = helpers.config.localeForAll config.i18n.defaultLocale;
+  i18n.extraLocaleSettings = {
+    "LC_ADDRESS" = config.i18n.defaultLocale;
+    "LC_IDENTIFICATION" = config.i18n.defaultLocale;
+    "LC_MEASUREMENT" = config.i18n.defaultLocale;
+    "LC_MONETARY" = config.i18n.defaultLocale;
+    "LC_NAME" = config.i18n.defaultLocale;
+    "LC_NUMERIC" = config.i18n.defaultLocale;
+    "LC_PAPER" = config.i18n.defaultLocale;
+    "LC_TELEPHONE" = config.i18n.defaultLocale;
+    "LC_TIME" = config.i18n.defaultLocale;
+  };
   console.keyMap = "uk";
 
   services.xserver = {
@@ -17,7 +24,6 @@
     layout = "gb";
   };
 
-  programs.fish.enable = true;
   services = {
     openssh.enable = true;
     printing.enable = true;
@@ -33,37 +39,10 @@
     pulse.enable = true;
   };
 
-  programs.volume = {
-    enable = true;
-    onChange = val: ''
-      set vol (pamixer --get-volume)
-      set mute (pamixer --get-mute)
-      dunstify \
-        --appname changeVolume \
-        --urgency low \
-        --icon audio-volume-(if test $mute = true; echo "muted"; else; echo "high"; end) \
-        --hints string:x-dunst-stack-tag:volume \
-        (if test $mute = false; echo "--hints int:value:$vol"; else; echo ""; end) \
-        --timeout 2000 \
-        (if test $mute = false; echo '"Volume: $vol%"'; else; echo '"Volume Muted"'; end)
-    '';
-  programs.brightness = {
-    enable = true;
-    onChange = ''
-      set val (light -G)
-      dunstify \
-        --appname changeBrightness \
-        --urgency low \
-        --hints string:x-dunst-stack-tag:brightness \
-        --hints int:value:$val \
-        --timeout 1000 \
-        "Brightness $val%"
-    '';
-  };
-})
 
-# danger zone
-{
+  # DANGER ZONE
+  # -----------
+
   system.stateVersion = "22.11";
   nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.config.allowUnfree = true;

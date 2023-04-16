@@ -54,6 +54,7 @@ in {
         };
 
         neovim = prev.custom.neovim.override {
+          vimAlias = true;
           beforeNeovimOpens = ''
              ${alacritty} msg config \
               window.padding.x=0 \
@@ -75,10 +76,10 @@ in {
           iconFont = "Font Awesome 6 Free";
           extraConfig = let 
             openInAlacritty = "${alacritty} --command";
-            htop = "${pkgs.htop}/bin/htop";
-            open = "${pkgs.xdg-utils}/bin/xdg-open";
+            htop = "${final.htop}/bin/htop";
+            open = "${final.xdg-utils}/bin/xdg-open";
           in rec {
-            network.on-click = ''${pkgs.networking}/bin/networking'';
+            network.on-click = ''${final.marcus.networking}/bin/networking'';
             wifiAlarm.on-click = network.on-click;
             cpu.on-click = ''${openInAlacritty} ${htop} --sort-key=PERCENT_CPU'';
             memory.on-click = ''${openInAlacritty} ${htop} --sort-key=PERCENT_MEM'';
@@ -160,7 +161,7 @@ in {
             bindsym Mod1+Shift+l move right
 
             bindsym Mod1+Return exec alacritty
-            bindsym Mod1+Escape exec ${final.logout}/bin/logout
+            bindsym Mod1+Escape exec ${final.marcus.logout}/bin/logout
             bindsym Mod1+d exec ${final.marcus.rofi}/bin/rofi -show drun -i -drun-display-format {name} -theme-str 'entry { placeholder: "Launch"; }' 
             bindsym Mod1+Shift+e exec ${prev.custom.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
@@ -187,11 +188,11 @@ in {
             bindsym Mod4+D exec "${final.marcus.alacritty}/bin/alacritty --working-directory ~/.dotfiles --command vim .
             bindsym Print exec "${final.libnotify}/bin/notify-send --appname screenshot --urgency low --timeout 500 Screenshot; ${pkgs.sway-contrib.grimshot}/bin/grimshot save output"
 
-            bindsym XF86AudioLowerVolume exec ${final.volume}/bin/volume down
-            bindsym XF86AudioMute exec ${final.volume}/bin/volume toggle-mute
-            bindsym XF86AudioRaiseVolume exec ${final.volume}/bin/volume up
-            bindsym XF86MonBrightnessDown exec ${final.brightness}/bin/brightness down
-            bindsym XF86MonBrightnessUp exec ${final.brightness}/bin/brightness up
+            bindsym XF86AudioLowerVolume exec ${final.custom.volume}/bin/volume down
+            bindsym XF86AudioMute exec ${final.custom.volume}/bin/volume toggle-mute
+            bindsym XF86AudioRaiseVolume exec ${final.custom.volume}/bin/volume up
+            bindsym XF86MonBrightnessDown exec ${final.custom.brightness}/bin/brightness down
+            bindsym XF86MonBrightnessUp exec ${final.custom.brightness}/bin/brightness up
 
             input "*" {
               natural_scroll enabled
@@ -229,6 +230,14 @@ in {
             exec "${final.dbus}/bin/dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE; systemctl --user start sway-session.target"
           '';
         };
+
+        networking = prev.custom.networking.override {
+          rofi = final.marcus.rofi;
+        };
+
+        logout = prev.custom.logout.override {
+          rofi = final.marcus.rofi;
+        };
       };
     })
   ];
@@ -263,6 +272,8 @@ in {
       marcus.waybar
       marcus.rofi
       marcus.dunst
+      marcus.logout
+      marcus.networking
 
       git gh delta
 

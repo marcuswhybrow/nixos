@@ -1,23 +1,5 @@
 {
   "nodes": {
-    "cheeky-scripts": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1680989092,
-        "narHash": "sha256-2BUb2zQLMAvaJqm3KqTRRLjyJaUV+w1L1BFcAH7LkBA=",
-        "owner": "marcuswhybrow",
-        "repo": "cheeky-scripts",
-        "rev": "dd1abb59dfc5e247ad0cfed4fa5425f643d3640e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "marcuswhybrow",
-        "repo": "cheeky-scripts",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -36,71 +18,13 @@
         "type": "github"
       }
     },
-    "home-manager": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1681092193,
-        "narHash": "sha256-JerCqqOqbT2tBnXQW4EqwFl0hHnuZp21rIQ6lu/N4rI=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "f9edbedaf015013eb35f8caacbe0c9666bbc16af",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "release-22.11",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "nixpak": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1673384967,
-        "narHash": "sha256-JKlwVc7mqAQfIvFkwtTy78dgOhHsoSTej6HsTFRIPac=",
-        "owner": "nixpak",
-        "repo": "nixpak",
-        "rev": "292b9dcc3496544692e17f1c2d442cd39d787927",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixpak",
-        "repo": "nixpak",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1680724564,
-        "narHash": "sha256-eeUUGOTKTelYKDbUxKs0V7GUa186L2fym7jM2QQ4Oss=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "36adaa6aaa6b03e59102df0c1b12cdc3f23fd112",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-unstable": {
-      "locked": {
-        "lastModified": 1681217261,
-        "narHash": "sha256-RbxCHWN3Vhyv/WEsXcJlDwF7bpvZ9NxDjfSouQxXEKo=",
+        "lastModified": 1681557730,
+        "narHash": "sha256-j2E3639kS3Qop2jQPyqWCdenZNaqIdxfoTvAHnGuAGI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3fb8eedc450286d5092e4953118212fa21091b3b",
+        "rev": "85b081528b937df4bfcaee80c3541b58f397df8b",
         "type": "github"
       },
       "original": {
@@ -110,30 +34,10 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1681154110,
-        "narHash": "sha256-OQwWzlzAY1dCqgSsgZzsPIOGmX4pBGaoXOy0rSl4b5Y=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "115a96e2ac1e92937cd47c30e073e16dcaaf6247",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "cheeky-scripts": "cheeky-scripts",
         "flake-utils": "flake-utils",
-        "home-manager": "home-manager",
-        "nixpak": "nixpak",
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs": "nixpkgs"
       }
     },
     "systems": {
@@ -148,21 +52,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1667395993,
-        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
         "type": "github"
       }
     }

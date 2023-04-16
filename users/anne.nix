@@ -56,12 +56,11 @@
             bindsym Mod4+Shift+Left move left
             bindsym Mod4+Shift+Right move right
 
-            bindsym XF86AudioLowerVolume exec ${final.volume}/bin/volume down
-            bindsym XF86AudioMute exec ${final.volume}/bin/volume toggle-mute
-            bindsym XF86AudioRaiseVolume exec ${final.volume}/bin/volume up
-            bindsym XF86MonBrightnessDown exec ${final.brightness}/bin/brightness down
-            bindsym XF86MonBrightnessUp exec ${final.brightness}/bin/brightness up
-
+            bindsym XF86AudioLowerVolume exec ${final.custom.volume}/bin/volume down
+            bindsym XF86AudioMute exec ${final.custom.volume}/bin/volume toggle-mute
+            bindsym XF86AudioRaiseVolume exec ${final.custom.volume}/bin/volume up
+            bindsym XF86MonBrightnessDown exec ${final.custom.brightness}/bin/brightness down
+            bindsym XF86MonBrightnessUp exec ${final.custom.brightness}/bin/brightness up
 
             gaps inner 5
             smart_gaps on
@@ -90,36 +89,5 @@
       marcus.rofi
       marcus.dunst
     ];
-  };
-
-  home-manager.users.anne = let
-    notify = "${pkgs.libnotify}/bin/notify-send";
-  in {
-    programs.brightness = {
-      enable = true;
-      onChange = ''
-        ${notify} \
-        --appname changeBrightness \
-        --urgency low \
-        --timeout 2000 \
-        --hints string:x-dunst-stack-tag:brightness \
-        --hints int:value:$brightness \
-        "Brightness $brightness%"
-      '';
-    };
-
-    programs.volume = {
-      enable = true;
-      onChange = ''
-        ${notify} \
-          --appname changeVolume \
-          --urgency low \
-          --timeout 2000 \
-          --icon audio-volume-$([[ $isMuted == true ]] && echo "muted" || echo "high") \
-          --hints string:x-dunst-stack-tag:volume \
-          $([[ $isMuted == false ]] && echo "--hints int:value:$volume") \
-          "$([[ $isMuted == false ]] && echo "Volume: $volume%" || echo "Volume Muted")"
-      '';
-    };
   };
 }
