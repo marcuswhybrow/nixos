@@ -2,7 +2,7 @@
   terminalPadding = 20;
   primaryColor = "#1e88eb";
 in {
-  config.nixpkgs.overlays = [
+  nixpkgs.overlays = [
     (final: prev: {
       marcus = let
         alacritty = "${final.marcus.alacritty}/bin/alacritty";
@@ -270,7 +270,10 @@ in {
     })
   ];
 
-  config.users.users.marcus = {
+  environment.systemPackages = with pkgs; [ light ];
+  services.udev.packages = with pkgs; [ light ];
+
+  users.users.marcus = {
     description = "Marcus Whybrow";
     isNormalUser = true;
     shell = pkgs.fish;

@@ -74,6 +74,10 @@
     })
   ];
 
+  services.udev.packages = with pkgs; [
+    light
+  ];
+
   users.users.anne = {
     description = "Anne Whybrow";
     isNormalUser = true;

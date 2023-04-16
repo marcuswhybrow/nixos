@@ -8,7 +8,14 @@
   nativeBuildInputs = [ makeWrapper ];
 } (let
   inherit (lib) recursiveUpdate;
-  inherit (lib.generators) toINI;
+
+  toDunstIni = lib.generators.toINI {
+    mkKeyValue = key: value: let
+      value' = if builtins.isBool value then (if value then "true" else "false")
+        else if builtins.isString value then ''"${value}"''
+        else toString value;
+    in "    ${key} = ${value'}";
+  };
 
   baseConfig = {
     global = {
@@ -18,7 +25,6 @@
       frame_color = "#000000";
       font = "Noto Sans 10";
       markup = "full";
-      geometry = "50x4-100+100";
       transparency = 0;
 
       padding = 20;
@@ -29,7 +35,7 @@
       separator_height = 1;
       separator_color = "#000000";
 
-      progress_bar_height = 3330;
+      progress_bar_height = 30;
       progress_bar_frame_width = 3; 
 
       # distance between notifications
@@ -72,17 +78,39 @@
     };
   };
 
-  config = pkgs.writeText "config" (toINI {} (recursiveUpdate baseConfig extraConfig));
+  config = pkgs.writeText "dunstrc" (toDunstIni (recursiveUpdate baseConfig extraConfig));
 in ''
-  mkdir $out
-  ln -s ${pkgs.dunst}/* $out
-  rm $out/bin
-  mkdir $out/bin
+  mkdir -p $out/bin
   ln -s ${pkgs.dunst}/bin/* $out/bin
+
   rm $out/bin/dunst
   makeWrapper ${pkgs.dunst}/bin/dunst $out/bin/dunst \
-    --set XDG_CONFIG_DIRS $out/config
+    --add-flags "-config ${config}"
 
-  mkdir -p $out/config/dunst
-  ln -s ${config} $out/config/dunst/dunstrc
+
+  mkdir -p $out/lib/systemd/user
+  tee $out/lib/systemd/user/dunst.service << EOF
+  [Unit]
+  Description=Dunst notification daemon
+  Documentation=man:dunst(1)
+  PartOf=graphical-session.target
+
+  [Service]
+  Type=dbus
+  BusName=org.freedesktop.Notifications
+  ExecStart=$out/bin/dunst
+  EOF
+
+
+  mkdir -p $out/share/dbus-1/services
+  tee $out/share/dbus-1/services/org.knopwob.dunst.service << EOF
+  [D-BUS Service]
+  Name=org.freedesktop.Notifications
+  Exec=$out/bin/dunst
+  SystemdService=dunst.service
+  EOF
+
+
+  mkdir -p $out/share/systemd/user
+  ln -s $out/lib/systemd/user/dunst.service $out/share/systemd/user/dunst.service
 '')
