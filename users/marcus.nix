@@ -238,6 +238,34 @@ in {
         logout = prev.custom.logout.override {
           rofi = final.marcus.rofi;
         };
+
+        git = prev.custom.git.override {
+          overrideConfig = ''
+            [core]
+              editor = vim
+              pager = ${pkgs.delta}/bin/delta
+
+            [credential "https://github.com"]
+              helper = gh auth git-credential
+
+            [delta]
+              light = true
+              navigate = true
+
+            [diff]
+              colorMoved = default
+
+            [merge]
+              conflictstyle = diff3
+
+            [interactive]
+              diffFilter = ${pkgs.delta}/bin/delta --color-only
+
+            [user]
+              name = "Marcus Whybrow"
+              email = "marcus@whybrow.uk"
+          '';
+        };
       };
     })
   ];
@@ -275,7 +303,7 @@ in {
       marcus.logout
       marcus.networking
 
-      git gh delta
+      marcus.git gh
 
       custom.private
     ];

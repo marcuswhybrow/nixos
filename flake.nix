@@ -9,12 +9,8 @@
       modules = systemModules ++ [
         ({ lib, pkgs, ... }: {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-          networking = {
-            hostName = hostname; 
-            networkmanager.enable = lib.mkDefault true;
-          };
-
+          networking.hostName = hostname; 
+          networking.networkmanager.enable = lib.mkDefault true;
           nixpkgs.overlays = [
             (final: prev: {
               custom = inputs.self.packages.${pkgs.system};
