@@ -302,7 +302,6 @@ in {
       marcus.dunst
       marcus.logout
       marcus.networking
-
       marcus.git gh
 
       custom.private
