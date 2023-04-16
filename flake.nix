@@ -29,7 +29,7 @@
       anne-laptop = [
         ./systems/anne-laptop.nix
         ./users/anne.nix
-        ./users/marcus
+        ./users/marcus.nix
       ];
     };
   } // inputs.flake-utils.lib.eachDefaultSystem (system: let
