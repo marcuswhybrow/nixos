@@ -1,11 +1,17 @@
-{ pkgs, lib, ... }: {
+{ pkgs, ... }: {
 
   nixpkgs.overlays = [
     (final: prev: {
       anne = {
-        fish = prev.custom.fish.overrid {
+        fish = prev.custom.fish.override {
           init = ''
-            ${final.anne.sway}/bin/sway
+            if status is-login
+              ${final.anne.sway}/bin/sway
+            end
+
+            if status is-interactive
+              ${pkgs.custom.starship}/bin/starship init fish | source
+            end
           '';
         };
 
@@ -89,8 +95,6 @@
   home-manager.users.anne = let
     notify = "${pkgs.libnotify}/bin/notify-send";
   in {
-    programs.starship.enable = true;
-
     programs.brightness = {
       enable = true;
       onChange = ''

@@ -39,11 +39,18 @@ in {
               abbr --add gp git push
               abbr --add gd git diff
 
-              starship init fish | source
+              ${pkgs.marcus.starship}/bin/starship init fish | source
             end
           '';
 
           functions.fish_greeting = ''echo (whoami) @ (hostname)'';
+        };
+
+        starship = prev.custom.starship.override {
+          init = ''
+            [[nix_shell]]
+            heuristic = true
+          '';
         };
 
         neovim = prev.custom.neovim.override {
@@ -225,16 +232,6 @@ in {
       };
     })
   ];
-
-  config.home-manager.users.marcus = {
-    programs.starship = {
-      enable = true;
-
-      # for nix _flakes_ shell detection
-      package = pkgs.unstable.starship; 
-      settings.nix_shell.heuristic = true;
-    };
-  };
 
   config.users.users.marcus = {
     description = "Marcus Whybrow";

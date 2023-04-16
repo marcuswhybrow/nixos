@@ -72,7 +72,7 @@
       ];
     };
   } // inputs.flake-utils.lib.eachDefaultSystem (system: let
-    pkgs = inputs.nixpkgs.legacyPackages.${system};
+    pkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
   in {
     packages = {
       neovim = pkgs.callPackage ./pkgs/neovim.nix {};
@@ -83,7 +83,8 @@
       rofi = pkgs.callPackage ./pkgs/rofi.nix {};
       dunst = pkgs.callPackage ./pkgs/dunst.nix {};
       sway = pkgs.callPackage ./pkgs/sway.nix {};
-      fish = pkgs.callPackage ./pkgs/fish.nix { };
+      fish = pkgs.callPackage ./pkgs/fish.nix {};
+      starship = pkgs.callPackage ./pkgs/starship.nix {};
     };
     apps.neovim = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.neovim}/bin/vim"; };
     apps.sway = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.sway}/bin/sway"; };
