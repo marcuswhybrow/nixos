@@ -2,10 +2,6 @@
   terminalPadding = 20;
   primaryColor = "#1e88eb";
 in {
-  imports = [
-    ./fish.nix
-  ];
-
   config.nixpkgs.overlays = [
     (final: prev: {
       marcus = let
@@ -14,6 +10,40 @@ in {
         alacritty = prev.custom.alacritty.override {
           padding = terminalPadding;
           opacity = 0.95;
+        };
+
+        fish = prev.custom.fish.override {
+          init = let
+            nixos = "~/.nixos";
+            config = "~/.config";
+            obsidian = "~/obsidian/Personal";
+          in ''
+            if status is-login
+              ${pkgs.dbus}/bin/dbus-run-session ${pkgs.marcus.sway}/bin/sway
+            end
+
+            if status is-interactive
+              abbr --add d cd ${nixos}
+              abbr --add c "cd ${nixos} && vim users/$(whoami).nix"
+              abbr --add config cd ${config}
+
+              abbr --add t vim ${obsidian}/Timeline/$(date +%Y-%m-%d).md
+              abbr --add y vim ${obsidian}/Timeline/$(date +%Y-%m-%d --date yesterday).md
+
+              abbr --add osswitch sudo nixos-rebuild switch
+              abbr --add ostest sudo nixos-rebuild test
+
+              abbr --add gs git status
+              abbr --add ga git add .
+              abbr --add gc git commit
+              abbr --add gp git push
+              abbr --add gd git diff
+
+              starship init fish | source
+            end
+          '';
+
+          functions.fish_greeting = ''echo (whoami) @ (hostname)'';
         };
 
         neovim = prev.custom.neovim.override {
@@ -196,6 +226,16 @@ in {
     })
   ];
 
+  config.home-manager.users.marcus = {
+    programs.starship = {
+      enable = true;
+
+      # for nix _flakes_ shell detection
+      package = pkgs.unstable.starship; 
+      settings.nix_shell.heuristic = true;
+    };
+  };
+
   config.users.users.marcus = {
     description = "Marcus Whybrow";
     isNormalUser = true;
@@ -220,6 +260,7 @@ in {
       ranger
 
       marcus.sway
+      marcus.fish
       marcus.alacritty
       marcus.neovim
       marcus.waybar

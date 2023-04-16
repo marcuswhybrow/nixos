@@ -58,6 +58,26 @@
         "type": "github"
       }
     },
+    "nixpak": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1673384967,
+        "narHash": "sha256-JKlwVc7mqAQfIvFkwtTy78dgOhHsoSTej6HsTFRIPac=",
+        "owner": "nixpak",
+        "repo": "nixpak",
+        "rev": "292b9dcc3496544692e17f1c2d442cd39d787927",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixpak",
+        "repo": "nixpak",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1680724564,
@@ -111,6 +131,7 @@
         "cheeky-scripts": "cheeky-scripts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "nixpak": "nixpak",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }

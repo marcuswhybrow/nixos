@@ -10,6 +10,11 @@
     };
 
     cheeky-scripts.url = "github:marcuswhybrow/cheeky-scripts";
+
+    nixpak = {
+      url = "github:/nixpak/nixpak";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: {
@@ -44,7 +49,6 @@
             (final: prev: {
               # Allows cherry picking of unstable packages with `pkgs.unstable`
               unstable = import inputs.nixpkgs-unstable { inherit (final) system; };
-
               custom = inputs.self.packages.${pkgs.system};
             })
           ];
@@ -57,7 +61,7 @@
     }) {
       marcus-laptop = [
         ./systems/marcus-laptop.nix
-        ./users/marcus
+        ./users/marcus.nix
         ./users/anne.nix
       ];
 
@@ -79,6 +83,7 @@
       rofi = pkgs.callPackage ./pkgs/rofi.nix {};
       dunst = pkgs.callPackage ./pkgs/dunst.nix {};
       sway = pkgs.callPackage ./pkgs/sway.nix {};
+      fish = pkgs.callPackage ./pkgs/fish.nix { };
     };
     apps.neovim = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.neovim}/bin/vim"; };
     apps.sway = { type = "app"; program = "${inputs.self.packages.${pkgs.system}.sway}/bin/sway"; };

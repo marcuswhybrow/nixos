@@ -3,6 +3,12 @@
   nixpkgs.overlays = [
     (final: prev: {
       anne = {
+        fish = prev.custom.fish.overrid {
+          init = ''
+            ${final.anne.sway}/bin/sway
+          '';
+        };
+
         sway = prev.custom.sway.override {
           replaceConfig = ''
             font pango:monospace 8.000000
@@ -83,11 +89,6 @@
   home-manager.users.anne = let
     notify = "${pkgs.libnotify}/bin/notify-send";
   in {
-    programs.fish = {
-      enable = true;
-      loginShellInit = ''${pkgs.anne.sway}/bin/sway'';
-    };
-
     programs.starship.enable = true;
 
     programs.brightness = {

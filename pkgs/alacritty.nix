@@ -54,8 +54,10 @@ in stdenv.mkDerivation {
   src = ./.;
 
   nativeBuildInputs = [ makeBinaryWrapper ];
+
   installPhase = ''
     mkdir -p $out/bin
+
     makeWrapper ${pkgs.alacritty}/bin/alacritty $out/bin/${binaryName} \
       --add-flags "--config-file ${alacrittyConfig}"
   '';
