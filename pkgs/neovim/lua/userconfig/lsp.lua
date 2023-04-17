@@ -56,29 +56,17 @@ cmp.setup({
     completeopt = "menu,menuone,noinsert",
   },
 
+  mapping = {
+    ["<Tab>"] = cmp_action.tab_complete(),
+    ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  },
+
   sources = {
     { name = "path" },
     { name = "nvim_lsp" },
     { name = "buffer" },
     { name = "nvim_lua" },
-  },
-
-  mapping = {
-    ["<Tab>"] = cmp_action.tab_complete(),
-    ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
-
-    --[[
-    ["J"] = cmp_action.tab_complete(),
-    ["K"] = cmp_action.select_prev_or_fallback(),
-    ["L"] = cmp.mapping.confirm({ select = false }),
-    --]]
-
-    ["<Down>"] = cmp_action.tab_complete(),
-    ["<Up>"] = cmp_action.select_prev_or_fallback(),
-    ["<Right>"] = cmp.mapping.confirm({ select = false }),
-
-
-    ["<CR>"] = cmp.mapping.confirm({ select = false }),
   },
 })
 
