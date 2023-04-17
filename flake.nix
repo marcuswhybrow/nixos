@@ -36,7 +36,7 @@
     pkgs = inputs.nixpkgs.legacyPackages.${system};
   in {
     packages = {
-      neovim = pkgs.callPackage ./pkgs/neovim.nix {};
+      neovim = pkgs.callPackage ./pkgs/neovim {};
       alacritty = pkgs.callPackage ./pkgs/alacritty.nix {};
       private = pkgs.callPackage ./pkgs/private.nix {};
       waybar = pkgs.callPackage ./pkgs/waybar.nix {};
