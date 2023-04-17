@@ -73,6 +73,7 @@
       cmp-cmdline-history
       nvim-cmp
       cmp-git
+      gitsigns-nvim
     ];
 
     # https://github.com/NixOS/nixpkgs/blob/db24d86dd8a4769c50d6b7295e81aa280cd93f35/pkgs/applications/editors/neovim/wrapper.nix#L13

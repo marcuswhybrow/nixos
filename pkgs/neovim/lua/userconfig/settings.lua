@@ -35,7 +35,7 @@ vim.opt.colorcolumn = "80"
 -- Theme
 --------
 
-require("github-theme").setup({
+require('github-theme').setup({
   transparent = true,
   hide_inactive_statusline = false,
 })
@@ -46,3 +46,8 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
   },
 }
+
+-- gitsigns.nvim
+-- -------------
+
+require('gitsigns').setup()
