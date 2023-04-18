@@ -52,8 +52,8 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Fugitive
-vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-vim.keymap.set("n", "<leader>gp", vim.cmd.Git_push)
+vim.keymap.set("n", "<leader>gs", ":Git<cr>")
+vim.keymap.set("n", "<leader>gp", ":Git push<cr>")
 
 -- Undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
