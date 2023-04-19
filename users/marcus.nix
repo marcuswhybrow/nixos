@@ -187,7 +187,7 @@ in {
 
             bindsym Mod4+B exec ${final.brave}/bin/brave
             bindsym Mod4+D exec "${final.marcus.alacritty}/bin/alacritty --working-directory ~/.dotfiles --command vim .
-            bindsym Print exec "${final.libnotify}/bin/notify-send --appname screenshot --urgency low --timeout 500 Screenshot; ${pkgs.sway-contrib.grimshot}/bin/grimshot save output"
+            bindsym Print exec "${pkgs.sway-contrib.grimshot}/bin/grimshot save output & ${final.gsound}/bin/gsound-play -f /home/marcus/Downloads/screenshot-tight.wav"
 
             bindsym XF86AudioLowerVolume exec ${final.custom.volume}/bin/volume down
             bindsym XF86AudioMute exec ${final.custom.volume}/bin/volume toggle-mute
