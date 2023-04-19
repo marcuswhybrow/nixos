@@ -295,6 +295,7 @@ in {
       vimb
       discord
       obsidian
+      reaper
 
       plex-media-player
 
