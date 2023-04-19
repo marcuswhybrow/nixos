@@ -265,6 +265,9 @@ in {
             [user]
               name = "Marcus Whybrow"
               email = "marcus@whybrow.uk"
+
+            [init]
+              defaultBranch = "main"
           '';
         };
       };
