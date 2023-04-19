@@ -160,7 +160,8 @@ in {
             bindsym Mod1+Shift+k move up
             bindsym Mod1+Shift+l move right
 
-            bindsym Mod1+Return exec alacritty
+            bindsym Mod1+Return exec ${alacritty}
+            bindsym Mod1+Shift+Return exec ${final.custom.private}/bin/private
             bindsym Mod1+Escape exec ${final.marcus.logout}/bin/logout
             bindsym Mod1+d exec ${final.marcus.rofi}/bin/rofi -show drun -i -drun-display-format {name} -theme-str 'entry { placeholder: "Launch"; }' 
             bindsym Mod1+Shift+e exec ${prev.custom.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
