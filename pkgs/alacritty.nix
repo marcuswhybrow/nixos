@@ -10,6 +10,33 @@
   alacrittyConfig = let
     font = "FiraCode Nerd Font";
   in pkgs.writeText "alacritty.yml" ''
+    key_bindings:
+    - {
+      key: Plus,
+      mods: Control|Shift,
+      command: {
+        program: "alacritty",
+        args: [
+          "msg",
+          "config",
+          "window.padding.x=${toString padding}",
+          "window.padding.y=${toString padding}"
+        ]
+      }
+    }
+    - {
+      key: Underline,
+      mods: Control|Shift,
+      command: {
+        program: "alacritty",
+        args: [
+          "msg",
+          "config",
+          "window.padding.x=0",
+          "window.padding.y=0"
+        ]
+      }
+    }
     window:
       padding:
         x: ${toString padding}

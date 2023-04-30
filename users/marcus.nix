@@ -4,6 +4,11 @@
 in {
   nixpkgs.overlays = [
     (final: prev: {
+      # Consider moving this into custom direnv package
+      nix-direnv = prev.nix-direnv.override {
+        enableFlakes = true;
+      };
+
       marcus = let
         alacritty = "${final.marcus.alacritty}/bin/alacritty";
       in {
@@ -14,8 +19,6 @@ in {
 
         fish = prev.custom.fish.override {
           init = let
-            nixos = "~/.nixos";
-            config = "~/.config";
             obsidian = "~/obsidian/Personal";
           in ''
             if status is-login
@@ -23,9 +26,9 @@ in {
             end
 
             if status is-interactive
-              abbr --add d cd ${nixos}
-              abbr --add c "cd ${nixos} && vim users/$(whoami).nix"
-              abbr --add config cd ${config}
+              abbr --add n "tmux new -A -s nixos -c ~/.nixos"
+              abbr --add c "tmux new -A -s config -c ~/.config"
+              abbr --add r work_on_repository
 
               abbr --add t vim ${obsidian}/Timeline/$(date +%Y-%m-%d).md
               abbr --add y vim ${obsidian}/Timeline/$(date +%Y-%m-%d --date yesterday).md
@@ -40,10 +43,20 @@ in {
               abbr --add gd git diff
 
               ${pkgs.marcus.starship}/bin/starship init fish | source
+              ${pkgs.direnv}/bin/direnv hook fish | source
             end
           '';
 
-          functions.fish_greeting = ''echo (whoami) @ (hostname)'';
+          functions = {
+            fish_greeting = ''echo (whoami) @ (hostname)'';
+            work_on_repository = ''
+              set name (ls $HOME/Repositories | fzf --bind tab:up,btab:down)
+              tmux new \
+                -A \
+                -s $name \
+                -c $HOME/Repositories/$name
+            '';
+          };
         };
 
         starship = prev.custom.starship.override {
@@ -274,8 +287,23 @@ in {
     })
   ];
 
-  environment.systemPackages = with pkgs; [ light ];
+  environment.systemPackages = with pkgs; [
+    light
+    direnv nix-direnv
+    tmux
+  ];
   services.udev.packages = with pkgs; [ light ];
+
+  # Consider including this if packaging direnv and nix-direnv 
+  # https://github.com/marcuswhybrow/.nixos/issues/6
+  # https://github.com/nix-community/nix-direnv
+  nix.settings = {
+    keep-outputs = true;
+    keep-derivations = true;
+  };
+  environment.pathsToLink = [
+    "/share/nix-direnv"
+  ];
 
   users.users.marcus = {
     description = "Marcus Whybrow";
