@@ -20,13 +20,33 @@ end)
 require'lspconfig'.gopls.setup{}
 require'lspconfig'.nil_ls.setup{}
 require'lspconfig'.bashls.setup{}
-require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.html.setup{}
 require'lspconfig'.cssls.setup{}
 require'lspconfig'.jsonls.setup{}
 require'lspconfig'.eslint.setup{}
 require'lspconfig'.yamlls.setup{}
 require'lspconfig'.marksman.setup{}
+require'lspconfig'.rust_analyzer.setup{
+  settings = {
+    ['rust-analyzer'] = {
+      diagnostics = {
+        enable = true;
+        disabled = {"unresolved-proc-macro"},
+        enableExperimental = true,
+      },
+
+      cargo = {
+        buildScripts = {
+          enable = true;
+        },
+      },
+
+      procMacro = {
+        enable = true;
+      },
+    },
+  },
+}
 
 -- Manual formatting (instead of buffer_autoformat() above)
 --[[

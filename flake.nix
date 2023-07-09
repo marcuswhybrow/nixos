@@ -6,7 +6,7 @@
 
   outputs = inputs: {
     nixosConfigurations = builtins.mapAttrs (hostname: systemModules: inputs.nixpkgs.lib.nixosSystem {
-      modules = systemModules ++ [
+      modules = [
         ({ lib, pkgs, ... }: {
           nix.settings.experimental-features = [ "nix-command" "flakes" ];
           networking.hostName = hostname; 
@@ -18,7 +18,7 @@
           ];
         })
         ./modules/intel-accelerated-video-playback.nix
-      ];
+       ] ++ systemModules;
     }) {
       marcus-laptop = [
         ./systems/marcus-laptop.nix
@@ -33,7 +33,10 @@
       ];
     };
   } // inputs.flake-utils.lib.eachDefaultSystem (system: let
-    pkgs = inputs.nixpkgs.legacyPackages.${system};
+    pkgs = import "${inputs.nixpkgs}" {
+      inherit system;
+      config.allowUnfree = true; # necessary for neovim's vscode dependency
+    };
   in {
     packages = {
       neovim = pkgs.callPackage ./pkgs/neovim {};

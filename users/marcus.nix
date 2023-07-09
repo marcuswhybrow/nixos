@@ -12,12 +12,12 @@ in {
       marcus = let
         alacritty = "${final.marcus.alacritty}/bin/alacritty";
       in {
-        alacritty = prev.custom.alacritty.override {
+        alacritty = final.custom.alacritty.override {
           padding = terminalPadding;
           opacity = 0.95;
         };
 
-        fish = prev.custom.fish.override {
+        fish = final.custom.fish.override {
           init = let
             obsidian = "~/obsidian/Personal";
           in ''
@@ -59,14 +59,14 @@ in {
           };
         };
 
-        starship = prev.custom.starship.override {
+        starship = final.custom.starship.override {
           init = ''
             [[nix_shell]]
             heuristic = true
           '';
         };
 
-        neovim = prev.custom.neovim.override {
+        neovim = final.custom.neovim.override {
           vimAlias = true;
           beforeNeovimOpens = ''
              ${alacritty} msg config \
@@ -82,7 +82,7 @@ in {
           '';
         };
 
-        waybar = prev.custom.waybar.override {
+        waybar = final.custom.waybar.override {
           inherit primaryColor;
           warningColor = "#ff8800";
           criticalColor = "#ff0000";
@@ -101,11 +101,11 @@ in {
           };
         };
 
-        rofi = prev.custom.rofi.override {
+        rofi = final.custom.rofi.override {
           borderColor = primaryColor;
         };
 
-        dunst = prev.custom.dunst.override {
+        dunst = final.custom.dunst.override {
           extraConfig.global = {
             dmenu = "${pkgs.marcus.rofi}/bin/rofi -show dmenu -p Notification";
             frame_color = primaryColor;
@@ -114,7 +114,7 @@ in {
           };
         };
 
-        sway = prev.custom.sway.override {
+        sway = final.custom.sway.override {
           replaceConfig = ''
             font pango:monospace 8.000000
 
@@ -177,7 +177,7 @@ in {
             bindsym Mod1+Shift+Return exec ${final.custom.private}/bin/private
             bindsym Mod1+Escape exec ${final.marcus.logout}/bin/logout
             bindsym Mod1+d exec ${final.marcus.rofi}/bin/rofi -show drun -i -drun-display-format {name} -theme-str 'entry { placeholder: "Launch"; }' 
-            bindsym Mod1+Shift+e exec ${prev.custom.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+            bindsym Mod1+Shift+e exec ${final.custom.sway}/bin/swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
             bindsym Mod1+Shift+c reload
             bindsym Mod1+Shift+q kill
@@ -245,15 +245,15 @@ in {
           '';
         };
 
-        networking = prev.custom.networking.override {
+        networking = final.custom.networking.override {
           rofi = final.marcus.rofi;
         };
 
-        logout = prev.custom.logout.override {
+        logout = final.custom.logout.override {
           rofi = final.marcus.rofi;
         };
 
-        git = prev.custom.git.override {
+        git = final.custom.git.override {
           overrideConfig = ''
             [core]
               editor = vim
@@ -305,6 +305,28 @@ in {
     "/share/nix-direnv"
   ];
 
+  # Proton VPN
+  networking.wg-quick.interfaces.protonvpn = {
+    # Key for marcus-laptop
+    # Bouncing = 3
+    # NetShield = 2
+    # NAT-PMP (Port Forwarding) = on
+    # VPN Accelerator = on
+    autostart = true;
+    privateKeyFile = "/etc/nixos/secrets/protonvpn-marcus-laptop-wg-NL-219";
+    address = [ "10.2.0.2/32" ];
+    dns = [ "10.2.0.1" ];
+
+    peers = [
+      {
+        # NL#219
+        publicKey = "JOA9GSHDxrJtyNxVAO9o+cDvylfOCEap+ayDHsJ10F4=";
+        allowedIPs = [ "0.0.0.0/0" "::/0" ]; # forward all ip traffic thru
+        endpoint = "185.107.57.49:51820";
+      }
+    ];
+  };
+
   users.users.marcus = {
     description = "Marcus Whybrow";
     isNormalUser = true;
@@ -324,6 +346,7 @@ in {
       discord
       obsidian
       reaper
+      protonvpn-gui protonvpn-cli protonmail-bridge
 
       plex-media-player
 

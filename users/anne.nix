@@ -3,7 +3,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       anne = {
-        fish = prev.custom.fish.override {
+        fish = final.custom.fish.override {
           init = ''
             if status is-login
               ${final.anne.sway}/bin/sway
@@ -15,7 +15,7 @@
           '';
         };
 
-        sway = prev.custom.sway.override {
+        sway = final.custom.sway.override {
           replaceConfig = ''
             font pango:monospace 8.000000
             floating_modifier Mod4
@@ -52,7 +52,7 @@
             bindsym Mod4+Escape kill
             bindsym Mod4+Left focus left
             bindsym Mod4+Right focus right
-            bindsym Mod4+Shift+Escape exec ${prev.custom.sway}/bin/swaynag -t warning -m "Shutdown?" -b "Shutdown" "systemctl poweroff"
+            bindsym Mod4+Shift+Escape exec ${final.custom.sway}/bin/swaynag -t warning -m "Shutdown?" -b "Shutdown" "systemctl poweroff"
             bindsym Mod4+Shift+Left move left
             bindsym Mod4+Shift+Right move right
 
