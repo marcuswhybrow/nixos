@@ -28,7 +28,7 @@
   services.gvfs.enable = true;
 
   # https://nixos.wiki/wiki/Fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     font-awesome
 
     (nerdfonts.override {

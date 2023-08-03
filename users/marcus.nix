@@ -307,22 +307,15 @@ in {
 
   # Proton VPN
   networking.wg-quick.interfaces.protonvpn = {
-    # Key for marcus-laptop
-    # Bouncing = 3
-    # NetShield = 2
-    # NAT-PMP (Port Forwarding) = on
-    # VPN Accelerator = on
     autostart = true;
-    privateKeyFile = "/etc/nixos/secrets/protonvpn-marcus-laptop-wg-NL-219";
     address = [ "10.2.0.2/32" ];
     dns = [ "10.2.0.1" ];
-
+    privateKeyFile = "/etc/nixos/secrets/protonvpn-marcus-laptop-UK-86";
     peers = [
       {
-        # NL#219
-        publicKey = "JOA9GSHDxrJtyNxVAO9o+cDvylfOCEap+ayDHsJ10F4=";
+        endpoint = "146.70.179.50:51820";
+        publicKey = "zctOjv4DH2gzXtLQy86Tp0vnT+PNpMsxecd2vUX/i0U="; # UK#86
         allowedIPs = [ "0.0.0.0/0" "::/0" ]; # forward all ip traffic thru
-        endpoint = "185.107.57.49:51820";
       }
     ];
   };
