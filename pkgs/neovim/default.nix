@@ -27,11 +27,42 @@
     extraLuaPackages = _: [];
     customRC = '''';
 
+    # Search search.nixos.org for "vimPlugins". Can't find a plugin? Wrap it's
+    # GitHub repo with `buildVimPluginsFrom2Nix` for the same result
     plugins = with pkgs.vimPlugins; [
-      telescope-fzf-native-nvim
-      nvim-web-devicons
-      plenary-nvim
+
+      # FILE SEARCH & MORE
+
+      # https://github.com/nvim-telescope/telescope.nvim
+      # Find, Filter, Preview, Pick. All lua, all the time.
+      # (Fast syntax highlighting)
       telescope-nvim
+
+      # https://github.com/nvim-telescope/telescope-fzf-native.nvim
+      # FZF sorter for telescope written in c
+      telescope-fzf-native-nvim
+
+      # https://github.com/nvim-tree/nvim-web-devicons
+      # lua `fork` of vim-web-devicons for neovim
+      # 
+      # (Adds file type icons to Vim plugins such as: NERDTree, vim-airline, 
+      # CtrlP, unite, Denite, lightline, vim-startify and many more)
+      nvim-web-devicons
+
+      # https://github.com/ThePrimeagen/harpoon
+      # Getting you where you want with the fewest keystrokes.
+      harpoon
+
+      # https://github.com/mbbill/undotree
+      # The undo history visualizer for VIM
+      undotree
+
+
+
+      # LANGUAGE FEATURES
+
+      # https://github.com/nvim-treesitter/nvim-treesitter
+      # Nvim Treesitter configurations and abstraction layer
       (nvim-treesitter.withPlugins (p: with p; [
         nix
         go
@@ -39,7 +70,21 @@
         bash
         fish
       ]))
+
+      # https://github.com/LnL7/vim-nix
+      # Vim configuration files for Nix
+      vim-nix # Not sure I need this if treesitter has a nix plugin?
+
+
+
+      # AUTOCOMPLETE
+
+      # https://github.com/neovim/nvim-lspconfig
+      # Quickstart configs for Nvim LSP
       nvim-lspconfig
+
+      # https://github.com/VonHeikemen/lsp-zero.nvim
+      # A starting point to setup some lsp related features in neovim.
       (pkgs.vimUtils.buildVimPluginFrom2Nix {
         pname = "lsp-zero-nvim";
         version = "2.x";
@@ -50,8 +95,74 @@
           sha256 = "sha256-C2LvhoNdNXRyG+COqVZv/BcUh6y82tajXipsqdySJJQ=";
         };
       })
-      vim-nix
+
+      # https://github.com/hrsh7th/nvim-cmp
+      # A completion plugin for neovim coded in Lua.
+      nvim-cmp
+
+      # https://github.com/hrsh7th/cmp-nvim-lsp
+      # nvim-cmp source for neovim builtin LSP client
+      cmp-nvim-lsp
+
+      # https://github.com/hrsh7th/cmp-nvim-lua
+      # nvim-cmp source for nvim lua
+      cmp-nvim-lua
+
+      # https://github.com/hrsh7th/cmp-buffer
+      # nvim-cmp source for buffer words
+      cmp-buffer
+
+      # https://github.com/hrsh7th/cmp-path
+      # nvim-cmp source for path
+      cmp-path
+
+      # https://github.com/hrsh7th/cmp-cmdline
+      # nvim-cmp source for vim's cmdline
+      cmp-cmdline
+
+      # https://github.com/dmitmel/cmp-cmdline-history
+      # Source for nvim-cmp which reads results from command-line or search 
+      # histories
+      cmp-cmdline-history
+
+      # https://github.com/petertriho/cmp-git
+      # Git source for nvim-cmp
+      cmp-git
+
+
+      # QUALITY OF LIFE
+
+      # https://github.com/tpope/vim-commentary
+      # comment stuff out
+      vim-commentary
+
+      # https://github.com/tpope/vim-surround
+      # Delete/change/add parentheses/quotes/XML-tags/much more with ease
+      vim-surround
+
+
+      # VERSION CONTROL
+
+      # https://github.com/tpope/vim-fugitive
+      # A Git wrapper so awesome, it should be illegal
+      vim-fugitive
+
+
+      # https://github.com/lewis6991/gitsigns.nvim
+      # Git integration for buffers
+      gitsigns-nvim
+
+
+      # INTERFACE CUSOMISATION
+
+      # https://github.com/nvim-lualine/lualine.nvim
+      # A blazing fast and easy to configure neovim statusline plugin written 
+      # in pure lua.
       lualine-nvim
+
+      # https://github.com/projekt0n/github-nvim-theme
+      # Github's Neovim themes
+      # (A nice light (white) theme from which to start)
       (pkgs.vimUtils.buildVimPluginFrom2Nix rec {
         pname = "github-nvim-theme";
         version = "0.0.7";
@@ -62,18 +173,14 @@
           sha256 = "sha256-Qm9ffdkHfG5+PLQ8PbOeFMywBbKVGqX8886clQbJzyg=";
         };
       })
-      harpoon
-      undotree
-      vim-fugitive
-      cmp-nvim-lsp
-      cmp-nvim-lua
-      cmp-buffer
-      cmp-path
-      cmp-cmdline
-      cmp-cmdline-history
-      nvim-cmp
-      cmp-git
-      gitsigns-nvim
+
+
+      # OTHER
+
+      # https://github.com/nvim-lua/plenary.nvim
+      # plenary: full; complete; entire; absolute; unqualified. All the lua 
+      # functions I don't want to write twice.
+      plenary-nvim
     ];
 
     # https://github.com/NixOS/nixpkgs/blob/db24d86dd8a4769c50d6b7295e81aa280cd93f35/pkgs/applications/editors/neovim/wrapper.nix#L13
