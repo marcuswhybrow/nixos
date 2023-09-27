@@ -6,7 +6,9 @@
     wget unixtools.ping
 
     # Fast rust tools
-    trashy bat exa fd procs sd du-dust ripgrep ripgrep-all tealdeer bandwhich
+    trashy bat eza fd procs sd du-dust tealdeer bandwhich
+    ripgrep 
+    #ripgrep-all
 
     # Utils
     coreboot-configurator
@@ -18,7 +20,7 @@
 
   # https://nixos.wiki/wiki/Samba
   fileSystems."/mnt/marcus-desktop/local" = {
-    device = "//192.168.0.22/Local";
+    device = "//192.168.0.23/Local";
     fsType = "cifs";
     options = let
       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
