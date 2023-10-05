@@ -30,7 +30,7 @@
         ./users/anne.nix
       ];
 
-      wsl = [
+      marcus-wsl = [
         inputs.nixos-wsl.nixosModules.wsl
         ./systems/wsl.nix
         ./users/marcus.nix
