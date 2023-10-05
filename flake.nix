@@ -53,6 +53,7 @@
       volume = pkgs.callPackage ./pkgs/volume.nix {};
       networking = pkgs.callPackage ./pkgs/networking.nix {};
       logout = pkgs.callPackage ./pkgs/logout.nix {};
+      tmux = pkgs.callPackage ./pkgs/tmux.nix {};
     };
   });
 }
