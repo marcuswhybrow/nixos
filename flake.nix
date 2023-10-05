@@ -2,6 +2,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: {
@@ -24,6 +28,12 @@
         ./systems/marcus-laptop.nix
         ./users/marcus.nix
         ./users/anne.nix
+      ];
+
+      wsl = [
+        inputs.nixos-wsl.nixosModules.wsl
+        ./systems/wsl.nix
+        ./users/marcus.nix
       ];
 
       anne-laptop = [
