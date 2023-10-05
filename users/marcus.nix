@@ -22,7 +22,9 @@ in {
             obsidian = "~/obsidian/Personal";
           in ''
             if status is-login
-              ${pkgs.dbus}/bin/dbus-run-session ${pkgs.marcus.sway}/bin/sway
+              if [ (hostname) = "marcus-laptop" ]
+                ${pkgs.dbus}/bin/dbus-run-session ${pkgs.marcus.sway}/bin/sway
+              end
             end
 
             if status is-interactive
