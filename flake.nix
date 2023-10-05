@@ -30,9 +30,9 @@
         ./users/anne.nix
       ];
 
-      marcus-wsl = [
+      Marcus-Desktop = [
         inputs.nixos-wsl.nixosModules.wsl
-        ./systems/wsl.nix
+        ./systems/marcus-desktop.nix
         ./users/marcus.nix
       ];
 
