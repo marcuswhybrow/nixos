@@ -17,7 +17,7 @@
           networking.networkmanager.enable = lib.mkDefault true;
           nixpkgs.overlays = [
             (final: prev: {
-              custom = inputs.self.packages.${pkgs.system};
+              custom = inputs.self.packages.${pkgs.system}.custom;
             })
           ];
         })
@@ -44,11 +44,11 @@
     };
   } // inputs.flake-utils.lib.eachDefaultSystem (system: let
     pkgs = import "${inputs.nixpkgs}" { inherit system; };
-    callPackageForEach = pkgs.lib.attrsets.mapAttrs' (name: value: {
+    callPackageForEach = path: pkgs.lib.attrsets.mapAttrs' (name: value: {
       name = pkgs.lib.strings.removeSuffix ".nix" name;
       value = pkgs.callPackage (./pkgs + "/${name}") {};
-    });
+    }) (builtins.readDir path);
   in {
-    packages = callPackageForEach (builtins.readDir ./pkgs);
+    packages = { custom = callPackageForEach ./pkgs; };
   });
 }
