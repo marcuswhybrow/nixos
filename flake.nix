@@ -47,23 +47,11 @@
       inherit system;
       config.allowUnfree = true; # necessary for neovim's vscode dependency
     };
+    callPackageForEach = pkgs.lib.attrsets.mapAttrs' (name: value: {
+      name = pkgs.lib.strings.removeSuffix ".nix" name;
+      value = pkgs.callPackage (./pkgs + "/${name}") {};
+    });
   in {
-    packages = {
-      neovim = pkgs.callPackage ./pkgs/neovim {};
-      alacritty = pkgs.callPackage ./pkgs/alacritty.nix {};
-      private = pkgs.callPackage ./pkgs/private.nix {};
-      waybar = pkgs.callPackage ./pkgs/waybar.nix {};
-      git = pkgs.callPackage ./pkgs/git.nix {};
-      rofi = pkgs.callPackage ./pkgs/rofi.nix {};
-      dunst = pkgs.callPackage ./pkgs/dunst.nix {};
-      sway = pkgs.callPackage ./pkgs/sway.nix {};
-      fish = pkgs.callPackage ./pkgs/fish.nix {};
-      starship = pkgs.callPackage ./pkgs/starship.nix {};
-      brightness = pkgs.callPackage ./pkgs/brightness.nix {};
-      volume = pkgs.callPackage ./pkgs/volume.nix {};
-      networking = pkgs.callPackage ./pkgs/networking.nix {};
-      logout = pkgs.callPackage ./pkgs/logout.nix {};
-      tmux = pkgs.callPackage ./pkgs/tmux.nix {};
-    };
+    packages = callPackageForEach (builtins.readDir ./pkgs);
   });
 }
