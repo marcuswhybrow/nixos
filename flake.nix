@@ -45,7 +45,6 @@
   } // inputs.flake-utils.lib.eachDefaultSystem (system: let
     pkgs = import "${inputs.nixpkgs}" {
       inherit system;
-      config.allowUnfree = true; # necessary for neovim's vscode dependency
     };
     callPackageForEach = pkgs.lib.attrsets.mapAttrs' (name: value: {
       name = pkgs.lib.strings.removeSuffix ".nix" name;
