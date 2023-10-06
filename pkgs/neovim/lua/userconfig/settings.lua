@@ -36,7 +36,7 @@ vim.opt.colorcolumn = "80"
 --------
 
 require('github-theme').setup({
-  transparent = true,
+  -- transparent = true,
   hide_inactive_statusline = false,
 })
 vim.cmd('colorscheme github_light')

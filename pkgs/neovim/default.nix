@@ -174,6 +174,17 @@
         };
       })
 
+      (pkgs.vimUtils.buildVimPluginFrom2Nix {
+        pname = "transparent-nvim";
+        version = "unstable";
+        src = pkgs.fetchFromGitHub {
+          owner = "xiyaowong";
+          repo = "transparent.nvim";
+          rev = "3af6232c8d39d51062702e875ff6407c1eeb0391";
+          sha256 = "sha256-1JyfwHBCtNCPmsOLzJRWBtg1u9uApQZY4fn2mTL3NZ4=";
+        };
+      })
+
 
       # OTHER
 
