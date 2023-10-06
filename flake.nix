@@ -43,9 +43,7 @@
       ];
     };
   } // inputs.flake-utils.lib.eachDefaultSystem (system: let
-    pkgs = import "${inputs.nixpkgs}" {
-      inherit system;
-    };
+    pkgs = import "${inputs.nixpkgs}" { inherit system; };
     callPackageForEach = pkgs.lib.attrsets.mapAttrs' (name: value: {
       name = pkgs.lib.strings.removeSuffix ".nix" name;
       value = pkgs.callPackage (./pkgs + "/${name}") {};
