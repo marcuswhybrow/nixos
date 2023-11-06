@@ -5,8 +5,6 @@ in {
   nixpkgs.overlays = [
     (final: prev: {
       marcus = {
-        nix-direnv = final.callPackage ./nix-direnv.nix {};
-
         alacritty = final.callPackage ./alacritty.nix {
           padding = terminalPadding; 
         };
@@ -48,7 +46,7 @@ in {
   environment.systemPackages = with pkgs; [
     light
     direnv 
-    marcus.nix-direnv
+    nix-direnv
   ];
   services.udev.packages = with pkgs; [ light ];
 

@@ -28,7 +28,7 @@
     customRC = '''';
 
     # Search search.nixos.org for "vimPlugins". Can't find a plugin? Wrap it's
-    # GitHub repo with `buildVimPluginsFrom2Nix` for the same result
+    # GitHub repo with `pkgs.vimutils.buildVimPlugins` for the same result
     plugins = with pkgs.vimPlugins; [
 
       # FILE SEARCH & MORE
@@ -67,17 +67,47 @@
         nix
         go
         rust
-        bash
-        fish
+        bash fish
+        html css
+        json yaml toml ron
+        lua
+        c
+
+        # Golang templ (template language)
+        (pkgs.vimUtils.buildVimPlugin {
+          pname = "tree-sitter-templ";
+          version = "89e5957b47707b16be1832a2753367b91fb85be0";
+          src = pkgs.fetchFromGitHub {
+            owner = "vrischmann";
+            repo = "tree-sitter-templ";
+            rev = "89e5957b47707b16be1832a2753367b91fb85be0";
+            sha256 = "sha256-nNC0mMsn5KAheFqOQNbbcXYnyd2S8EoGc1k+1Zi6PVc=";
+          };
+        })
       ]))
 
       # https://github.com/LnL7/vim-nix
       # Vim configuration files for Nix
       vim-nix # Not sure I need this if treesitter has a nix plugin?
 
+      (pkgs.vimUtils.buildVimPlugin {
+        pname = "templ.vim";
+        version = "5cc48b93a4538adca0003c4bc27af844bb16ba24";
+        src = pkgs.fetchFromGitHub {
+          owner = "joerdav";
+          repo = "templ.vim";
+          rev = "5cc48b93a4538adca0003c4bc27af844bb16ba24";
+          sha256 = "sha256-YdV8ioQJ10/HEtKQy1lHB4Tg9GNKkB0ME8CV/+hlgYs=";
+        };
+      })
+      
 
 
       # AUTOCOMPLETE
+
+      # https://github.com/l3mon4d3/luasnip/
+      # Snippet Engine for Neovim written in Lua
+      luasnip
 
       # https://github.com/neovim/nvim-lspconfig
       # Quickstart configs for Nvim LSP
@@ -85,7 +115,7 @@
 
       # https://github.com/VonHeikemen/lsp-zero.nvim
       # A starting point to setup some lsp related features in neovim.
-      (pkgs.vimUtils.buildVimPluginFrom2Nix {
+      (pkgs.vimUtils.buildVimPlugin {
         pname = "lsp-zero-nvim";
         version = "2.x";
         src = pkgs.fetchFromGitHub {
@@ -99,6 +129,10 @@
       # https://github.com/hrsh7th/nvim-cmp
       # A completion plugin for neovim coded in Lua.
       nvim-cmp
+
+      # https://github.com/saadparwaiz1/cmp_luasnip
+      # luasnip completion source for nvim-cmp
+      cmp_luasnip
 
       # https://github.com/hrsh7th/cmp-nvim-lsp
       # nvim-cmp source for neovim builtin LSP client
@@ -163,7 +197,7 @@
       # https://github.com/projekt0n/github-nvim-theme
       # Github's Neovim themes
       # (A nice light (white) theme from which to start)
-      (pkgs.vimUtils.buildVimPluginFrom2Nix rec {
+      (pkgs.vimUtils.buildVimPlugin rec {
         pname = "github-nvim-theme";
         version = "0.0.7";
         src = pkgs.fetchFromGitHub {
@@ -174,9 +208,9 @@
         };
       })
 
-      (pkgs.vimUtils.buildVimPluginFrom2Nix {
+      (pkgs.vimUtils.buildVimPlugin {
         pname = "transparent-nvim";
-        version = "unstable";
+        version = "3af6232c8d39d51062702e875ff6407c1eeb0391";
         src = pkgs.fetchFromGitHub {
           owner = "xiyaowong";
           repo = "transparent.nvim";
@@ -207,7 +241,8 @@
     ${beforeNeovimOpens}
     ${neovim}/bin/nvim "$@"
     ${afterNeovimCloses}
-  '';
+    '';
+
 in pkgs.runCommand "neovim" {
   nativeBuildInputs = [ makeBinaryWrapper ];
 } ''
@@ -224,6 +259,7 @@ in pkgs.runCommand "neovim" {
     --suffix PATH : ${lib.makeBinPath (with pkgs; [
       nil
       gopls
+      nodePackages."@tailwindcss/language-server"
       nodePackages.bash-language-server
       nodePackages.vscode-langservers-extracted # html css json eslint
       nodePackages.yaml-language-server

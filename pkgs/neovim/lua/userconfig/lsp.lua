@@ -16,17 +16,43 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>gr", "<cmd>Telescope lsp_references<cr>", { buffer = true })
 end)
 
+local lspconfig = require('lspconfig')
+
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-require'lspconfig'.gopls.setup{}
-require'lspconfig'.nil_ls.setup{}
-require'lspconfig'.bashls.setup{}
-require'lspconfig'.html.setup{}
-require'lspconfig'.cssls.setup{}
-require'lspconfig'.jsonls.setup{}
-require'lspconfig'.eslint.setup{}
-require'lspconfig'.yamlls.setup{}
-require'lspconfig'.marksman.setup{}
-require'lspconfig'.rust_analyzer.setup{
+lspconfig.gopls.setup{}
+
+-- https://templ.guide/commands-and-tools/ide-support#neovim--050
+lspconfig.templ.setup{}
+
+lspconfig.tailwindcss.setup({
+  filetypes = {
+    'templ',
+    'html',
+  },
+  init_options = {
+    userLanguages = {
+      templ = "html"
+    }
+  },
+  handlers = {
+    -- https://github.com/tailwindlabs/tailwindcss-intellisense/issues/188#issuecomment-886110433
+    ["tailwindcss/getConfiguration"] = function (_, _, params, _, bufnr, _)
+      -- tailwindcss lang server waits for this repsonse before providing hover
+      vim.lsp.buf_notify(bufnr, "tailwindcss/getConfigurationResponse", { _id = params._id })
+    end
+  },
+})
+
+lspconfig.nil_ls.setup{}
+lspconfig.bashls.setup{}
+lspconfig.html.setup{}
+lspconfig.cssls.setup{}
+lspconfig.jsonls.setup{}
+lspconfig.eslint.setup{}
+lspconfig.yamlls.setup{}
+lspconfig.marksman.setup{}
+
+lspconfig.rust_analyzer.setup{
   settings = {
     ['rust-analyzer'] = {
       diagnostics = {
@@ -82,6 +108,16 @@ cmp.setup({
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
   },
 
+  snippet = {
+    expand = function(args)
+      local luasnip = require("luasnip")
+      if not luasnip then
+        return
+      end 
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+
   sources = {
     { name = "path" },
     { name = "nvim_lsp" },
@@ -113,3 +149,16 @@ cmp.setup.cmdline(":", {
     { name = "cmdline" },
   })
 })
+
+-- https://templ.guide/commands-and-tools/ide-support#format-on-save-1
+vim.api.nvim_create_autocmd(
+  {
+    "BufWritePre"
+  },
+  {
+    pattern = {"*.templ"},
+    callback = function()
+      vim.lsp.buf.format()
+    end,
+  }
+)
