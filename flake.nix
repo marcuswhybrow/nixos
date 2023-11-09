@@ -29,7 +29,7 @@
       modules = [
 
         ({ lib, pkgs, ... }: {
-          nix.settings.experimental-features = [ "nix-command" "flakes" ];
+          nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
           networking.hostName = hostname; 
           networking.networkmanager.enable = lib.mkDefault true;
           nixpkgs.overlays = [
