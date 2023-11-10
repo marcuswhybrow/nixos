@@ -28,10 +28,12 @@ lspconfig.tailwindcss.setup({
   filetypes = {
     'templ',
     'html',
+    'gohtml',
+    'go',
   },
   init_options = {
     userLanguages = {
-      templ = "html"
+      templ = "html",
     }
   },
   handlers = {
