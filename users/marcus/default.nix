@@ -114,6 +114,7 @@ in {
       marcus.tmux
 
       custom.private
+      custom.alarm
     ];
 
   };
