@@ -35,7 +35,7 @@
 
   functions = {
     fish_greeting = ''echo (whoami) @ (hostname)'';
-    work_on_repository = ''
+    code = ''
       set name (ls $HOME/Repositories | fzf --bind tab:up,btab:down)
       tmux new \
         -A \
