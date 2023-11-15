@@ -100,7 +100,18 @@
           sha256 = "sha256-YdV8ioQJ10/HEtKQy1lHB4Tg9GNKkB0ME8CV/+hlgYs=";
         };
       })
-      
+
+      # REAPER JSFX/EEL2 syntax highlighting
+      (pkgs.vimUtils.buildVimPlugin {
+        pname = "vim-eel2";
+        version = "2019-11-16";
+        src = pkgs.fetchFromGitHub {
+          owner = "TristanCrawford";
+          repo = "vim-eel2";
+          rev = "6865d0f3e92bb5feb0108cc20f89f69659021483";
+          sha256 = "sha256-lAekmwJxXN+Y6zIxcaJTAftA7919J4Vl1SRjdhx2X8M=";
+        };
+      })
 
 
       # AUTOCOMPLETE
