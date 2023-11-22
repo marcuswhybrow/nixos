@@ -34,6 +34,7 @@ lspconfig.tailwindcss.setup({
   init_options = {
     userLanguages = {
       templ = "html",
+      go = "html",
     }
   },
   handlers = {
