@@ -16,36 +16,10 @@
     # Mounting Windows Shares
     cifs-utils
     lxqt.lxqt-policykit
+
+    # Image editing
+    krita
   ];
-
-  # https://nixos.wiki/wiki/Samba
-  fileSystems."/mnt/marcus-desktop/local" = {
-    device = "//192.168.0.23/Local";
-    fsType = "cifs";
-    options = let
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in [ "${automount_opts},credentials=/etc/nixos/secrets/marcus-laptop-smb,uid=1000,gid=100" ];
-  };
-  networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
-  services.gvfs.enable = true;
-
-  # https://nixos.wiki/wiki/Fonts
-  fonts.packages = with pkgs; [
-    font-awesome
-
-    (nerdfonts.override {
-      fonts = [
-        # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
-        "FiraCode"
-        "FiraMono"
-        "Terminus"
-      ];
-    })
-  ];
-
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "FiraCode Nerd Font Mono" ];
-  };
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";

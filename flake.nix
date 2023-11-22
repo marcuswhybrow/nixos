@@ -32,14 +32,21 @@
         ./modules/nix-flake-support.nix
         deriveHostnameModule
         customPkgsModule
-        ./modules/intel-accelerated-video-playback.nix
       ] ++ systemModules;
     });
+
+    mountMarcusDesktop = import ./modules/samba-mount.nix {
+      local = "/mnt/marcus-desktop/local";
+      remote = "//192.168.0.23/Local";
+    };
   in {
     nixosConfigurations = mapAttrs toNixosSystem {
       marcus-laptop = [
         ./systems/marcus-laptop.nix
         ./users/marcus
+        ./modules/intel-accelerated-video-playback.nix
+        ./modules/coding-fonts.nix
+        mountMarcusDesktop
       ];
 
       Marcus-Desktop = [
@@ -50,6 +57,7 @@
 
       anne-laptop = [
         ./systems/anne-laptop.nix
+        ./modules/intel-accelerated-video-playback.nix
         ./users/anne
         ./users/marcus
       ];
