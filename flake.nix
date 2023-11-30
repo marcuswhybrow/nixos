@@ -1,26 +1,130 @@
 {
   inputs = {
-    alacritty.url = "github:marcuswhybrow/alacritty";
-    alarm.url = "github:marcuswhybrow/alarm";
-    anne-sway.url = "github:whybrow/anne-sway";
-    anne-fish.url = "github:whybrow/anne-fish";
-    brightness.url = "github:marcuswhybrow/brightness";
-    dunst.url = "github:marcuswhybrow/dunst";
-    fish.url = "github:marcuswhybrow/fish";
-    git.url = "github:marcuswhybrow/git";
-    logout.url = "github:marcuswhybrow/logout";
-    neovim.url = "github:marcuswhybrow/neovim";
-    networking.url = "github:marcuswhybrow/networking";
-    nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
+    alacritty = {
+      url = "github:marcuswhybrow/alacritty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    alarm = {
+      url = "github:marcuswhybrow/alarm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    anne-sway = { 
+      url = "github:whybrow/anne-sway"; 
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rofi.follows = "rofi";
+        volume.follows = "volume";
+        brightness.follows = "brightness";
+        waybar.follows = "waybar";
+      };
+    };
+    anne-fish = { 
+      url = "github:whybrow/anne-fish"; 
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        sway.follows = "anne-sway";
+        starship.follows = "starship";
+      };
+    };
+    brightness = {
+      url = "github:marcuswhybrow/brightness";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dunst = {
+      url = "github:marcuswhybrow/dunst";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    fish = {
+      url = "github:marcuswhybrow/fish";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        neovim.follows = "neovim";
+        git.follows = "git";
+        starship.follows = "starship";
+      };
+    };
+    git = {
+      url = "github:marcuswhybrow/git";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        neovim.follows = "neovim";
+      };
+    };
+    logout= {
+      url = "github:marcuswhybrow/logout";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rofi.follows = "rofi";
+      };
+    };
+    neovim = {
+      url = "github:marcuswhybrow/neovim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    networking = {
+      url = "github:marcuswhybrow/networking";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rofi.follows = "rofi";
+      };
+    };
+    nixos-wsl = { 
+      url = "github:nix-community/NixOS-WSL"; 
+      inputs.nixpkgs.follows = "nixpkgs"; 
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-updates.url = "github:marcuswhybrow/nixpkgs-updates";
-    private.url = "github:marcuswhybrow/private";
-    starship.url = "github:marcuswhybrow/starship";
-    sway.url = "github:marcuswhybrow/sway";
-    tmux.url = "github:marcuswhybrow/tmux";
-    rofi.url = "github:marcuswhybrow/rofi";
-    volume.url = "github:marcuswhybrow/volume";
-    waybar.url = "github:marcuswhybrow/waybar";
+    nixpkgs-updates = {
+      url = "github:marcuswhybrow/nixpkgs-updates";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    private = {
+      url = "github:marcuswhybrow/private";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        alacritty.follows = "alacritty";
+      };
+    };
+    starship = {
+      url = "github:marcuswhybrow/starship";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sway = {
+      url = "github:marcuswhybrow/sway";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        alacritty.follows = "alacritty";
+        private.follows = "private";
+        logout.follows = "logout";
+        rofi.follows = "rofi";
+        volume.follows = "volume";
+        brightness.follows = "brightness";
+        waybar.follows = "waybar";
+      };
+    };
+    tmux = {
+      url = "github:marcuswhybrow/tmux";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        fish.follows = "fish";
+      };
+    };
+    rofi = {
+      url = "github:marcuswhybrow/rofi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    volume = {
+      url = "github:marcuswhybrow/volume";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    waybar = {
+      url = "github:marcuswhybrow/waybar";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        networking.follows = "networking";
+        nixpkgs-updates.follows = "nixpkgs-updates";
+        alacritty.follows = "alacritty";
+      };
+    };
   };
 
   outputs = inputs: let
