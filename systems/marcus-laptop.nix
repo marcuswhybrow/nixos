@@ -59,8 +59,22 @@
   
   security.sudo.wheelNeedsPassword = false;
 
-  hardware.opengl.intelAcceleratedVideoPlayback.enable = true;
+  environment.sessionVariables = {
+    # WLR_NO_HARDWARE_CURSORS = "1"; # can solve hidden cursor issues
+    NIXOS_OZONE_WL = "1"; # encourages electron apps to use wayland
+  };
 
+  programs.hyprland = {
+    enable = true;
+    enableNvidiaPatches = true;
+    xwayland.enable = true;
+  };
+
+  hardware = {
+    opengl.enable = true;
+    nvidia.modesetting.enable = true;
+    opengl.intelAcceleratedVideoPlayback.enable = true;
+  };
 
   # DANGER ZONE
   # -----------

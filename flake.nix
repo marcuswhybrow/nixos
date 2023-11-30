@@ -1,49 +1,51 @@
 {
   inputs = {
+    alacritty.url = "github:marcuswhybrow/alacritty";
+    alarm.url = "github:marcuswhybrow/alarm";
+    anne-sway.url = "github:whybrow/anne-sway";
+    anne-fish.url = "github:whybrow/anne-fish";
+    brightness.url = "github:marcuswhybrow/brightness";
+    dunst.url = "github:marcuswhybrow/dunst";
+    fish.url = "github:marcuswhybrow/fish";
+    git.url = "github:marcuswhybrow/git";
+    logout.url = "github:marcuswhybrow/logout";
+    neovim.url = "github:marcuswhybrow/neovim";
+    networking.url = "github:marcuswhybrow/networking";
+    nixos-wsl = { url = "github:nix-community/NixOS-WSL"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs-updates.url = "github:marcuswhybrow/nixpkgs-updates";
+    private.url = "github:marcuswhybrow/private";
+    starship.url = "github:marcuswhybrow/starship";
+    sway.url = "github:marcuswhybrow/sway";
+    tmux.url = "github:marcuswhybrow/tmux";
+    rofi.url = "github:marcuswhybrow/rofi";
+    volume.url = "github:marcuswhybrow/volume";
+    waybar.url = "github:marcuswhybrow/waybar";
   };
 
   outputs = inputs: let
     lib = inputs.nixpkgs.lib;
-    inherit (builtins) mapAttrs readDir;
-    inherit (lib.attrsets) mapAttrs' mapAttrsToList filterAttrs;
 
-    overlayCustomPkgs = pkgs: final: prev: {
-      custom = mapAttrs' (n: v: {
-        name = lib.strings.removeSuffix ".nix" n;
-        value = pkgs.callPackage (./pkgs + "/${n}") {};
-      }) (readDir ./pkgs);
-    };
-
-    toNixosSystem = hostname: systemModules: lib.nixosSystem (let 
-      deriveHostnameModule = { lib, ... }: {
-        networking.hostName = hostname; 
-        networking.networkmanager.enable = lib.mkDefault true;
-      };
-      customPkgsModule = { pkgs, ... }: {
-        nixpkgs.overlays = [(overlayCustomPkgs pkgs)];
-      };
-    in {
+    toNixosSystem = hostname: systemModules: lib.nixosSystem {
       modules = [
         ./modules/nix-flake-support.nix
-        deriveHostnameModule
-        customPkgsModule
+        ({ lib, ... }: {
+          networking.hostName = hostname; 
+          networking.networkmanager.enable = lib.mkDefault true;
+        })
       ] ++ systemModules;
-    });
+      specialArgs = { inherit inputs; };
+    };
 
     mountMarcusDesktop = import ./modules/samba-mount.nix {
       local = "/mnt/marcus-desktop/local";
       remote = "//192.168.0.23/Local";
     };
   in {
-    nixosConfigurations = mapAttrs toNixosSystem {
+    nixosConfigurations = builtins.mapAttrs toNixosSystem {
       marcus-laptop = [
         ./systems/marcus-laptop.nix
-        ./users/marcus
+        ./users/marcus.nix
         ./modules/intel-accelerated-video-playback.nix
         ./modules/coding-fonts.nix
         mountMarcusDesktop
@@ -52,46 +54,16 @@
       Marcus-Desktop = [
         inputs.nixos-wsl.nixosModules.wsl
         ./systems/marcus-desktop.nix
-        ./users/marcus
+        ./users/marcus.nix
       ];
 
       anne-laptop = [
         ./systems/anne-laptop.nix
         ./modules/intel-accelerated-video-playback.nix
-        ./users/anne
-        ./users/marcus
+        ./users/anne.nix
+        ./users/marcus.nix
       ];
 
     };
-
-    packages = let 
-      pkgs = import "${inputs.nixpkgs}" (let 
-        users = readDir ./users;
-        userModule = name: import (./users + "/${name}") { 
-          pkgs = inputs.nixpkgs; 
-        };
-        userOverlays = name: (userModule name).nixpkgs.overlays;
-        overlaysForAllusers = mapAttrsToList (n: v: userOverlays n) users;
-        concat = x: lib.lists.foldl (a: b: a ++ b) [] x;
-        finalOverlays = concat overlaysForAllusers;
-      in {
-        system = "x86_64-linux";
-        overlays = [(overlayCustomPkgs "${inputs.nixpkgs}")] ++ finalOverlays;
-      });
-
-      marcusOutputs = let 
-        marcusFiles = readDir ./users/marcus;
-        ignoreDefaultNix = filterAttrs (n: v: n != "default.nix");
-        marcusPkgs = ignoreDefaultNix marcusFiles;
-
-        callPackages = name: value: {
-          name = lib.strings.removeSuffix ".nix" name;
-          value = pkgs.callPackage (./users/marcus + "/${name}") {};
-        };
-      in mapAttrs' callPackages marcusPkgs;
-
-      rawOutputs.private =  pkgs.callPackage ./pkgs/private.nix {};
-    in
-      marcusOutputs // rawOutputs;
   };
 }

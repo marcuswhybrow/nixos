@@ -11,12 +11,15 @@ in {
       vaapiIntel = prev.vaapiIntel.override { enableHybridCodec = true; };
     })];
 
-    hardware.opengl.extraPackages = with pkgs; [
-      intel-media-driver
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
+    hardware.opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
 }
