@@ -1,4 +1,6 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, mwpkgs, config, ... }: let 
+  onHost = host: value: if config.networking.hostName == host then value else [];
+in {
   environment.systemPackages = [
     pkgs.light
     pkgs.direnv 
@@ -44,33 +46,33 @@
       "video"
     ];
 
-    packages = [
+    packages = with pkgs; [
       pkgs.htop
       pkgs.lsof # htop requires lsof when you press `l` on a processF
-
-      pkgs.brave
+      pkgs.firefox
+      pkgs.ranger
+      pkgs.gh
+    ] ++ (with mwpkgs; [
+      hyprland
+      fish
+      alacritty
+      neovim
+      waybar
+      rofi
+      dunst
+      logout
+      networking
+      git
+      tmux
+      private
+      alarm
+      volume
+      brightness
+    ]) ++ (onHost "marcus-laptop" [
+      mwpkgs.hyprland-fish-auto-login
+      pkgs.reaper
       pkgs.discord
       pkgs.obsidian
-      pkgs.reaper
-
-      pkgs.ranger
-      pkgs.hyprland
-      pkgs.gh
-
-      inputs.fish.packages.x86_64-linux.fish
-      inputs.alacritty.packages.x86_64-linux.alacritty
-      inputs.neovim.packages.x86_64-linux.nvim
-      inputs.waybar.packages.x86_64-linux.waybar
-      inputs.rofi.packages.x86_64-linux.rofi
-      inputs.dunst.packages.x86_64-linux.dunst
-      inputs.logout.packages.x86_64-linux.logout
-      inputs.networking.packages.x86_64-linux.networking
-      inputs.git.packages.x86_64-linux.git
-      inputs.tmux.packages.x86_64-linux.tmux
-      inputs.private.packages.x86_64-linux.private
-      inputs.alarm.packages.x86_64-linux.alarm
-      inputs.volume.packages.x86_64-linux.volume
-      inputs.brightness.packages.x86_64-linux.brightness
-    ];
+    ]);
   };
 }

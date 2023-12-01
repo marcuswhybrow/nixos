@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, mwpkgs, ... }: {
 
   services.udev.packages = [
     pkgs.light
@@ -13,10 +13,10 @@
       pkgs.firefox
       pkgs.pcmanfm
 
-      inputs.anne-fish.packages.x86_64-linux.fish
-      inputs.anne-sway.packages.x86_64-linux.sway
-      inputs.alacritty.packages.x86_64-linux.alacritty
-      inputs.dunst.packages.x86_64-linux.dunst
+      mwpkgs.anne-fish
+      mwpkgs.anne-sway
+      mwpkgs.alacritty
+      mwpkgs.dunst
     ];
   };
 }
