@@ -1,4 +1,4 @@
-{ pkgs, inputs, mwpkgs, config, ... }: let 
+{ pkgs, mwpkgs, config, ... }: let 
   onHost = host: value: if config.networking.hostName == host then value else [];
 in {
   environment.systemPackages = [
