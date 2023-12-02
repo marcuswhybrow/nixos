@@ -53,6 +53,7 @@ in {
       pkgs.ranger
       pkgs.gh
     ] ++ (with mwpkgs; [
+      flake-updates
       hyprland
       fish
       alacritty
