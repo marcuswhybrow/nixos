@@ -523,11 +523,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1701344231,
-        "narHash": "sha256-tjh95fplpf47hXYgimTOoRUlAUAyg6Eyct10sFwN8+0=",
+        "lastModified": 1701621328,
+        "narHash": "sha256-WhBvSi4XtbyS27TB0kKLU/dgx33usOPElg8wzJylU3E=",
         "owner": "marcuswhybrow",
         "repo": "dunst",
-        "rev": "efedd417e100e6e71f35add44aa90c3bddf67a9f",
+        "rev": "8a9bbea18880f820e69e885fcf600b1a0f519c9e",
         "type": "github"
       },
       "original": {
@@ -1327,11 +1327,11 @@
         "waybar": "waybar"
       },
       "locked": {
-        "lastModified": 1701524679,
-        "narHash": "sha256-Am29cGRq5nreruBxpB2+6NED+btE3/kFKGJWmIE3BsA=",
+        "lastModified": 1701621358,
+        "narHash": "sha256-DRNq+fTL4CGa9xEJcKgvDxbsb3Rjtpo0rw42if7eUNw=",
         "owner": "marcuswhybrow",
         "repo": "mwpkgs",
-        "rev": "ebe288491ed90c11c411cfa8dbe08f7f9639fe1b",
+        "rev": "074ea50d267e6cfa931e2440533a3cab4eefab4e",
         "type": "github"
       },
       "original": {
