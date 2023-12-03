@@ -47,11 +47,18 @@ in {
     ];
 
     packages = with pkgs; [
-      pkgs.htop
-      pkgs.lsof # htop requires lsof when you press `l` on a processF
-      pkgs.firefox
-      pkgs.ranger
-      pkgs.gh
+      htop
+      lsof # htop requires lsof when you press `l` on a processF
+      brave
+      firefox
+      ranger
+      gh
+      megasync
+      megacmd
+      krita
+      unzip
+      vlc
+      mpv
     ] ++ (with mwpkgs; [
       flake-updates
       hyprland
