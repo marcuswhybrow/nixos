@@ -64,6 +64,7 @@ in {
       hyprland
       fish
       alacritty
+      starship
       neovim
       waybar
       rofi
