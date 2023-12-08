@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs"; 
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    musnix.url = "github:musnix/musnix";
   };
 
   outputs = inputs: let

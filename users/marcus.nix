@@ -29,6 +29,7 @@ in {
       "networkmanager"
       "wheel"
       "video"
+      "audio"
     ];
 
     packages = with pkgs; [
