@@ -21,21 +21,6 @@ in {
     "/share/nix-direnv"
   ];
 
-  # Proton VPN
-  networking.wg-quick.interfaces.protonvpn = {
-    autostart = true;
-    address = [ "10.2.0.2/32" ];
-    dns = [ "10.2.0.1" ];
-    privateKeyFile = "/etc/nixos/secrets/protonvpn-marcus-laptop-UK-86";
-    peers = [
-      {
-        endpoint = "146.70.179.50:51820";
-        publicKey = "zctOjv4DH2gzXtLQy86Tp0vnT+PNpMsxecd2vUX/i0U="; # UK#86
-        allowedIPs = [ "0.0.0.0/0" "::/0" ]; # forward all ip traffic thru
-      }
-    ];
-  };
-
   users.users.marcus = {
     description = "Marcus Whybrow";
     isNormalUser = true;
@@ -79,6 +64,10 @@ in {
       brightness
     ]) ++ (onHost "marcus-laptop" [
       mwpkgs.hyprland-fish-auto-login
+      pkgs.reaper
+      pkgs.discord
+      pkgs.obsidian
+    ]) ++ (onHost "marcus-desktop" [
       pkgs.reaper
       pkgs.discord
       pkgs.obsidian

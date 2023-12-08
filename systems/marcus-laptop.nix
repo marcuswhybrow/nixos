@@ -77,6 +77,29 @@
     opengl.intelAcceleratedVideoPlayback.enable = true;
   };
 
+  networking = {
+    enable = true;
+    hostName = "marcus-laptop";
+    networkmanager.enable = true;
+  };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+
+  # Proton VPN
+  networking.wg-quick.interfaces.protonvpn = {
+    autostart = true;
+    address = [ "10.2.0.2/32" ];
+    dns = [ "10.2.0.1" ];
+    privateKeyFile = "/etc/nixos/secrets/protonvpn-marcus-laptop-UK-86";
+    peers = [
+      {
+        endpoint = "146.70.179.50:51820";
+        publicKey = "zctOjv4DH2gzXtLQy86Tp0vnT+PNpMsxecd2vUX/i0U="; # UK#86
+        allowedIPs = [ "0.0.0.0/0" "::/0" ]; # forward all ip traffic thru
+      }
+    ];
+  };
+
   # DANGER ZONE
   # -----------
 

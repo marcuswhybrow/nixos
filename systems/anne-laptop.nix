@@ -39,6 +39,14 @@
     pulse.enable = true;
   };
 
+  networking = {
+    enable = true;
+    hostName = "anne-laptop";
+    networkmanager.enable = true;
+  };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+
 
   # DANGER ZONE
   # -----------

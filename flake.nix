@@ -16,19 +16,8 @@
     mwpkgs = inputs.mwpkgs.packages.x86_64-linux;
 
     toNixosSystem = hostname: systemModules: lib.nixosSystem {
-      modules = [
-        ./modules/nix-flake-support.nix
-        ({ lib, ... }: {
-          networking.hostName = hostname; 
-          networking.networkmanager.enable = lib.mkDefault true;
-        })
-      ] ++ systemModules;
+      modules = systemModules;
       specialArgs = { inherit inputs mwpkgs; };
-    };
-
-    mountMarcusDesktop = import ./modules/samba-mount.nix {
-      local = "/mnt/marcus-desktop/local";
-      remote = "//192.168.0.23/Local";
     };
   in {
     nixosConfigurations = builtins.mapAttrs toNixosSystem {
@@ -37,13 +26,12 @@
         ./users/marcus.nix
         ./modules/intel-accelerated-video-playback.nix
         ./modules/coding-fonts.nix
-        mountMarcusDesktop
       ];
 
-      Marcus-Desktop = [
-        inputs.nixos-wsl.nixosModules.wsl
+      marcus-desktop = [
         ./systems/marcus-desktop.nix
         ./users/marcus.nix
+        ./modules/coding-fonts.nix
       ];
 
       anne-laptop = [
