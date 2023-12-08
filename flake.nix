@@ -23,6 +23,7 @@
   in {
     nixosConfigurations = builtins.mapAttrs toNixosSystem {
       marcus-laptop = [
+        inputs.musnix.nixosModules.musnix
         ./systems/marcus-laptop.nix
         ./users/marcus.nix
         ./modules/intel-accelerated-video-playback.nix
