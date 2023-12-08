@@ -125,6 +125,10 @@
       device = "/dev/disk/by-uuid/B13C-CFE9";
       fsType = "vfat";
     };
+    "/storage" = {
+      device = "/dev/disk/by-label/Storage"; # nvme0n1p2
+      fsType = "ntfs";
+    };
   };
 
   swapDevices = [];
