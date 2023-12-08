@@ -72,6 +72,9 @@ in {
       pkgs.reaper
       pkgs.discord
       pkgs.obsidian
+      pkgs.wineWowPackages.waylandFull
+      pkgs.yabridge
+      pkgs.yabridgectl
     ]);
   };
 }

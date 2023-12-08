@@ -31,6 +31,7 @@
       ];
 
       marcus-desktop = [
+        inputs.musnix.nixosModules.musnix
         ./systems/marcus-desktop.nix
         ./users/marcus.nix
         ./modules/coding-fonts.nix

@@ -30,10 +30,19 @@
     pulse.enable = true;
     jack.enable = true;
   };
+  musnix = {
+    enable = true;
+    alsaSeq.enable = true;
+    ffado.enable = false; # firewire support
+    soundcardPciId = "07:00.6"; # [AMD] Family 17h/19h HD Audio Controller
+    kernel.realtime = false;
+    das_watchdog.enable = true;
+  };
 
   services = {
     printing.enable = true;
     openssh.enable = true;
+    unifi.enable = false;
   };
 
   environment.sessionVariables = {
