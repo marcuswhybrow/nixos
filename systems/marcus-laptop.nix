@@ -157,7 +157,6 @@
   };
 
   networking = {
-    enable = true;
     hostName = "marcus-laptop";
     networkmanager.enable = true;
 
