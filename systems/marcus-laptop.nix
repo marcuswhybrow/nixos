@@ -1,4 +1,7 @@
 { pkgs, config, ... }: {
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+  ];
   environment.systemPackages = with pkgs; [
     vim
 
@@ -13,8 +16,6 @@
     # Utils
     coreboot-configurator
 
-    # Mounting Windows Shares
-    cifs-utils
     lxqt.lxqt-policykit
 
     # Image editing
@@ -54,7 +55,7 @@
     alsaSeq.enable = true;
     ffado.enable = false;
     soundcardPciId = "00:0e.0"; # Integrated sound card
-    kernel.realtime = true;
+    kernel.realtime = false;
     das_watchdog.enable = true;
   };
 
@@ -146,7 +147,6 @@
 
   programs.hyprland = {
     enable = true;
-    enableNvidiaPatches = true;
     xwayland.enable = true;
   };
 

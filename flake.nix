@@ -20,11 +20,6 @@
       modules = systemModules;
       specialArgs = { inherit inputs mwpkgs; };
     };
-
-    mountMarcusDesktop = import ./modules/samba-mount.nix {
-      local = "/mnt/marcus-desktop/local";
-      remote = "//192.168.0.23/Local";
-    };
   in {
     nixosConfigurations = builtins.mapAttrs toNixosSystem {
       marcus-laptop = [
@@ -33,7 +28,11 @@
         ./users/marcus.nix
         ./modules/intel-accelerated-video-playback.nix
         ./modules/coding-fonts.nix
-        mountMarcusDesktop
+        (import ./modules/samba-mount.nix {
+          local = "/mnt/marcus-desktop/local";
+          remote = "//192.168.0.23/Local";
+          creds = /etc/nixos/secrets/marcus-laptop-smb;
+        })
       ];
 
       marcus-desktop = [
