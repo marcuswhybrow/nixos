@@ -41,7 +41,7 @@
   services.xserver = {
     enable = true;
     autorun = false;
-    layout = "gb";
+    xkb.layout = "gb";
   };
 
   programs.fish.enable = true;
