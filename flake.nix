@@ -24,6 +24,7 @@
     nixosConfigurations = builtins.mapAttrs toNixosSystem {
       marcus-laptop = [
         inputs.musnix.nixosModules.musnix
+        ./modules/obsidian-wayland-fix.nix
         ./systems/marcus-laptop.nix
         ./users/marcus.nix
         ./modules/intel-accelerated-video-playback.nix
@@ -33,6 +34,7 @@
           remote = "//192.168.0.23/Local";
           creds = /etc/nixos/secrets/marcus-laptop-smb;
         })
+        ./modules/disable-bluetooth.nix
       ];
 
       marcus-desktop = [

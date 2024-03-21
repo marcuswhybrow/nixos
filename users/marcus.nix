@@ -67,7 +67,7 @@ in {
       mwpkgs.hyprland-fish-auto-login
       pkgs.reaper
       pkgs.discord
-      pkgs.obsidian
+      pkgs.obsidian-wayland
     ]) ++ (onHost "marcus-desktop" [
       pkgs.reaper
       pkgs.discord

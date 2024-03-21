@@ -138,6 +138,15 @@
     # '';
   };
 
+  # Battery life managment
+  powerManagement = {
+    enable = true; # Hibernate and suspend
+    powertop.enable = true; # Analysis and auto tune
+  };
+  services.thermald.enable = true; # Prevents overheating
+  services.power-profiles-daemon.enable = true; # User switchable power profiles
+
+
   security.sudo.wheelNeedsPassword = false;
 
   environment.sessionVariables = {
@@ -177,7 +186,6 @@
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-
 
   # DANGER ZONE
   # -----------
