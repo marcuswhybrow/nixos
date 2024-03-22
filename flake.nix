@@ -25,7 +25,6 @@
       marcus-laptop = [
         inputs.musnix.nixosModules.musnix
         ./modules/obsidian-wayland-fix.nix
-        ./systems/marcus-laptop.nix
         ./users/marcus.nix
         ./modules/intel-accelerated-video-playback.nix
         ./modules/coding-fonts.nix
@@ -35,7 +34,7 @@
           creds = /etc/nixos/secrets/marcus-laptop-smb;
         })
         ./modules/disable-bluetooth.nix
-      ];
+      ] ++ (import ./systems/marcus-laptop.nix);
 
       marcus-desktop = [
         inputs.musnix.nixosModules.musnix
