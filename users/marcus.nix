@@ -39,7 +39,6 @@ in {
       firefox
       ranger
       gh
-      megasync
       megacmd
       krita
       unzip
@@ -69,6 +68,7 @@ in {
       pkgs.discord
       pkgs.obsidian-wayland
     ]) ++ (onHost "marcus-desktop" [
+      pkgs.megasync
       pkgs.reaper
       pkgs.discord
       pkgs.obsidian
