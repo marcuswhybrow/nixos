@@ -123,6 +123,11 @@
     };
     services.thermald.enable = true; # Prevents overheating
     services.power-profiles-daemon.enable = true; # User switchable power profiles
+
+    # By default closing the lid suspends the system to RAM. However, opening 
+    # the lid never resumes, and I'm forced to reboot witht the power button.
+    # So for now, I'm ignore this feature.
+    services.logind.lidSwitch = "ignore"; 
   })
 
   # Audio and Music
