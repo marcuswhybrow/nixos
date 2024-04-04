@@ -1918,11 +1918,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1712189394,
-        "narHash": "sha256-ShIVUWZzUueE/cLXNDNm+VHiLkw5p9MuMwEBdNlkijo=",
+        "lastModified": 1712254133,
+        "narHash": "sha256-fwuWrAprqoA4fUrkZGVb6PjRpebm5xjNsyoaw+JVSyY=",
         "owner": "musnix",
         "repo": "musnix",
-        "rev": "cce3ba190b631c432e9685ceabecfe50675d9511",
+        "rev": "b5bcdce137b00185dce5fa578739cd52770b8794",
         "type": "github"
       },
       "original": {
