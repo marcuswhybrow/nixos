@@ -2,7 +2,7 @@ NixOS is the declaritive linux distribution composed of immutable packages defin
 
 # New System Procedure
 
-```
+```bash
 # Clone this repository 
 nix profile install nixpkgs#gh --extra-experimental-features "nix-command flakes"
 nix profile install github:marcuswhybrow/git --extra-experimental-features "nix-command flakes"
