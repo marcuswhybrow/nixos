@@ -43,6 +43,13 @@
         ./modules/coding-fonts.nix
       ];
 
+      marcus-wsl = [
+        inputs.nixos-wsl.nixosModules.wsl
+        ./systems/marcus-wsl.nix
+        ./users/marcus.nix
+        ./modules/coding-fonts.nix
+      ];
+
       anne-laptop = [
         ./systems/anne-laptop.nix
         ./modules/intel-accelerated-video-playback.nix

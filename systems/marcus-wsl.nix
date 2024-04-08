@@ -1,32 +1,15 @@
-{ pkgs, config, ... }: {
+{ config, ... }: {
 
   wsl = {
     enable = true;
     defaultUser = "marcus";
     startMenuLaunchers = true;
     nativeSystemd = true;
-    # docker-native.enable = true;
-    # docker-desktop.enable = true;
+    wslConf.network.hostname = "marcus-wsl";
   };
 
-  # Not sure if I need fonts. I think Windows Terminal manages fonts.
-  # https://nixos.wiki/wiki/Fonts
-  fonts.packages = with pkgs; [
-    font-awesome
-
-    (nerdfonts.override {
-      fonts = [
-        # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
-        "FiraCode"
-        "FiraMono"
-        "Terminus"
-      ];
-    })
-  ];
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "FiraCode Nerd Font Mono" ];
-  };
-
+  # System
+  nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
   i18n.extraLocaleSettings = {
@@ -41,16 +24,31 @@
     "LC_TIME" = config.i18n.defaultLocale;
   };
 
+  # Console
   console.keyMap = "uk";
-
   programs.fish.enable = true;
   security.sudo.wheelNeedsPassword = false;
+
+  # Window Manager
+  services.xserver = {
+    enable = true;
+    autorun = false;
+    xkb.layout = "gb";
+  };
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+  environment.sessionVariables = {
+    # WLR_NO_HARDWARE_CURSORS = "1"; # can solve hidden cursor issues
+    NIXOS_OZONE_WL = "1"; # encourages electron apps to use wayland
+  };
 
 
   # DANGER ZONE
   # -----------
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "23.11";
   nixpkgs.hostPlatform = "x86_64-linux";
   nixpkgs.config.allowUnfree = true;
 }
