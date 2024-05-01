@@ -1803,11 +1803,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714571065,
-        "narHash": "sha256-/HXavDfqP2THzsPnyMyltDTITYTPy75cy8fgMmpVxEM=",
+        "lastModified": 1714571471,
+        "narHash": "sha256-DBNfI1dCKFH+61225/Pxt+MsC43TBra/4liaTTibYCQ=",
         "owner": "marcuswhybrow",
         "repo": "fish",
-        "rev": "73b28e5fbfffa0cff15c1f7e6e04a335a7deaa11",
+        "rev": "a7fff1396aff949e608afa9ca5da95da8d41e5e5",
         "type": "github"
       },
       "original": {
@@ -4070,11 +4070,11 @@
         "waybar": "waybar_6"
       },
       "locked": {
-        "lastModified": 1714571119,
-        "narHash": "sha256-2fdf5pxHYdOcF83MbaNCZAdn6gUOeLUbE85fBOYZxp8=",
+        "lastModified": 1714571562,
+        "narHash": "sha256-FKnfV+HdZYUr3uzlo8F+ekCxJD3Fh9a2nQAlmsN4hgs=",
         "owner": "marcuswhybrow",
         "repo": "mwpkgs",
-        "rev": "642cecc9de80bdcdb500ee4f8071858787b925d4",
+        "rev": "d18f3a6338c304e52db4860bb40d84e1b0d8f684",
         "type": "github"
       },
       "original": {
@@ -6954,11 +6954,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714567310,
-        "narHash": "sha256-puNT3PtdXzVKzW3dEV8KuTQe+7vz3csvyRJ/HT7kUn0=",
+        "lastModified": 1714567587,
+        "narHash": "sha256-rXMRfrzrHqq8JGmyvHDyjWuF62OANWKpeJbYI7bE3H8=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "0c9b522dd0e3838e9a3e88c63ca02d7d9f94daa9",
+        "rev": "627314df926b5b993796cc6390f1fd953c80c07c",
         "type": "github"
       },
       "original": {
