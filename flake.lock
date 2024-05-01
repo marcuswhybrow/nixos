@@ -1958,11 +1958,11 @@
         "waybar": "waybar"
       },
       "locked": {
-        "lastModified": 1714567036,
-        "narHash": "sha256-H6tsRLFzAaeAs6AQQzg7uq33sJawZs6mFFjCBhvCvYk=",
+        "lastModified": 1714567345,
+        "narHash": "sha256-xHG7ykhF1zxPojZuLnupraCWVtQ86udt5gsWvXHXjqE=",
         "owner": "marcuswhybrow",
         "repo": "mwpkgs",
-        "rev": "d6c103e96aac32ec61f2cb2e71203077482b75f4",
+        "rev": "7a60c5e29dfcf3fc8eadbfc98246756a049e6190",
         "type": "github"
       },
       "original": {
@@ -3298,11 +3298,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714566933,
-        "narHash": "sha256-/hvjf+QAG0hj242T5zdAA+Y9DGj08T70Fe515oqim4w=",
+        "lastModified": 1714567310,
+        "narHash": "sha256-puNT3PtdXzVKzW3dEV8KuTQe+7vz3csvyRJ/HT7kUn0=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "db3a9470487d6226896d9ee0e0046e2cebb80b0d",
+        "rev": "0c9b522dd0e3838e9a3e88c63ca02d7d9f94daa9",
         "type": "github"
       },
       "original": {
