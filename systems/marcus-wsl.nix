@@ -6,6 +6,7 @@
     startMenuLaunchers = true;
     nativeSystemd = true;
     wslConf.network.hostname = "marcus-wsl";
+    # useWindowsDriver = true; # Windows OpenGL driver
   };
 
   # System
@@ -18,10 +19,10 @@
     "LC_MEASUREMENT" = config.i18n.defaultLocale;
     "LC_MONETARY" = config.i18n.defaultLocale;
     "LC_NAME" = config.i18n.defaultLocale;
-    "LC_NUMERIC" = config.i18n.defaultLocale;
     "LC_PAPER" = config.i18n.defaultLocale;
     "LC_TELEPHONE" = config.i18n.defaultLocale;
-    "LC_TIME" = config.i18n.defaultLocale;
+    # "LC_NUMERIC" = config.i18n.defaultLocale;
+    # "LC_TIME" = config.i18n.defaultLocale;
   };
 
   # Console
@@ -29,20 +30,26 @@
   programs.fish.enable = true;
   security.sudo.wheelNeedsPassword = false;
 
-  # Window Manager
-  services.xserver = {
+  # SSH
+  services.openssh = {
     enable = true;
-    autorun = false;
-    xkb.layout = "gb";
   };
+
+  # Window Manager
+  # hardware.opengl.enable = true;
+  # services.xserver = {
+  #   enable = true;
+  #   autorun = false;
+  #   xkb.layout = "gb";
+  # };
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
-  environment.sessionVariables = {
-    # WLR_NO_HARDWARE_CURSORS = "1"; # can solve hidden cursor issues
-    NIXOS_OZONE_WL = "1"; # encourages electron apps to use wayland
-  };
+  # environment.sessionVariables = {
+  #   # WLR_NO_HARDWARE_CURSORS = "1"; # can solve hidden cursor issues
+  #   NIXOS_OZONE_WL = "1"; # encourages electron apps to use wayland
+  # };
 
 
   # DANGER ZONE
