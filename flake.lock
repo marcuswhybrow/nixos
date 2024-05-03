@@ -8516,11 +8516,11 @@
         "waybar": "waybar_16"
       },
       "locked": {
-        "lastModified": 1714740596,
-        "narHash": "sha256-lVfF3EFSj/xyl0ba6PayfwIGwqQ9uibOnucFbVsXAbI=",
+        "lastModified": 1714745942,
+        "narHash": "sha256-xx8c5V0PfE5VWadBS05Lp6f0AAbTLRIejGILCkMu6GI=",
         "owner": "marcuswhybrow",
         "repo": "mwpkgs",
-        "rev": "e31af5ffab12ee4618d018071cac42773e43f98e",
+        "rev": "c51551d5d3a945fa61a34ea4bd51bcc2510c450b",
         "type": "github"
       },
       "original": {
