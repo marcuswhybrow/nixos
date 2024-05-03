@@ -1803,11 +1803,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714571471,
-        "narHash": "sha256-DBNfI1dCKFH+61225/Pxt+MsC43TBra/4liaTTibYCQ=",
+        "lastModified": 1714735021,
+        "narHash": "sha256-Ywv9w9HRYSSvjqJxGDM8+WdP2M3DeuOwpTapOddwIyc=",
         "owner": "marcuswhybrow",
         "repo": "fish",
-        "rev": "a7fff1396aff949e608afa9ca5da95da8d41e5e5",
+        "rev": "4e6c3e157010f30ac925fedcb21eefa37c664d6f",
         "type": "github"
       },
       "original": {
@@ -2899,11 +2899,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1701381351,
-        "narHash": "sha256-dT7G0ZoD2T5R8h2kpeThu3wV6pVDmmjNxNcFaCdyTPo=",
+        "lastModified": 1714733999,
+        "narHash": "sha256-HmcLy5cDJ2HPM8kKmB9dWb65/xG6Ulur/i2BsJXNjpo=",
         "owner": "marcuswhybrow",
         "repo": "git",
-        "rev": "e1f87cd9aaac74e622556fe69cabcdf36e8af83f",
+        "rev": "9b8d9a4f334e6dae51390b2d80fc9b1c04a7b75a",
         "type": "github"
       },
       "original": {
@@ -4070,11 +4070,11 @@
         "waybar": "waybar_6"
       },
       "locked": {
-        "lastModified": 1714571562,
-        "narHash": "sha256-FKnfV+HdZYUr3uzlo8F+ekCxJD3Fh9a2nQAlmsN4hgs=",
+        "lastModified": 1714735077,
+        "narHash": "sha256-/wSttVEm6LYIP2toj0GsVEKJ/4BeOPGlBKg8ZU6ZCZk=",
         "owner": "marcuswhybrow",
         "repo": "mwpkgs",
-        "rev": "d18f3a6338c304e52db4860bb40d84e1b0d8f684",
+        "rev": "070d8d865836f0b145870391fcc980055568210e",
         "type": "github"
       },
       "original": {
@@ -4492,11 +4492,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1712705037,
-        "narHash": "sha256-+gg/a0dqZjYjBlhaGwbT+Plwx7Qwz4zGMVBfpQf2fXQ=",
+        "lastModified": 1714733946,
+        "narHash": "sha256-BYYqZkyKU73+NUEcb5JTYlReK2mJNNtsFp+QLoDjajE=",
         "owner": "marcuswhybrow",
         "repo": "neovim",
-        "rev": "750f299cf5b63c4e176076e7bf19b7d7d42e2d4e",
+        "rev": "ebaaf9fefe384d38b277022ce687395a42d23abd",
         "type": "github"
       },
       "original": {
@@ -5961,11 +5961,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1701710791,
-        "narHash": "sha256-PoYDEWSBRJHZlutQO7a5UurX+KM6JtEwh0B7GdxnQNo=",
+        "lastModified": 1714734684,
+        "narHash": "sha256-aMwu0KtQOiSOhEGbPVf+1ZEdcPLclYnW0+xaEZYpqPA=",
         "owner": "marcuswhybrow",
         "repo": "starship",
-        "rev": "18dda81ab2e7f5e4029534b7e5bbd7d31b0d5b7c",
+        "rev": "043b68738491eabe3251ffe5df522e34134589ff",
         "type": "github"
       },
       "original": {
@@ -6954,11 +6954,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714567587,
-        "narHash": "sha256-rXMRfrzrHqq8JGmyvHDyjWuF62OANWKpeJbYI7bE3H8=",
+        "lastModified": 1714733844,
+        "narHash": "sha256-xLqJV84c4myzC3h/1Y1j+46AGSO6R9HXsxwJdCBMZow=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "627314df926b5b993796cc6390f1fd953c80c07c",
+        "rev": "99c31588c032c0d3319df7d56d09d3c3e988b4a8",
         "type": "github"
       },
       "original": {

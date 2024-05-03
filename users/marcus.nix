@@ -1,6 +1,4 @@
-{ pkgs, mwpkgs, config, ... }: let 
-  onHost = host: value: if config.networking.hostName == host then value else [];
-in {
+{ pkgs, mwpkgs, config, ... }: {
   environment.systemPackages = [
     pkgs.light
     pkgs.direnv 
@@ -32,37 +30,41 @@ in {
       "audio"
     ];
 
-    packages = with pkgs; [
-      htop
-      lsof # htop requires lsof when you press `l` on a processF
-      brave
-      firefox
-      ranger
-      gh
-      megacmd
-      krita
-      unzip
-      vlc
-      mpv
-    ] ++ (with mwpkgs; [
-      flake-updates
-      hyprland
-      fish
-      alacritty
-      starship
-      neovim
-      waybar
-      rofi
-      dunst
-      logout
-      networking
-      git
-      tmux
-      private
-      alarm
-      volume
-      brightness
-    ]) ++ (onHost "marcus-laptop" [
+    packages = let 
+      onHost = host: value: if config.networking.hostName == host then value else [];
+    in [
+      pkgs.htop
+      pkgs.lsof # htop requires lsof when you press `l` on a processF
+      pkgs.brave
+      pkgs.firefox
+      pkgs.ranger
+      pkgs.gh
+      pkgs.megacmd
+      pkgs.krita
+      pkgs.unzip
+      pkgs.vlc
+      pkgs.mpv
+      mwpkgs.flake-updates
+      mwpkgs.hyprland
+      mwpkgs.fish
+      mwpkgs.alacritty
+      mwpkgs.starship
+      mwpkgs.neovim
+      mwpkgs.neovim-fish-abbreviations
+      mwpkgs.waybar
+      mwpkgs.rofi
+      mwpkgs.dunst
+      mwpkgs.logout
+      mwpkgs.networking
+      mwpkgs.git
+      mwpkgs.git-fish-abbreviations
+      mwpkgs.tmux
+      mwpkgs.tmux-fish-abbreviations
+      mwpkgs.private
+      mwpkgs.alarm
+      mwpkgs.volume
+      mwpkgs.brightness
+    ] ++ (onHost "marcus-laptop" [
       mwpkgs.hyprland-fish-auto-login
       pkgs.reaper
       pkgs.discord
@@ -75,6 +77,8 @@ in {
       pkgs.wineWowPackages.waylandFull
       pkgs.yabridge
       pkgs.yabridgectl
+    ]) ++ (onHost "marcus-wsl" [
+      # No WSL specific packages as yet
     ]);
   };
 }
