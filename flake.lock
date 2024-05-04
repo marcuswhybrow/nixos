@@ -5205,11 +5205,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1714568986,
-        "narHash": "sha256-+i7HfYSafCO8jPuXX+KJ7UT7sAtYb+hxgqbCM606xv4=",
+        "lastModified": 1714814600,
+        "narHash": "sha256-sOVaUsDheCECq7YJiJuvyND3OidM6x0RApKkZb+/7/w=",
         "owner": "marcuswhybrow",
         "repo": "flake-updates",
-        "rev": "41dd3aa25cee35bb397ac588264c79b6ec4cacda",
+        "rev": "15ffa768204ef8ff9e041ce0211cca2d5c40c119",
         "type": "github"
       },
       "original": {
@@ -8516,11 +8516,11 @@
         "waybar": "waybar_16"
       },
       "locked": {
-        "lastModified": 1714745942,
-        "narHash": "sha256-xx8c5V0PfE5VWadBS05Lp6f0AAbTLRIejGILCkMu6GI=",
+        "lastModified": 1714815234,
+        "narHash": "sha256-GOWk1h0fWayMIWsGrK9gbQ/lCRBzXnsy2gUxMCL+Kmc=",
         "owner": "marcuswhybrow",
         "repo": "mwpkgs",
-        "rev": "c51551d5d3a945fa61a34ea4bd51bcc2510c450b",
+        "rev": "b3062f263ffada5784e1bcdb1d2dcef300b0a23c",
         "type": "github"
       },
       "original": {
