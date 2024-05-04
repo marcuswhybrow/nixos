@@ -56,7 +56,6 @@
       mwpkgs.logout
       mwpkgs.networking
       mwpkgs.git
-      mwpkgs.git-fish-abbreviations
       mwpkgs.tmux
       mwpkgs.private
       mwpkgs.alarm
