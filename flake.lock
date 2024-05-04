@@ -7402,11 +7402,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714737489,
-        "narHash": "sha256-cU92WeEAJ3Arsy12ewOo/Gs+ppPEJb9gN7fi5HeEtsw=",
+        "lastModified": 1714840808,
+        "narHash": "sha256-yd9ZOt88sbb0yONHcffUQc5KlqQS+/5oGS6AcT7zPWE=",
         "owner": "marcuswhybrow",
         "repo": "hyprland",
-        "rev": "9790f654c2e4193d517195bda6ace0e4db1d58b5",
+        "rev": "06c80b19353e278feb7a3b8074b4087ac63e8953",
         "type": "github"
       },
       "original": {
@@ -8516,11 +8516,11 @@
         "waybar": "waybar_16"
       },
       "locked": {
-        "lastModified": 1714815234,
-        "narHash": "sha256-GOWk1h0fWayMIWsGrK9gbQ/lCRBzXnsy2gUxMCL+Kmc=",
+        "lastModified": 1714840831,
+        "narHash": "sha256-DEBGvFFIW5UJEOVcLFZwV+eGw5AR/49jdJG9A+wQvUE=",
         "owner": "marcuswhybrow",
         "repo": "mwpkgs",
-        "rev": "b3062f263ffada5784e1bcdb1d2dcef300b0a23c",
+        "rev": "f785d9f2ca7facbd47709349328d8236c3b1e521",
         "type": "github"
       },
       "original": {
@@ -9284,11 +9284,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714733946,
-        "narHash": "sha256-BYYqZkyKU73+NUEcb5JTYlReK2mJNNtsFp+QLoDjajE=",
+        "lastModified": 1714839450,
+        "narHash": "sha256-no+yFx0Iy2N3+Fq3DDf0puH6xd8NQqemySzJ4SaD7n8=",
         "owner": "marcuswhybrow",
         "repo": "neovim",
-        "rev": "ebaaf9fefe384d38b277022ce687395a42d23abd",
+        "rev": "9f834ff866c0212b436063415ecf9d5316572f57",
         "type": "github"
       },
       "original": {
@@ -14334,11 +14334,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714733844,
-        "narHash": "sha256-xLqJV84c4myzC3h/1Y1j+46AGSO6R9HXsxwJdCBMZow=",
+        "lastModified": 1714840464,
+        "narHash": "sha256-19KGcAaaP5LiQ93GRi0mOB03ignEeeMWIuT8kx0t1d0=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "99c31588c032c0d3319df7d56d09d3c3e988b4a8",
+        "rev": "b2af1a405fcb08cd0dc6eb39af5e97b98bbdbb74",
         "type": "github"
       },
       "original": {
@@ -15384,11 +15384,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1712520242,
-        "narHash": "sha256-1ZO5huWy8UHHOjCenNck139KH/QLjDDtclO6mJLwrJU=",
+        "lastModified": 1714837821,
+        "narHash": "sha256-mcIGFQk0FAflE+T01bKiMH51RqfQyxpc0zeqVzcy0MU=",
         "owner": "marcuswhybrow",
         "repo": "waybar",
-        "rev": "e09573b8aebe29d8e680c03aeb9d7c3aabc3d160",
+        "rev": "626d43cf1dc1695270af24220abcd056a4d205b2",
         "type": "github"
       },
       "original": {

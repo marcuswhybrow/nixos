@@ -50,7 +50,6 @@
       mwpkgs.alacritty
       mwpkgs.starship
       mwpkgs.neovim
-      mwpkgs.neovim-fish-abbreviations
       mwpkgs.waybar
       mwpkgs.rofi
       mwpkgs.dunst
@@ -59,7 +58,6 @@
       mwpkgs.git
       mwpkgs.git-fish-abbreviations
       mwpkgs.tmux
-      mwpkgs.tmux-fish-abbreviations
       mwpkgs.private
       mwpkgs.alarm
       mwpkgs.volume
