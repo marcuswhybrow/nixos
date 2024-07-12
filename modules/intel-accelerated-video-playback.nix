@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:  let
-  cfg = config.hardware.opengl.intelAcceleratedVideoPlayback;
+  cfg = config.hardware.graphics.intelAcceleratedVideoPlayback;
 in {
-  options.hardware.opengl.intelAcceleratedVideoPlayback = {
+  options.hardware.graphics.intelAcceleratedVideoPlayback = {
     enable = lib.mkEnableOption "Whether to enable Intel Accelerated Video Playback";
   };
 
@@ -11,7 +11,7 @@ in {
       vaapiIntel = prev.vaapiIntel.override { enableHybridCodec = true; };
     })];
 
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
