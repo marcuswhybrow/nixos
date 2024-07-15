@@ -1,24 +1,46 @@
 {
   inputs = {
-    mwpkgs = {
-      url = "github:marcuswhybrow/mwpkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # Helper to run NixOS under Windows Subsystem for Linux
     nixos-wsl = { 
       url = "github:nix-community/NixOS-WSL"; 
       inputs.nixpkgs.follows = "nixpkgs"; 
     };
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # Optimisations for audio
     musnix.url = "github:musnix/musnix";
+
+    # Custom utility packages
+    volume.url = "github:marcuswhybrow/volume";
+    logout.url = "github:marcuswhybrow/logout";
+    networking.url = "github:marcuswhybrow/networking";
+    flake-updates.url = "github:marcuswhybrow/flake-updates";
+    brightness.url = "github:marcuswhybrow/brightness";
+    alarm.url = "github:marcuswhybrow/alarm";
+
+    # Packages themed and customised to Marcus' tastes
+    marcus-dunst.url = "github:marcuswhybrow/dunst";
+    marcus-fish.url = "github:marcuswhybrow/fish";
+    marcus-git.url = "github:marcuswhybrow/git";
+    marcus-hyprland.url = "github:marcuswhybrow/hyprland";
+    marcus-alacritty.url = "github:marcuswhybrow/alacritty";
+    marcus-neovim.url = "github:marcuswhybrow/neovim";
+    marcus-private.url = "github:marcuswhybrow/private";
+    marcus-starship.url = "github:marcuswhybrow/starship";
+    marcus-sway.url = "github:marcuswhybrow/sway";
+    marcus-tmux.url = "github:marcuswhybrow/tmux";
+    marcus-rofi.url = "github:marcuswhybrow/rofi";
+    marcus-waybar.url = "github:marcuswhybrow/waybar";
+
+    # Packages themed and customised for Anne
+    anne-sway.url = "github:whybrow/anne-sway"; 
+    anne-fish.url = "github:whybrow/anne-fish"; 
   };
 
   outputs = inputs: let
     inherit (inputs.nixpkgs) lib;
-
-    specialArgs = {
-      inherit inputs;
-      mwpkgs = inputs.mwpkgs.packages.x86_64-linux; 
-    };
+    specialArgs = { inherit inputs; };
 
     # Marcus' personal requirements to be included in one or more NixOS systems 
     # defined below.
@@ -88,7 +110,7 @@
       })
 
       # Packages on all systems
-      ({ pkgs, mwpkgs, ... }: {
+      ({ pkgs, inputs, ... }: {
         users.users.marcus.packages = [
           pkgs.htop # Interative process veiwer, like Windows Task Manager
           pkgs.lsof # htop requires lsof when you press `l` on a processF
@@ -101,31 +123,61 @@
           pkgs.unzip # Unzips .zip files
           pkgs.vlc # Video player that supports every video format you need
           pkgs.mpv # Simple video player that's command line friendly
-          mwpkgs.flake-updates # Command to check if flake inputs have updates
-          mwpkgs.hyprland # Window Manager configured by Marcus
-          mwpkgs.fish # Shell replacement for BASH configured by Marcus
-          mwpkgs.alacritty # Graphical terminal configure by Marcus
-          mwpkgs.starship # Terminal prompt configured by Marcus
-          mwpkgs.neovim # Powerful terminal text editor configured by Marcus
-          mwpkgs.waybar # Graphical status bar configured by Marcus
-          mwpkgs.rofi # Graphical menu launcher configured by Marcus
-          mwpkgs.dunst # Graphical notification manager configured by Marcus
-          mwpkgs.logout # Graphical logout menu
-          mwpkgs.networking # Graphical ethernet/wifi switcher
-          mwpkgs.git # Git command configured for Marcus
-          mwpkgs.tmux # Terminal tabs and windows configured for Marcus
-          mwpkgs.private # Graphical terminal that doesn't record history
-          mwpkgs.alarm # Command to send a notification after a specific time
-          mwpkgs.volume # Command to change volume in steps
-          mwpkgs.brightness # Command to change brightness in steps
+
+          # Command to check if flake inputs have updates
+          inputs.flake-updates.packages.x86_64-linux.flake-updates
+
+          # Window Manager configured by Marcus
+          inputs.marcus-hyprland.packages.x86_64-linux.hyprland
+
+          # Shell replacement for BASH configured by Marcus
+          inputs.marcus-fish.packages.x86_64-linux.fish
+
+          # Graphical terminal configure by Marcus
+          inputs.marcus-alacritty.packages.x86_64-linux.alacritty
+
+          # Terminal prompt configured by Marcus
+          inputs.marcus-starship.packages.x86_64-linux.starship
+
+          # Powerful terminal text editor configured by Marcus
+          inputs.marcus-neovim.packages.x86_64-linux.nvim
+
+          # Graphical menu launcher configured by Marcus
+          inputs.marcus-rofi.packages.x86_64-linux.rofi
+
+          # Graphical notification manager configured by Marcus
+          inputs.marcus-dunst.packages.x86_64-linux.dunst
+
+          # Graphical logout menu
+          inputs.logout.packages.x86_64-linux.logout
+
+          # Graphical ethernet/wifi switcher
+          inputs.networking.packages.x86_64-linux.networking
+
+          # Git command configured for Marcus
+          inputs.marcus-git.packages.x86_64-linux.git
+
+          # Terminal tabs and windows configured for Marcus
+          inputs.marcus-tmux.packages.x86_64-linux.tmux
+
+          # Graphical terminal that doesn't record history
+          inputs.marcus-private.packages.x86_64-linux.private
+
+          # Command to send a notification after a specific time
+          inputs.alarm.packages.x86_64-linux.alarm
+
+          # Command to change volume in steps
+          inputs.volume.packages.x86_64-linux.volume
+
+          # Command to change brightness in steps
+          inputs.brightness.packages.x86_64-linux.brightness
         ];
       })
 
       # System dependent packages
-      ({ pkgs, mwpkgs, config, ... }: {
+      ({ pkgs, config, ... }: {
         users.users.marcus.packages = {
           "marcus-laptop" = [
-            mwpkgs.hyprland-fish-auto-login
             pkgs.reaper # Digital Audio Workstation celebrated for live use
             pkgs.discord # Voice, video and text chat
             pkgs.obsidian-wayland # Markdown based note taking app
@@ -148,7 +200,7 @@
     # defined below.
     anne = [
       # Account details
-      ({ pkgs, mwpkgs, ... }: {
+      ({ pkgs, ... }: {
         users.users.anne = {
           description = "Anne Whybrow";
           isNormalUser = true;
@@ -158,15 +210,16 @@
       })
 
       # Packages Anne wants on all systems 
-      ({ pkgs, mwpkgs, ...}: {
+      ({ pkgs, inputs, ...}: {
         users.users.anne.packages = [
           pkgs.firefox
           pkgs.pcmanfm
 
-          mwpkgs.anne-fish
-          mwpkgs.anne-sway
-          mwpkgs.alacritty
-          mwpkgs.dunst
+          inputs.anne-fish.packages.x86_64-linux.fish
+          inputs.anne-sway.packages.x86_64-linux.sway
+
+          inputs.marcus-alacritty.packages.x86_64-linux.alacritty
+          inputs.marcus-dunst.packages.x86_64-linux.dunst
         ];
       })
 
@@ -365,7 +418,7 @@
         })
 
         # Window Manger
-        ({ mwpkgs, ... }: {
+        ({ ... }: {
           services.xserver = {
             enable = true;
             autorun = false;
@@ -418,6 +471,8 @@
             powertop.enable = true; # Analysis and auto tune
           };
           services.thermald.enable = true; # Prevents overheating
+          services.upower.enable = true; # Battery status monitoring
+          services.acpid.enable = true; # Battery events
 
           # Auto speed and power optimiser I couldn't get to work
           # services.auto-cpufreq = {
@@ -868,7 +923,6 @@
       inherit specialArgs;
       modules = marcus ++ [
         inputs.musnix.nixosModules.musnix
-        ./systems/marcus-desktop.nix
 
         # Coding Fonts improve upon normal fonts by including many extra glyphs 
         # that many coding programs and scripts expect to exist.
