@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-24-05.url = "github:NixOS/nixpkgs/nixos-24.05";
 
     # Helper to run NixOS under Windows Subsystem for Linux
     nixos-wsl = { 
@@ -39,18 +40,23 @@
   };
 
   outputs = inputs: let
-    inherit (inputs.nixpkgs) lib;
-    specialArgs = { inherit inputs; };
+    specialArgs = { 
+      inherit inputs; 
+      unstable = import inputs.nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+    };
 
     # Marcus' personal requirements to be included in one or more NixOS systems 
     # defined below.
     marcus = [
       # Account details
-      ({ pkgs, ...}: {
+      ({ unstable, ...}: {
         users.users.marcus = {
           description = "Marcus Whybrow";
           isNormalUser = true;
-          shell = pkgs.fish; # don't use custom package here
+          shell = unstable.fish; # don't use custom package here
           extraGroups = [
             "networkmanager"
             "wheel"
@@ -85,7 +91,7 @@
       #
       # https://github.com/marcuswhybrow/.nixos/issues/6
       # https://github.com/nix-community/nix-direnv
-      ({ pkgs, ... }: {
+      ({ unstable, ... }: {
         nix.settings = {
           keep-outputs = true;
           keep-derivations = true;
@@ -94,35 +100,35 @@
           "/share/nix-direnv"
         ];
         environment.systemPackages = [
-          pkgs.direnv
-          pkgs.nix-direnv
+          unstable.direnv
+          unstable.nix-direnv
         ];
       })
 
       # Display backlight support
-      ({ pkgs, ... }: {
+      ({ unstable, ... }: {
         environment.systemPackages = [
-          pkgs.light
+          unstable.light
         ];
         services.udev.packages = [ 
-          pkgs.light 
+          unstable.light 
         ];
       })
 
       # Packages on all systems
-      ({ pkgs, inputs, ... }: {
+      ({ unstable, inputs, ... }: {
         users.users.marcus.packages = [
-          pkgs.htop # Interative process veiwer, like Windows Task Manager
-          pkgs.lsof # htop requires lsof when you press `l` on a processF
-          pkgs.firefox # Internet browser
-          pkgs.brave # Privacy focused internet browser similar to Firefox
-          pkgs.ranger # Terminal file manager inspired by vim
-          pkgs.gh # GitHub command line client
-          pkgs.megacmd # MEGA file storage's command line interface
-          pkgs.krita # Free photo editor and digital painting app
-          pkgs.unzip # Unzips .zip files
-          pkgs.vlc # Video player that supports every video format you need
-          pkgs.mpv # Simple video player that's command line friendly
+          unstable.htop # Interative process veiwer, like Windows Task Manager
+          unstable.lsof # htop requires lsof when you press `l` on a processF
+          unstable.firefox # Internet browser
+          unstable.brave # Privacy focused internet browser similar to Firefox
+          unstable.ranger # Terminal file manager inspired by vim
+          unstable.gh # GitHub command line client
+          unstable.megacmd # MEGA file storage's command line interface
+          unstable.krita # Free photo editor and digital painting app
+          unstable.unzip # Unzips .zip files
+          unstable.vlc # Video player that supports every video format you need
+          unstable.mpv # Simple video player that's command line friendly
 
           # Command to check if flake inputs have updates
           inputs.flake-updates.packages.x86_64-linux.flake-updates
@@ -175,21 +181,21 @@
       })
 
       # System dependent packages
-      ({ pkgs, config, ... }: {
+      ({ unstable, config, ... }: {
         users.users.marcus.packages = {
           "marcus-laptop" = [
-            pkgs.reaper # Digital Audio Workstation celebrated for live use
-            pkgs.discord # Voice, video and text chat
-            pkgs.obsidian-wayland # Markdown based note taking app
+            unstable.reaper # Digital Audio Workstation celebrated for live use
+            unstable.discord # Voice, video and text chat
+            unstable.obsidian # Markdown based note taking app
           ];
           "marcus-desktop" = [
-            pkgs.megasync # MEGA cloud storage syncronisation daemon
-            pkgs.reaper # Digital Audio Workstation celebrated forlive use
-            pkgs.discord # Voice, video and text chat
-            pkgs.obsidian # Markdown based note taking app
-            pkgs.wineWowPackages.waylandFull # Run Windows apps on Linux
-            pkgs.yabridge # Run Windows VST instruments on Linux
-            pkgs.yabridgectl # Command line interface for controlling Yabridge
+            unstable.megasync # MEGA cloud storage syncronisation daemon
+            unstable.reaper # Digital Audio Workstation celebrated forlive use
+            unstable.discord # Voice, video and text chat
+            unstable.obsidian # Markdown based note taking app
+            unstable.wineWowPackages.waylandFull # Run Windows apps on Linux
+            unstable.yabridge # Run Windows VST instruments on Linux
+            unstable.yabridgectl # Command line interface for controlling Yabridge
           ];
           "marcus-wsl" = [];
         }."${config.networking.hostName}";
@@ -200,20 +206,20 @@
     # defined below.
     anne = [
       # Account details
-      ({ pkgs, ... }: {
+      ({ unstable, ... }: {
         users.users.anne = {
           description = "Anne Whybrow";
           isNormalUser = true;
           extraGroups = [ "networkmanager" "wheel" "video" ];
-          shell = pkgs.fish; # using custom fish here breaks login
+          shell = unstable.fish; # using custom fish here breaks login
         };
       })
 
       # Packages Anne wants on all systems 
-      ({ pkgs, inputs, ...}: {
+      ({ unstable, inputs, ...}: {
         users.users.anne.packages = [
-          pkgs.firefox
-          pkgs.pcmanfm
+          unstable.firefox
+          unstable.pcmanfm
 
           inputs.anne-fish.packages.x86_64-linux.fish
           inputs.anne-sway.packages.x86_64-linux.sway
@@ -224,18 +230,18 @@
       })
 
       # Display backlight support
-      ({ pkgs, ...}: {
+      ({ unstable, ...}: {
         environment.systemPackages = [
-          pkgs.light
+          unstable.light
         ];
         services.udev.packages = [ 
-          pkgs.light 
+          unstable.light 
         ];
       })
     ];
   in {
     # Marcus' black Starlabs Starlite Mk IV laptop
-    nixosConfigurations.marcus-laptop = lib.nixosSystem {
+    nixosConfigurations.marcus-laptop = inputs.nixpkgs-24-05.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ [
         # Fix Obsidian not opening with latest electron version
@@ -257,10 +263,10 @@
         # Coding Fonts improve upon normal fonts by including many extra glyphs 
         # that many coding programs and scripts expect to exist.
         # https://nixos.wiki/wiki/Fonts
-        ({ pkgs, ... }: {
+        ({ unstable, ... }: {
           fonts.packages = [
-            pkgs.font-awesome
-            (pkgs.nerdfonts.override {
+            unstable.font-awesome
+            (unstable.nerdfonts.override {
               fonts = [
                 # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
                 "FiraCode"
@@ -287,11 +293,12 @@
 
         # Mount my Windows desktop via SMB
         # https://nixos.wiki/wiki/Samba
-        ({ pkgs, ... }: {
+        ({ unstable, ... }: {
           fileSystems."/mnt/marcus-desktop/local" = {
-            device = "//192.168.0.23";
+            device = "//192.168.0.23/Local";
             fsType = "cifs"; # Common Internet File System
             options = [ 
+              # "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,credentials=/etc/nixos/secrets/marcus-laptop-smb,uid=1000,gid=100"
               (builtins.concatStringsSep "," [
                 "x-systemd.automount"
                 "noauto"
@@ -306,10 +313,10 @@
           };
 
           environment.systemPackages = [
-            pkgs.cifs-utils # Required for CIFS file systems
+            unstable.cifs-utils # Required for CIFS file systems
           ];
 
-          networking.firewall.extraCommands = builtins.toString [
+          networking.firewall.extraCommands = (builtins.toString [
             "iptables"
             "-t raw"
             "-A OUTPUT"
@@ -318,7 +325,7 @@
             "--dport 137"
             "-j CT"
             "--helper netbios-ns"
-          ];
+          ]);
 
           # GNOME Virtual File System
           # Not sure if/why we need this
@@ -326,30 +333,30 @@
         })
 
         # System wide packages
-        ({ pkgs, ... }: {
+        ({ unstable, ... }: {
           environment.systemPackages = [
-            pkgs.vim
+            unstable.vim
 
             # Networking
-            pkgs.wget pkgs.unixtools.ping
+            unstable.wget unstable.unixtools.ping
 
             # Fast rust tools
-            pkgs.trashy 
-            pkgs.bat 
-            pkgs.eza 
-            pkgs.fd 
-            pkgs.procs 
-            pkgs.sd 
-            pkgs.du-dust 
-            pkgs.tealdeer 
-            pkgs.bandwhich
-            pkgs.ripgrep 
+            unstable.trashy 
+            unstable.bat 
+            unstable.eza 
+            unstable.fd 
+            unstable.procs 
+            unstable.sd 
+            unstable.du-dust 
+            unstable.tealdeer 
+            unstable.bandwhich
+            unstable.ripgrep 
             #pkgs.ripgrep-all
 
-            pkgs.lxqt.lxqt-policykit
+            unstable.lxqt.lxqt-policykit
 
             # Image editing
-            pkgs.krita
+            unstable.krita
           ];
         })
 
@@ -392,22 +399,22 @@
         # Graphics 
         # The Starlabs Starlite Mk IV has a Pentium Silver N5030 with
         # integrated graphics only.
-        ({ pkgs, ... }: {
-          hardware.graphics = {
+        ({ unstable, ... }: {
+          hardware.opengl = {
             enable = true;
             extraPackages = [
               # The latest intel graphics driver
-              pkgs.intel-media-driver # iHD
+              unstable.intel-media-driver # iHD
 
               # Legacy intel graphics driver for older CPUs (like mine)
-              pkgs.intel-vaapi-driver # i965
+              unstable.intel-vaapi-driver # i965
 
               # Helps MPLayer and Flash Player as I understand
-              pkgs.libvdpau-va-gl
+              unstable.libvdpau-va-gl
 
               # Enables Intel Quick Sync Video for hardware video conversions
               # https://nixos.wiki/wiki/Intel_Graphics
-              pkgs.intel-media-sdk 
+              unstable.intel-media-sdk 
             ];
           };
 
@@ -633,16 +640,16 @@
     };
 
     # Marcus' Windows Subsystem for Linux inside his Windows desktop
-    nixosConfigurations.marcus-wsl = lib.nixosSystem {
+    nixosConfigurations.marcus-wsl = inputs.nixpkgs-24-05.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ [
         # Coding Fonts improve upon normal fonts by including many extra glyphs 
         # that many coding programs and scripts expect to exist.
         # https://nixos.wiki/wiki/Fonts
-        ({ pkgs, ... }: {
+        ({ unstable, ... }: {
           fonts.packages = [
-            pkgs.font-awesome
-            (pkgs.nerdfonts.override {
+            unstable.font-awesome
+            (unstable.nerdfonts.override {
               fonts = [
                 # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
                 "FiraCode"
@@ -727,12 +734,12 @@
     # Note: This computer is now no longer serving this purpose, and therefore 
     # this NixOS configuration is no longer being updated. Keeping the config 
     # around for potential future use.
-    nixosConfigurations.anne-laptop = lib.nixosSystem {
+    nixosConfigurations.anne-laptop = inputs.nixpkgs-24-05.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ anne ++ [
         # System wide packages
-        ({ pkgs, ... }: {
-          environment.systemPackages = [ pkgs.vim ];
+        ({ unstable, ... }: {
+          environment.systemPackages = [ unstable.vim ];
         })
 
         # Auto login 
@@ -779,22 +786,22 @@
         #
         # Note: We probably want nVIDIA specific graphics drivers here. But 
         # these drivers seemed to be working nonetheless.
-        ({ pkgs, ... }: {
-          hardware.graphics = {
+        ({ unstable, ... }: {
+          hardware.opengl = {
             enable = true;
             extraPackages = [
               # The latest intel graphics driver
-              pkgs.intel-media-driver # iHD
+              unstable.intel-media-driver # iHD
 
               # Legacy intel graphics driver for older CPUs (like mine)
-              pkgs.intel-vaapi-driver # i965
+              unstable.intel-vaapi-driver # i965
 
               # Helps MPLayer and Flash Player as I understand
-              pkgs.libvdpau-va-gl
+              unstable.libvdpau-va-gl
 
               # Enables Intel Quick Sync Video for hardware video conversions
               # https://nixos.wiki/wiki/Intel_Graphics
-              pkgs.intel-media-sdk 
+              unstable.intel-media-sdk 
             ];
           };
           environment.sessionVariables = {
@@ -919,7 +926,7 @@
     # Note: This system is currently back running Windows and therefore this
     # NixOS config for it is not longer in use and not maintained. The 
     # configuration is being preserved for potential future use.
-    nixosConfigurations.marcus-desktop = lib.nixosSystem {
+    nixosConfigurations.marcus-desktop = inputs.nixpkgs-24-05.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ [
         inputs.musnix.nixosModules.musnix
@@ -927,10 +934,10 @@
         # Coding Fonts improve upon normal fonts by including many extra glyphs 
         # that many coding programs and scripts expect to exist.
         # https://nixos.wiki/wiki/Fonts
-        ({ pkgs, ... }: {
+        ({ unstable, ... }: {
           fonts.packages = [
-            pkgs.font-awesome
-            (pkgs.nerdfonts.override {
+            unstable.font-awesome
+            (unstable.nerdfonts.override {
               fonts = [
                 # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
                 "FiraCode"
@@ -1035,11 +1042,11 @@
         # This probably needs to add graphics drivers for better performance.
         # See other systems in this flake for examples.
         ({ ... }: {
-          hardware.graphics.enable = true;
+          hardware.opengl.enable = true;
         })
 
         # Networking
-        ({ ... }: {
+        ({ lib,  ... }: {
           networking = {
             hostName = "marcus-desktop";
             useDHCP = lib.mkDefault true;
@@ -1102,7 +1109,7 @@
         })
 
         # CPU specific config for AMD Ryzen 5
-        ({ ... }: {
+        ({ lib, ... }: {
           hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
           hardware.enableRedistributableFirmware = true;
         })

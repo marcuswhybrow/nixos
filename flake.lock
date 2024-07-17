@@ -28359,6 +28359,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-24-05": {
+      "locked": {
+        "lastModified": 1720954236,
+        "narHash": "sha256-1mEKHp4m9brvfQ0rjCca8P1WHpymK3TOr3v34ydv9bs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "53e81e790209e41f0c1efa9ff26ff2fd7ab35e27",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-updates": {
       "inputs": {
         "nixpkgs": "nixpkgs_17"
@@ -34140,6 +34156,7 @@
         "networking": "networking_43",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_145",
+        "nixpkgs-24-05": "nixpkgs-24-05",
         "volume": "volume_43"
       }
     },
