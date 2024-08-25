@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs"; 
     };
 
+    # The Zen Browser package for nixpkgs is experience difficulties but on the 
+    # way, in the mean time this flake packages the official binary.
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
+
     # Optimisations for audio
     musnix.url = "github:musnix/musnix";
 
@@ -129,6 +133,10 @@
           unstable.unzip # Unzips .zip files
           unstable.vlc # Video player that supports every video format you need
           unstable.mpv # Simple video player that's command line friendly
+
+          # Zen Browser offers a specific and a generic binary. The specifc 
+          # binary is faster but is incompatible with older CPUs.
+          inputs.zen-browser.packages.x86_64-linux.generic
 
           # Command to check if flake inputs have updates
           inputs.flake-updates.packages.x86_64-linux.flake-updates
