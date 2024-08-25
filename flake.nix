@@ -291,6 +291,43 @@
           ];
         })
 
+        # Expose Marcus' home directory as a network SMB share
+        # `smbpasswd -a [username]` to add SMB users
+        ({ ...}: {
+          services.samba = {
+            enable = true;
+            securityType = "user";
+            openFirewall = true;
+            extraConfig = ''
+              workgroup = WORKGROUP 
+              server string = marcus-laptop
+              netbios name = marcus-laptop
+              security = user 
+              guest account = nobody
+              map to guest = bad user
+            '';
+            shares.marcus = {
+              path = "/home/marcus";
+              browseable = "yes";
+              "read only" = "no";
+              "guest ok" = "no";
+              "create mask" = "0644";
+              "directory mask" = "0755";
+              "force user" = "marcus";
+              "force group" = "users";
+            };
+          };
+
+          # Advertises shares on the network
+          services.samba-wsdd = {
+            enable = true;
+            openFirewall = true;
+          };
+
+          networking.firewall.enable = true;
+          networking.firewall.allowPing = true;
+        })
+
         # Mount my Windows desktop via SMB
         # https://nixos.wiki/wiki/Samba
         ({ unstable, ... }: {
