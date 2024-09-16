@@ -377,6 +377,15 @@
           services.gvfs.enable = true; 
         })
 
+        # iOS Webkit Debugging 
+        # https://jade.fyi/blog/debugging-ios-safari-from-linux
+        ({ unstable, ... }: {
+          services.usbmuxd.enable = true;
+          environment.systemPackages = [ 
+            unstable.ios-webkit-debug-proxy 
+          ];
+        })
+
         # System wide packages
         ({ unstable, ... }: {
           environment.systemPackages = [

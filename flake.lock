@@ -983,11 +983,11 @@
         "nixpkgs": "nixpkgs_112"
       },
       "locked": {
-        "lastModified": 1711047588,
-        "narHash": "sha256-QjT1bpe3t/mnR8oe4IIaFikpB5CVlNZMfRuv7Ys31BA=",
+        "lastModified": 1726499381,
+        "narHash": "sha256-hbBhiQTcgLEndlmcF0UzID3tn+nrRkOftVyCx0Dd10g=",
         "owner": "marcuswhybrow",
         "repo": "alacritty",
-        "rev": "5d2375434ad91acc1997062813804696ee0bf428",
+        "rev": "21b7d170f85ee5d5253e6d8bcdc22d444d5cbcb3",
         "type": "github"
       },
       "original": {
@@ -17657,22 +17657,6 @@
         "type": "github"
       }
     },
-    "harpoon_20": {
-      "locked": {
-        "lastModified": 1701068326,
-        "narHash": "sha256-vmMceA+q6hG1yrjb+MP8T0YFDQIrW3bl45e7z24IEts=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "8cfef6986adfb599ba379ae53c9f5631ecd2fd9c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "8cfef6986adfb599ba379ae53c9f5631ecd2fd9c",
-        "type": "github"
-      }
-    },
     "harpoon_3": {
       "locked": {
         "lastModified": 1701068326,
@@ -23589,11 +23573,11 @@
         "nixpkgs": "nixpkgs_32"
       },
       "locked": {
-        "lastModified": 1716043563,
-        "narHash": "sha256-xXdgwVJJGjDtpv6eE8IFivwpnY9kPmHT/G/rwhFvNYc=",
+        "lastModified": 1726499381,
+        "narHash": "sha256-hbBhiQTcgLEndlmcF0UzID3tn+nrRkOftVyCx0Dd10g=",
         "owner": "marcuswhybrow",
         "repo": "alacritty",
-        "rev": "60624dc95622eba1b0bae81f50c76745ce495883",
+        "rev": "21b7d170f85ee5d5253e6d8bcdc22d444d5cbcb3",
         "type": "github"
       },
       "original": {
@@ -23680,15 +23664,14 @@
     },
     "marcus-neovim": {
       "inputs": {
-        "harpoon": "harpoon_19",
         "nixpkgs": "nixpkgs_111"
       },
       "locked": {
-        "lastModified": 1714839450,
-        "narHash": "sha256-no+yFx0Iy2N3+Fq3DDf0puH6xd8NQqemySzJ4SaD7n8=",
+        "lastModified": 1726494744,
+        "narHash": "sha256-zLNxmhg43CqFi9U4k4yIelvsVW+/n+bEgFtT8/rcaak=",
         "owner": "marcuswhybrow",
         "repo": "neovim",
-        "rev": "9f834ff866c0212b436063415ecf9d5316572f57",
+        "rev": "acf86bbf9511f7f4823bd08cdf5eef65ab716dcf",
         "type": "github"
       },
       "original": {
@@ -23703,11 +23686,11 @@
         "nixpkgs": "nixpkgs_113"
       },
       "locked": {
-        "lastModified": 1711116349,
-        "narHash": "sha256-t5D1yK2hKxeQFpUT00WLc556+N1jDkjffCASz7kQ5oA=",
+        "lastModified": 1726499664,
+        "narHash": "sha256-vqaRUnJxDcw/RX8Oe6A4chuxbtpuWFNqkM9UNWjZUx4=",
         "owner": "marcuswhybrow",
         "repo": "private",
-        "rev": "0d58e514330e4acdcfa0c074481dc66f855015bb",
+        "rev": "a494cf861a66d37e27040980b0403e81677e44a3",
         "type": "github"
       },
       "original": {
@@ -26482,7 +26465,7 @@
     },
     "neovim_39": {
       "inputs": {
-        "harpoon": "harpoon_20",
+        "harpoon": "harpoon_19",
         "nixpkgs": [
           "marcus-waybar",
           "mwpkgs",
@@ -28818,11 +28801,11 @@
     },
     "nixpkgs_111": {
       "locked": {
-        "lastModified": 1712608508,
-        "narHash": "sha256-vMZ5603yU0wxgyQeHJryOI+O61yrX2AHwY6LOFyV1gM=",
+        "lastModified": 1725983898,
+        "narHash": "sha256-4b3A9zPpxAxLnkF9MawJNHDtOOl6ruL0r6Og1TEDGCE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4cba8b53da471aea2ab2b0c1f30a81e7c451f4b6",
+        "rev": "1355a0cbfeac61d785b7183c0caaec1f97361b43",
         "type": "github"
       },
       "original": {
