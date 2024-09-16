@@ -2935,11 +2935,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1726509602,
-        "narHash": "sha256-KfFxuf2hQN0ZZ/ehmrgptjb1lDav6ksdrHc6VltqBZc=",
+        "lastModified": 1726510494,
+        "narHash": "sha256-sc0SJOLbT8Dv5oT6O768uth9WDZUzbd3H2fMpZh3b6s=",
         "owner": "marcuswhybrow",
         "repo": "hyprland",
-        "rev": "cff4a26e23f123b669bc75410685138ba3e9bf83",
+        "rev": "237a92d95ebb555a6adc7c9fc2a1e1b12c486d67",
         "type": "github"
       },
       "original": {
@@ -4735,11 +4735,11 @@
     },
     "nixpkgs_61": {
       "locked": {
-        "lastModified": 1711001935,
-        "narHash": "sha256-URtGpHue7HHZK0mrHnSf8wJ6OmMKYSsoLmJybrOLFSQ=",
+        "lastModified": 1726243404,
+        "narHash": "sha256-sjiGsMh+1cWXb53Tecsm4skyFNag33GPbVgCdfj3n9I=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "20f77aa09916374aa3141cbc605c955626762c9a",
+        "rev": "345c263f2f53a3710abe117f28a5cb86d0ba4059",
         "type": "github"
       },
       "original": {
@@ -7332,11 +7332,11 @@
         "rofi": "rofi_17"
       },
       "locked": {
-        "lastModified": 1726509559,
-        "narHash": "sha256-McLRCxLwW+YAWQzRZLfKyJ4M/yLzIYBAJu5Y7XiIbIM=",
+        "lastModified": 1726510453,
+        "narHash": "sha256-kMdbNvx+ETVKgHW/FYVZdrvHx2kYp2oApH3778BHM7w=",
         "owner": "marcuswhybrow",
         "repo": "waybar",
-        "rev": "a546cda99b63691cb1d13fc021e57b606c4c58a9",
+        "rev": "fe8412c8b152f65aee18ecedc2f48aba39147e14",
         "type": "github"
       },
       "original": {
