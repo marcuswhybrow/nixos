@@ -23,6 +23,7 @@
     flake-updates.url = "github:marcuswhybrow/flake-updates";
     brightness.url = "github:marcuswhybrow/brightness";
     alarm.url = "github:marcuswhybrow/alarm";
+    nprm.url = "github:marcuswhybrow/nprm";
 
     # Packages themed and customised to Marcus' tastes
     marcus-dunst.url = "github:marcuswhybrow/dunst";
@@ -185,6 +186,9 @@
 
           # Command to change brightness in steps
           inputs.brightness.packages.x86_64-linux.brightness
+
+          # Fuzzy finder for removing nix profile packages
+          inputs.nprm.packages.x86_64-linux.nprm
         ];
       })
 
