@@ -776,10 +776,13 @@
             defaultUser = "marcus";
             startMenuLaunchers = true;
             nativeSystemd = true;
-            wslConf.network.hostname = "marcus-wsl";
             # useWindowsDriver = true; # Windows OpenGL driver
           };
         })
+
+        {
+          networking.hostName = "marcus-wsl";
+        }
 
         # This third-party module enables NixOS to work inside of the 
         # Windows Subsystem for Linux
