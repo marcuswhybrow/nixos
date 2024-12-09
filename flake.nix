@@ -158,6 +158,7 @@
             unstable.reaper # Digital Audio Workstation celebrated for live use
             unstable.discord # Voice, video and text chat
             unstable.obsidian # Markdown based note taking app
+            unstable.spotify
           ];
           "marcus-desktop" = common ++ graphical ++ [
             unstable.megasync # MEGA cloud storage syncronisation daemon
@@ -170,6 +171,16 @@
           ];
           "marcus-wsl" = common ++ [];
         }."${config.networking.hostName}";
+      })
+
+      # Fix Dolphin Program Associations
+      # https://discourse.nixos.org/t/dolphin-does-not-have-mime-associations/48985/3
+      ({ unstable, ... }: {
+        environment.systemPackages = [
+          unstable.kdePackages.dolphin
+          unstable.kdePackages.dolphin-plugins
+        ];
+        environment.etc."/xdg/menus/applications.menu".text = builtins.readFile "${unstable.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
       })
     ];
 
@@ -228,6 +239,13 @@
 
           nixpkgs.config.permittedInsecurePackages = [
             "electron-24.8.6" # latest version of electron_24 package in nixpkgs
+          ];
+        })
+
+        # Web development
+        ({ ... }: {
+          networking.firewall.allowedTCPPortRanges = [
+            { from = 3000; to = 3001; } # Leptos
           ];
         })
 
