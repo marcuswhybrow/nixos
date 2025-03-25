@@ -1130,11 +1130,11 @@
         "nixpkgs": "nixpkgs_58"
       },
       "locked": {
-        "lastModified": 1742935181,
-        "narHash": "sha256-3Wl7dnt2Jsvj6PSmm/bPIrR/hSgE9d9A75YPZ7a7OYE=",
+        "lastModified": 1742937056,
+        "narHash": "sha256-L2zfgD0NK10/9BLn8G377uosnjdc8ORCyAZuSVW7Kkc=",
         "owner": "marcuswhybrow",
         "repo": "neovim",
-        "rev": "4a8eece23a4d77413fb5537ca61830852de0ef35",
+        "rev": "3f3dfc43332f8665b583424308614ea4fa0aa64b",
         "type": "github"
       },
       "original": {
