@@ -1229,11 +1229,11 @@
         "nixpkgs": "nixpkgs_80"
       },
       "locked": {
-        "lastModified": 1743004378,
-        "narHash": "sha256-1i8OnhPIEmranFlZWIKCp8n9L+PiQtF8XBYreZlXf/U=",
+        "lastModified": 1743099236,
+        "narHash": "sha256-EZp6WiWgZz/rFdi7K+otj1Jhkz0RdYyZERFRKkhympc=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "577fa2c19a1ef140db18acc737ac9795439d11e4",
+        "rev": "ff0ace388f58fc192f8351fb47355a0ca64762bb",
         "type": "github"
       },
       "original": {
