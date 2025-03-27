@@ -28,7 +28,10 @@
     # Packages themed and customised to Marcus' tastes
     marcus-dunst.url = "github:marcuswhybrow/dunst";
     marcus-fish.url = "github:marcuswhybrow/fish";
-    marcus-git.url = "github:marcuswhybrow/git";
+    marcus-git = {
+      inputs.neovim.follows = "marcus-neovim";
+      url = "github:marcuswhybrow/git";
+    };
     marcus-hyprland.url = "github:marcuswhybrow/hyprland";
     marcus-alacritty.url = "github:marcuswhybrow/alacritty";
     marcus-neovim.url = "github:marcuswhybrow/neovim";
