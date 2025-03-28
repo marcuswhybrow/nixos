@@ -1187,11 +1187,11 @@
         "nixpkgs": "nixpkgs_61"
       },
       "locked": {
-        "lastModified": 1714734684,
-        "narHash": "sha256-aMwu0KtQOiSOhEGbPVf+1ZEdcPLclYnW0+xaEZYpqPA=",
+        "lastModified": 1743148499,
+        "narHash": "sha256-w7xttqyBAtUEnNahgN1CmLWYnsYHLk6NLrqpvbOcaNs=",
         "owner": "marcuswhybrow",
         "repo": "starship",
-        "rev": "043b68738491eabe3251ffe5df522e34134589ff",
+        "rev": "690170cfef8a48ee273371392862a228ab2b2418",
         "type": "github"
       },
       "original": {
@@ -1234,11 +1234,11 @@
         "nixpkgs": "nixpkgs_79"
       },
       "locked": {
-        "lastModified": 1743141814,
-        "narHash": "sha256-EAEnSEcgNSTnj/QlLYBku1OVKCGYI/fHd86lS97tmQM=",
+        "lastModified": 1743148850,
+        "narHash": "sha256-pgqYoc9F3u3qMNtF/h+Mv21FKDNzSyNjNGgEUVcpDUE=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "84bf6e91018ab048ec2e63d94a17674b7db4e199",
+        "rev": "c4f1f36c8d9e8bf6d00a8b3ebb63449f80fd1789",
         "type": "github"
       },
       "original": {
