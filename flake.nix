@@ -284,14 +284,9 @@
         ({ unstable, ... }: {
           fonts.packages = [
             unstable.font-awesome
-            (unstable.nerdfonts.override {
-              fonts = [
-                # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
-                "FiraCode"
-                "FiraMono"
-                "Terminus"
-              ];
-            })
+            unstable.nerd-fonts.fira-code
+            unstable.nerd-fonts.fira-mono
+            # unstable.nerd-fonts.terminus
           ];
 
           fonts.fontconfig.defaultFonts = {
@@ -713,14 +708,9 @@
         ({ unstable, ... }: {
           fonts.packages = [
             unstable.font-awesome
-            (unstable.nerdfonts.override {
-              fonts = [
-                # https://github.com/NixOS/nixpkgs/blob/nixos-22.11/pkgs/data/fonts/nerdfonts/shas.nix
-                "FiraCode"
-                "FiraMono"
-                "Terminus"
-              ];
-            })
+            unstable.nerd-fonts.fira-code
+            unstable.nerd-fonts.fira-mono
+            # unstable.nerd-fonts.terminus
           ];
 
           fonts.fontconfig.defaultFonts = {
@@ -780,8 +770,8 @@
           wsl = {
             enable = true;
             defaultUser = "marcus";
-            startMenuLaunchers = true;
-            nativeSystemd = true;
+            startMenuLaunchers = true; # Open Linux GUI apps from Windows start menu
+            wslConf.automount.enabled = true; # Automatically mount windows drives under /mnt
             # useWindowsDriver = true; # Windows OpenGL driver
           };
         })
