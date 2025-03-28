@@ -1234,11 +1234,11 @@
         "nixpkgs": "nixpkgs_79"
       },
       "locked": {
-        "lastModified": 1743148850,
-        "narHash": "sha256-pgqYoc9F3u3qMNtF/h+Mv21FKDNzSyNjNGgEUVcpDUE=",
+        "lastModified": 1743149875,
+        "narHash": "sha256-iH/06pxq88eY/p2+2RZ9d+XYXVW2JtOLOJ3HUn5Mbhs=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "c4f1f36c8d9e8bf6d00a8b3ebb63449f80fd1789",
+        "rev": "55389b01b25444d34b7b16c12820df26f6f5ecea",
         "type": "github"
       },
       "original": {
