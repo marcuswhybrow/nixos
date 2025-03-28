@@ -38,7 +38,10 @@
     marcus-private.url = "github:marcuswhybrow/private";
     marcus-starship.url = "github:marcuswhybrow/starship";
     marcus-sway.url = "github:marcuswhybrow/sway";
-    marcus-tmux.url = "github:marcuswhybrow/tmux";
+    marcus-tmux = {
+      inputs.neovim.follows = "marcus-neovim";
+      url = "github:marcuswhybrow/tmux";
+    };
     marcus-rofi.url = "github:marcuswhybrow/rofi";
     marcus-waybar.url = "github:marcuswhybrow/waybar";
 
