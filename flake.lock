@@ -1228,14 +1228,17 @@
     "marcus-tmux": {
       "inputs": {
         "fish": "fish",
+        "neovim": [
+          "marcus-neovim"
+        ],
         "nixpkgs": "nixpkgs_79"
       },
       "locked": {
-        "lastModified": 1743099236,
-        "narHash": "sha256-EZp6WiWgZz/rFdi7K+otj1Jhkz0RdYyZERFRKkhympc=",
+        "lastModified": 1743128342,
+        "narHash": "sha256-b/2UJQfgh2gPOzjWXLZowqdjKIULja+xwQI6hZTxTt4=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "ff0ace388f58fc192f8351fb47355a0ca64762bb",
+        "rev": "997caa326766b604da012b61bbb39979beb9358c",
         "type": "github"
       },
       "original": {
