@@ -1067,11 +1067,11 @@
         "nixpkgs": "nixpkgs_36"
       },
       "locked": {
-        "lastModified": 1742998973,
-        "narHash": "sha256-lmigJd6wBX/u+Uo0S3g/2R2JoU9nIEZiVKEp7jghirE=",
+        "lastModified": 1743189470,
+        "narHash": "sha256-mjLJjskJTly3vApaDQ1RY4AayPhmAvf2tUsVoLgkWvg=",
         "owner": "marcuswhybrow",
         "repo": "fish",
-        "rev": "7a1cfe89841c5ff2f860dd3b8721fbaccab1fd3f",
+        "rev": "482d6415a320e680209cf62fd18a01fa54c0e9fa",
         "type": "github"
       },
       "original": {
