@@ -1049,11 +1049,11 @@
         "nixpkgs": "nixpkgs_36"
       },
       "locked": {
-        "lastModified": 1743189470,
-        "narHash": "sha256-mjLJjskJTly3vApaDQ1RY4AayPhmAvf2tUsVoLgkWvg=",
+        "lastModified": 1743293619,
+        "narHash": "sha256-+ySuD5Uymn3P+da6HkJynQkpNbECWRc5WjLvay2IUiQ=",
         "owner": "marcuswhybrow",
         "repo": "fish",
-        "rev": "482d6415a320e680209cf62fd18a01fa54c0e9fa",
+        "rev": "c490bc682d6722ed60a02425377bcce58d9dda26",
         "type": "github"
       },
       "original": {
@@ -1114,11 +1114,11 @@
         "nixpkgs": "nixpkgs_57"
       },
       "locked": {
-        "lastModified": 1743224754,
-        "narHash": "sha256-uC69bdtcyXbZIyuFTxOc+HUCmsXX3jVKTp3csxJfIO0=",
+        "lastModified": 1743348466,
+        "narHash": "sha256-cxt3V+qsF5oGUxfefNZNt2mjnShIn52w5CD/xzKfnWw=",
         "owner": "marcuswhybrow",
         "repo": "neovim",
-        "rev": "81e150e0fce267be27c47dcd3198d92bd1e4f593",
+        "rev": "560ed6b00fa4226757e043521b261352ac17e6c7",
         "type": "github"
       },
       "original": {
