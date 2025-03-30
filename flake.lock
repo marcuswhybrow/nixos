@@ -1169,11 +1169,11 @@
         "nixpkgs": "nixpkgs_61"
       },
       "locked": {
-        "lastModified": 1743373640,
-        "narHash": "sha256-dbAHlNJYI9NC4myzIHn94VlzDHmLdoorEK0tG2xcoHs=",
+        "lastModified": 1743373817,
+        "narHash": "sha256-XnBpeAaVBkoVoXmMWqxZaPbw7fn4JAVFfhGQZxoD9QU=",
         "owner": "marcuswhybrow",
         "repo": "starship",
-        "rev": "51146e339af5c36b5c15e26e9fdae88624ea8c30",
+        "rev": "17672c6b62d250586da59fb34396f72a8f366047",
         "type": "github"
       },
       "original": {
