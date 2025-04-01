@@ -1114,11 +1114,11 @@
         "nixpkgs": "nixpkgs_57"
       },
       "locked": {
-        "lastModified": 1743376101,
-        "narHash": "sha256-C+6mqolC7LjR3kVYMQoAHmmUnzj7fe+1WMkqeNTcGiI=",
+        "lastModified": 1743467006,
+        "narHash": "sha256-vurcFFbHmxnpYCEaO5LI5Q91eAUug1BwNpoz99dlQxs=",
         "owner": "marcuswhybrow",
         "repo": "neovim",
-        "rev": "44e3d9c7a88a02110fb10c4ec996d1dd595fc4b3",
+        "rev": "df10648c978b686838451c7f590e3fd7432530b7",
         "type": "github"
       },
       "original": {
@@ -1216,11 +1216,11 @@
         "nixpkgs": "nixpkgs_79"
       },
       "locked": {
-        "lastModified": 1743179767,
-        "narHash": "sha256-rXBBDNx7p0oNtplbkiIijXCT9yuSgzhhOFccUaMXKfo=",
+        "lastModified": 1743475252,
+        "narHash": "sha256-Uz0sGtGTcMX2/pe/mUWO1l2iyDJN9LXYbYhoO3smDko=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "dcd264b88f95352410254711f3fb0280633113be",
+        "rev": "a64099eab222fc474ed5e29cd0d7774bccdea284",
         "type": "github"
       },
       "original": {
