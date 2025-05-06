@@ -102,18 +102,8 @@
       #
       # https://github.com/marcuswhybrow/.nixos/issues/6
       # https://github.com/nix-community/nix-direnv
-      ({ unstable, ... }: {
-        nix.settings = {
-          keep-outputs = true;
-          keep-derivations = true;
-        };
-        environment.pathsToLink = [
-          "/share/nix-direnv"
-        ];
-        environment.systemPackages = [
-          unstable.direnv
-          unstable.nix-direnv
-        ];
+      ({ ... }: {
+        programs.direnv.enable = true;
       })
 
       # Display backlight support
@@ -126,87 +116,48 @@
         ];
       })
 
-      # Packages on all systems
-      ({ unstable, inputs, ... }: {
-        users.users.marcus.packages = [
-          unstable.htop # Interative process veiwer, like Windows Task Manager
-          unstable.lsof # htop requires lsof when you press `l` on a processF
-          unstable.firefox # Internet browser
-          unstable.brave # Privacy focused internet browser similar to Firefox
-          unstable.ranger # Terminal file manager inspired by vim
-          unstable.gh # GitHub command line client
-          unstable.megacmd # MEGA file storage's command line interface
-          unstable.krita # Free photo editor and digital painting app
-          unstable.unzip # Unzips .zip files
-          unstable.vlc # Video player that supports every video format you need
-          unstable.mpv # Simple video player that's command line friendly
-
-          # Zen Browser offers a specific and a generic binary. The specifc 
-          # binary is faster but is incompatible with older CPUs.
-          inputs.zen-browser.packages.x86_64-linux.generic
-
-          # Command to check if flake inputs have updates
-          inputs.flake-updates.packages.x86_64-linux.flake-updates
-
-          # Window Manager configured by Marcus
-          inputs.marcus-hyprland.packages.x86_64-linux.hyprland
-
-          # Shell replacement for BASH configured by Marcus
-          inputs.marcus-fish.packages.x86_64-linux.fish
-
-          # Graphical terminal configure by Marcus
-          inputs.marcus-alacritty.packages.x86_64-linux.alacritty
-
-          # Terminal prompt configured by Marcus
-          inputs.marcus-starship.packages.x86_64-linux.starship
-
-          # Powerful terminal text editor configured by Marcus
-          inputs.marcus-neovim.packages.x86_64-linux.nvim
-
-          # Graphical menu launcher configured by Marcus
-          inputs.marcus-rofi.packages.x86_64-linux.rofi
-
-          # Graphical notification manager configured by Marcus
-          inputs.marcus-dunst.packages.x86_64-linux.dunst
-
-          # Graphical logout menu
-          inputs.logout.packages.x86_64-linux.logout
-
-          # Graphical ethernet/wifi switcher
-          inputs.networking.packages.x86_64-linux.networking
-
-          # Git command configured for Marcus
-          inputs.marcus-git.packages.x86_64-linux.git
-
-          # Terminal tabs and windows configured for Marcus
-          inputs.marcus-tmux.packages.x86_64-linux.tmux
-
-          # Graphical terminal that doesn't record history
-          inputs.marcus-private.packages.x86_64-linux.private
-
-          # Command to send a notification after a specific time
-          inputs.alarm.packages.x86_64-linux.alarm
-
-          # Command to change volume in steps
-          inputs.volume.packages.x86_64-linux.volume
-
-          # Command to change brightness in steps
-          inputs.brightness.packages.x86_64-linux.brightness
-
-          # Fuzzy finder for removing nix profile packages
-          inputs.nprm.packages.x86_64-linux.nprm
-        ];
-      })
-
-      # System dependent packages
-      ({ unstable, config, ... }: {
-        users.users.marcus.packages = {
-          "marcus-laptop" = [
+      # Configure packages depnding on system
+      ({ unstable, config, inputs, ... }: {
+        users.users.marcus.packages = let 
+          common = [
+            unstable.htop # Interative process veiwer, like Windows Task Manager
+            unstable.lsof # htop requires lsof when you press `l` on a processF
+            unstable.ranger # Terminal file manager inspired by vim
+            unstable.gh # GitHub command line client
+            unstable.megacmd # MEGA file storage's command line interface
+            unstable.unzip # Unzips .zip files
+            inputs.flake-updates.packages.x86_64-linux.flake-updates # Command to check if flake inputs have updates
+            inputs.marcus-fish.packages.x86_64-linux.fish # Shell replacement for BASH configured by Marcus
+            inputs.marcus-starship.packages.x86_64-linux.starship # Terminal prompt configured by Marcus
+            inputs.marcus-neovim.packages.x86_64-linux.nvim # Powerful terminal text editor configured by Marcus
+            inputs.marcus-git.packages.x86_64-linux.git # Git command configured for Marcus
+            inputs.marcus-tmux.packages.x86_64-linux.tmux # Terminal tabs and windows configured for Marcus
+            inputs.nprm.packages.x86_64-linux.nprm # Fuzzy finder for removing nix profile packages
+          ];
+          graphical = [
+            unstable.krita # Free photo editor and digital painting app
+            unstable.firefox # Internet browser
+            unstable.brave # Privacy focused internet browser similar to Firefox
+            unstable.vlc # Video player that supports every video format you need
+            unstable.mpv # Simple video player that's command line friendly
+            inputs.marcus-hyprland.packages.x86_64-linux.hyprland # Window Manager configured by Marcus
+            inputs.marcus-alacritty.packages.x86_64-linux.alacritty # Graphical terminal configure by Marcus
+            inputs.marcus-rofi.packages.x86_64-linux.rofi # Graphical menu launcher configured by Marcus
+            inputs.marcus-dunst.packages.x86_64-linux.dunst # Graphical notification manager configured by Marcus
+            inputs.logout.packages.x86_64-linux.logout # Graphical logout menu
+            inputs.networking.packages.x86_64-linux.networking # Graphical ethernet/wifi switcher
+            inputs.marcus-private.packages.x86_64-linux.private # Graphical terminal that doesn't record history
+            inputs.alarm.packages.x86_64-linux.alarm # Command to send a notification after a specific time
+            inputs.volume.packages.x86_64-linux.volume # Command to change volume in steps
+            inputs.brightness.packages.x86_64-linux.brightness # Command to change brightness in steps
+          ];
+        in {
+          "marcus-laptop" = common ++ graphical ++ [
             unstable.reaper # Digital Audio Workstation celebrated for live use
             unstable.discord # Voice, video and text chat
             unstable.obsidian # Markdown based note taking app
           ];
-          "marcus-desktop" = [
+          "marcus-desktop" = common ++ graphical ++ [
             unstable.megasync # MEGA cloud storage syncronisation daemon
             unstable.reaper # Digital Audio Workstation celebrated forlive use
             unstable.discord # Voice, video and text chat
@@ -215,7 +166,7 @@
             unstable.yabridge # Run Windows VST instruments on Linux
             unstable.yabridgectl # Command line interface for controlling Yabridge
           ];
-          "marcus-wsl" = [];
+          "marcus-wsl" = common ++ [];
         }."${config.networking.hostName}";
       })
     ];
