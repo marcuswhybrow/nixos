@@ -1070,11 +1070,11 @@
         "nixpkgs": "nixpkgs_37"
       },
       "locked": {
-        "lastModified": 1743099605,
-        "narHash": "sha256-JoP3YK7wmzvdG0sQuKVfxR3QVcxiNX89CBfCKEXSLts=",
+        "lastModified": 1746597898,
+        "narHash": "sha256-zzjWKY/qzW/Oj7fiRILR56HiUpVsdM6cxlieonAU7DI=",
         "owner": "marcuswhybrow",
         "repo": "git",
-        "rev": "f39a6899bc527b161b985cde98e5ab01f32ec81b",
+        "rev": "7dccbbcdae4fd04b946ddea3d7ffbaaa8b63806a",
         "type": "github"
       },
       "original": {
