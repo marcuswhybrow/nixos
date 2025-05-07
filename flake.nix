@@ -674,6 +674,15 @@
           services.openssh.enable = true;
         })
 
+        # Open common ports for sharing web dev stuff on the network
+        {
+          networking.firewall.interfaces.eth0.allowedTCPPortRanges = [
+            { from = 3000; to = 3001; }
+            { from = 8000; to = 8000; }
+            { from = 8080; to = 8080; }
+          ];
+        }
+
         # Localisation
         ({ config, ... }: {
           time.timeZone = "Europe/London";
