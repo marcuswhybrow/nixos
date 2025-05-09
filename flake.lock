@@ -1216,11 +1216,11 @@
         "nixpkgs": "nixpkgs_79"
       },
       "locked": {
-        "lastModified": 1743475252,
-        "narHash": "sha256-Uz0sGtGTcMX2/pe/mUWO1l2iyDJN9LXYbYhoO3smDko=",
+        "lastModified": 1746772319,
+        "narHash": "sha256-tZ+dVJvC0+9jKAy0m+iGNbyzaaOCQOiyFA3J49Bogf8=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "a64099eab222fc474ed5e29cd0d7774bccdea284",
+        "rev": "acddde3ba7b4dce47b038448f44f9bc8c8f97103",
         "type": "github"
       },
       "original": {
