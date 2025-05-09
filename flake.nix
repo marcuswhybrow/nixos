@@ -39,7 +39,7 @@
     marcus-starship.url = "github:marcuswhybrow/starship";
     marcus-sway.url = "github:marcuswhybrow/sway";
     marcus-tmux = {
-      inputs.neovim.follows = "marcus-neovim";
+      inputs.marcus-fish.follows = "marcus-fish";
       url = "github:marcuswhybrow/tmux";
     };
     marcus-rofi.url = "github:marcuswhybrow/rofi";
@@ -133,6 +133,9 @@
             inputs.marcus-git.packages.x86_64-linux.git # Git command configured for Marcus
             inputs.marcus-tmux.packages.x86_64-linux.tmux # Terminal tabs and windows configured for Marcus
             inputs.nprm.packages.x86_64-linux.nprm # Fuzzy finder for removing nix profile packages
+            (unstable.writeTextDir "share/fish/vendor_conf.d/marcus-env-vars.fish" /* fish */ ''
+              set -gx EDITOR "${inputs.marcus-neovim.packages.x86_64-linux.nvim}/bin/vim"
+            '')
           ];
           graphical = [
             unstable.krita # Free photo editor and digital painting app
