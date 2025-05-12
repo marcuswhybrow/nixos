@@ -1096,11 +1096,11 @@
         "nixpkgs": "nixpkgs_76"
       },
       "locked": {
-        "lastModified": 1746793621,
-        "narHash": "sha256-8MqVV8air/TR9tOUjNGNbudmznBZBw6ZJT5fhitRXFc=",
+        "lastModified": 1747043666,
+        "narHash": "sha256-aq2nJJXOpvO5OiTnjmH6k8QB9p/a4LMtpH12GOsDQjY=",
         "owner": "marcuswhybrow",
         "repo": "tmux",
-        "rev": "39a75faf7764930c10019c480f9ddcf025f1fc37",
+        "rev": "2d91f128b3a7a599b76d37ee80cae832b917dc9a",
         "type": "github"
       },
       "original": {
