@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-24-05.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-25-11.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     # Helper to run NixOS under Windows Subsystem for Linux
     nixos-wsl = { 
@@ -88,7 +88,6 @@
         nix.settings.experimental-features = [ 
           "nix-command" 
           "flakes" 
-          "repl-flake" # Useful when developing and debugging flakes
         ];
       })
 
@@ -213,7 +212,7 @@
     ];
   in {
     # Marcus' black Starlabs Starlite Mk IV laptop
-    nixosConfigurations.marcus-laptop = inputs.nixpkgs-24-05.lib.nixosSystem {
+    nixosConfigurations.marcus-laptop = inputs.nixpkgs-25-11.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ [
         # Fix Obsidian not opening with latest electron version
@@ -653,7 +652,7 @@
     };
 
     # Marcus' Windows Subsystem for Linux inside his Windows desktop
-    nixosConfigurations.marcus-wsl = inputs.nixpkgs-24-05.lib.nixosSystem {
+    nixosConfigurations.marcus-wsl = inputs.nixpkgs-25-11.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ [
         # Coding Fonts improve upon normal fonts by including many extra glyphs 
@@ -754,7 +753,7 @@
     # Note: This computer is now no longer serving this purpose, and therefore 
     # this NixOS configuration is no longer being updated. Keeping the config 
     # around for potential future use.
-    nixosConfigurations.anne-laptop = inputs.nixpkgs-24-05.lib.nixosSystem {
+    nixosConfigurations.anne-laptop = inputs.nixpkgs-25-11.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ anne ++ [
         # System wide packages
@@ -946,7 +945,7 @@
     # Note: This system is currently back running Windows and therefore this
     # NixOS config for it is not longer in use and not maintained. The 
     # configuration is being preserved for potential future use.
-    nixosConfigurations.marcus-desktop = inputs.nixpkgs-24-05.lib.nixosSystem {
+    nixosConfigurations.marcus-desktop = inputs.nixpkgs-25-11.lib.nixosSystem {
       inherit specialArgs;
       modules = marcus ++ [
         inputs.musnix.nixosModules.musnix
